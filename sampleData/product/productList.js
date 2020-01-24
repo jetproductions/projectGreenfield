@@ -1,5 +1,6 @@
 // API call GET products/list
 
+let productList = 
 [
 	{
 			"id": 1,
@@ -42,3 +43,5 @@
 			"default_price": "99"
 	}
 ]
+
+export default productList;

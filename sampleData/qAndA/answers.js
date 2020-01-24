@@ -40,3 +40,5 @@ let answerQ35515 = {
 			}
 	]
 }
+
+export default answerQ35515;

@@ -1,6 +1,6 @@
 // API call GET products/:productId
 
-let product = 
+let product1 = 
 {
 	"id": 1,
 	"name": "Camo Onesie",
@@ -15,3 +15,5 @@ let product =
 			}
 	]
 }
+
+export default product1;

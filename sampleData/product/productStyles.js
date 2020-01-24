@@ -252,3 +252,5 @@ let stylesP1 =
 			}
 	]
 }
+
+export default stylesP1;

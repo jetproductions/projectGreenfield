@@ -32,3 +32,5 @@ let reviewMetaP1 = {
 			}
 	}
 }
+
+export default reviewMetaP1;

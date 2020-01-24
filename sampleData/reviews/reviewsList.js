@@ -72,3 +72,5 @@ let reviewListP1 = {
 			}
 	]
 }
+
+export default reviewListP1;

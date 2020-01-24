@@ -1,6 +1,6 @@
 // API call GET qa/:productId
 
-qaP1 =
+let qaP1 =
 {
 	"product_id": "1",
 	"results": [
@@ -37,3 +37,5 @@ qaP1 =
 			}
 	]
 }
+
+export default qaP1;
