@@ -1,0 +1,7 @@
+.reviews{
+  @apply bg-gray-200;
+
+  span{
+    @apply bg-blue-400;
+  }
+}
