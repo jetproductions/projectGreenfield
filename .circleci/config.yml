@@ -19,4 +19,10 @@
             - node_modules
           key: v1-dependencies{{ checksum "package.json" }}
       - run: npm run test
-      
+
+      - store_artifacts:
+          path: test-reports/
+          destination: tr1
+      - store_test_results:
+          path: test-reports/
+          
