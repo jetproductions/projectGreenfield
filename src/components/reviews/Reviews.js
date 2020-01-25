@@ -1,8 +1,9 @@
 import React from 'react';
+import './reviews.css';
 
 const Reviews = (props) => (
-  <div>
-      Reviews
+  <div className="reviews">
+    <span>Reviews</span>
   </div>
 );
 
