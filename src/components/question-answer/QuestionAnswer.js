@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -9,11 +10,18 @@ const QuestionAnswer = ({ productStore }) => {
   const { product } = useParams();
   const [questions, setQuestions] = useState(productStore);
   // eslint-disable-next-line no-undef
-  fetch(`http://3.134.102.30/qa/${product}`)
-    .then((res) => res.json())
-    .then((result) => {
-      setQuestions(result);
-    });
+  useEffect(() => {
+
+  });
+
+  const getQuestions = () => {
+    fetch(`http://3.134.102.30/qa/${product}`)
+      .then((res) => res.json())
+      .then((result) => {
+        setQuestions(result);
+      });
+  };
+
   return (
     <div>
       <h3>

@@ -15,7 +15,7 @@ class QuestionSearch extends Component {
 
   render() {
     return (
-      <input type="text" onChange={this.onChangeHandler} placeholder="HAVE A QUESTION? SEARH FOR ANSWERS..." />
+      <input type="text" onChange={(e) => this.onChangeHandler(e)} placeholder="HAVE A QUESTION? SEARH FOR ANSWERS..." />
     );
   }
 }
