@@ -1,4 +1,5 @@
-import React from 'react'
+import React { useState, useEffect }from 'react';
+import { connect } from 'react-redux';
 
 const QuestionAnswer = (props) => {
   return(
@@ -7,5 +8,8 @@ const QuestionAnswer = (props) => {
     </div>
   )
 }
+mapPropsFromState = {
 
-export default QuestionAnswer 
+}
+
+export default connect(mapPropsFromState)(QuestionAnswer);
