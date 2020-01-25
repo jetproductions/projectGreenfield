@@ -3,23 +3,20 @@
    build:
      docker:
        - image: circleci/node:12.0.0
+
+     working_directory: ~/projectGreenfield
+
      steps:
       - checkout
-      - run: 
-        name: update-npm
-        command: 'npm install -g npm@latest'
-      # # -restore_cache:
-      #   key: dependency-cache-({ checksum "package-lock.json"})
-      # -run:
-      #   name: install-npm-wee
-      #   command: npm install
-      # -save_cache:
-      #   key: dependency-cache-{{chechsum "package-lock.json"}}
-      #   paths:
-      #     - ./node_modules
-      # -run:
-      #   name: test
-      #   command: npm run test
-      # -run:
-      #   name: code-coverage
-      #   command: './node_modules/.bin/nyc report --resporter=text-lcov'
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies{{ checksum "package.json" }}
+      - run: npm run test
+      
