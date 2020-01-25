@@ -13,13 +13,13 @@
       -run:
         name: install-npm-wee
         command: npm install
-      -save_cache:
-        key: dependency-cache-{{chechsum "package-lock.json"}}
-        paths:
-          - ./node_modules
-      -run:
-        name: test
-        command: npm run test
-      -run:
-        name: code-coverage
-        command: './node_modules/.bin/nyc report --resporter=text-lcov'
+      # -save_cache:
+      #   key: dependency-cache-{{chechsum "package-lock.json"}}
+      #   paths:
+      #     - ./node_modules
+      # -run:
+      #   name: test
+      #   command: npm run test
+      # -run:
+      #   name: code-coverage
+      #   command: './node_modules/.bin/nyc report --resporter=text-lcov'
