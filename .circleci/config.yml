@@ -9,7 +9,7 @@ jobs:
       # hunguphere
       -run:
         name: update-npm
-        command: 'sudo npm install -g npm@latest'
+        command: 'npm install npm@latest'
       -restore_cache:
         key: dependency-cache-({ checksum "package-lock.json"})
       -save_cache:
