@@ -1,21 +1,21 @@
-import product from '../../sampleData/product/product'
+import product from '../../sampleData/product/product';
 
 const initialState = {
-  product
-}
+  product,
+};
 
-const reducer = (state = initialState, {type, payload}) => {
-  switch (type){
+const reducer = (state = initialState, { type, payload }) => {
+  switch (type) {
     case 'SET_PRODUCT':
       return (
         {
           ...state,
-          product: payload 
+          product: payload,
         }
-      )
+      );
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default reducer
+export default reducer;
