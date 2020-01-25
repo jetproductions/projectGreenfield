@@ -1,22 +1,22 @@
 import React from 'react';
 
-//  Has four sub-components
-  //  Image Gallery
-  //  Product Information
-  //  Style Selector
-  //  Add to Cart
+//  Has four sub-units:
+//  Image Gallery
+//  Product Information
+//  Style Selector
+//  Add to Cart
 
 const ProductOverview = (props) => (
   <div>
       Product Overview
-      {/* Product View Class */}
-        {/* Left Column Grid */}
-          {/* Image Carousel(Gallery) */}
-        {/* Right Column Grid */}
-          {/* Product information */}
-            {/* Star Utility Component */}
-          {/* Style Selector */}
-          {/* Add to Cart */}
+    {/* Product View - Class Component */}
+    {/*   Left Column Grid - use Tailwind */}
+    {/*     Image Carousel(Gallery) - Functional Component */}
+    {/*   Right Column Grid - use Tailwind */}
+    {/*     Product information - Functional Component */}
+    {/*     Stars/Review - Utility (Functional?) Component */}
+    {/*     Style Selector - Functional Component */}
+    {/*     Add to Cart Button - Functional Component */}
 
   </div>
 );
