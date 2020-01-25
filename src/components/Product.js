@@ -3,6 +3,9 @@ import {
   useParams
 } from 'react-router-dom';
 import { connect } from 'react-redux'
+import ProductOverview from './product-overview/ProductOverview'
+import QuestionAnswer from './question-answer/QuestionAnswer'
+import Reviews from './reviews/Reviews'
 
 const Product = (props) => {
     const { id } = useParams()
@@ -26,7 +29,9 @@ const Product = (props) => {
     return(
       <div className="product">
         <div style={ { marginTop: '3em' } }>
-          { product.name }
+          <ProductOverview />
+          <QuestionAnswer />
+          <Reviews />
         </div>
       </div>
     )

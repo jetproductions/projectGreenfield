@@ -1,8 +1,7 @@
+import product from '../../sampleData/product/product'
+
 const initialState = {
-  product: {
-    id: 1,
-    name: ''
-  }
+  product
 }
 
 const reducer = (state = initialState, {type, payload}) => {
