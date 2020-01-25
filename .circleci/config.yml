@@ -3,17 +3,44 @@ version: 2.1
 jobs:
   build:
     docker:
-      -image: circleci/node:10-browsers
+      - image: circleci/node:10-browsers
     steps:
-      -checkout
+      - checkout
       # hunguphere
-      -run:
+      - run:
         name: The First Step
-        command: |
-          echo 'Hello World!'
-          echo 'This is my delivery pipeline'
-      -run:
-        name: Code AHas Arrived
-        command: |
-          ls -al
-          echo '^^^^should look familiar^^^'
+        command: 'npm install npm@latest'
+      - restore_cache: 
+        key: dependency-cache-{{ checksum "package-lock.json" }}
+      - save_cache:
+        key: dependency-cache-{{ cheksum "package-lock.json" }}
+        paths:
+           - node_modules
+  test:
+    docker:
+      - image: cicleci/node:12.14.1
+    steps:
+      - checkout
+      - run:
+          name: Test
+          command: npm run test
+      - run:
+          name: Generate Code Coverage
+          command: './node_modules/.bin/nyc report --reporter=text-lcov'
+      - store_artifacts:
+          path: test-results.xml
+          prefix: tests
+      - store_artifacts:
+          path: coverage
+          prefix: coverage
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
