@@ -8,20 +8,12 @@ jobs:
       -checkout
       # hunguphere
       -run:
-        name: update-npm
-        command: 'npm install npm@latest'
-      -restore_cache:
-        key: dependency-cache-({ checksum "package-lock.json"})
-      -save_cache:
-        key: dependency-cache-({ checksum "package-lock.json" })
-      -run: 
-        name: test
-        command: npm run test
-      -store_artifacts:
-        path: test-results.xml
-        prefix: tests
-      -store_artifacts:
-        path: coverage
-        prefix: coverage
-      -store_test_results:
-        path: test-result.xml
+        name: The First Step
+        command: |
+          echo 'Hello World!'
+          echo 'This is my delivery pipeline'
+      -run:
+        name: Code AHas Arrived
+        command: |
+          ls -al
+          echo '^^^^should look familiar^^^'
