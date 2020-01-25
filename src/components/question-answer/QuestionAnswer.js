@@ -1,4 +1,4 @@
-import React { useState, useEffect }from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 const QuestionAnswer = (props) => {
@@ -7,9 +7,6 @@ const QuestionAnswer = (props) => {
       Question Answer
     </div>
   )
-}
-mapPropsFromState = {
-
 }
 
 export default connect(mapPropsFromState)(QuestionAnswer);
