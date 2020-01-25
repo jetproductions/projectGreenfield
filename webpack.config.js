@@ -19,7 +19,7 @@ module.exports = {
         test: /\.(jsx|js)$/,
         include: path.resolve(__dirname, 'src'),
         exclude: /node_modules/,
-        use: {
+        use: [{
           loader: 'babel-loader',
           options: {
             presets: [
@@ -32,7 +32,12 @@ module.exports = {
             ],
             plugins: ['@babel/plugin-proposal-class-properties']
           }
-        }
+        }, {
+          loader: 'eslint-loader',
+          options: {
+            fix: true
+          }
+        }]
       }
     ]
   },
