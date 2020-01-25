@@ -1,11 +1,9 @@
-import React from 'react'
+import React from 'react';
 
-const Reviews = (props) => {
-  return(
-    <div>
+const Reviews = (props) => (
+  <div>
       Reviews
-    </div>
-  )
-}
+  </div>
+);
 
-export default Reviews
+export default Reviews;
