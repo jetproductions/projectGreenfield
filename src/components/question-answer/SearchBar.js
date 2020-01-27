@@ -11,9 +11,12 @@ class QuestionSearch extends Component {
 
   onChangeHandler = (e) => {
     this.setState({ search: e.target.value });
-	}
-	// should add questions to global state and reducer with actions to get questions into store in component above this.
-  // will need to have a display and !display functionality so when search is in use only shows searched
+  }
+
+  // should add questions to global state and reducer with actions to
+  // get questions into store in component above this.
+  // will need to have a display and !display functionality so when
+  // search is in use only shows searched
 
   render() {
     return (
