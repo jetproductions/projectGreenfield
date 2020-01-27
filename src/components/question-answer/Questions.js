@@ -4,7 +4,7 @@ import Question from './Question';
 
 const Questions = ({ questions }) => {
   // console.log('questions: ', questions.results);
-  if (questions.length === 0) {
+  if (questions.product_id === undefined) {
     return (
       <div>No Questions Asked Yet</div>
     );

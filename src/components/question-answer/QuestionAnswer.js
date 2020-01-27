@@ -11,7 +11,7 @@ const getQuestions = (id) => fetch(`http://3.134.102.30/qa/${id}`).then((res) =>
 
 const QuestionAnswer = ({ productStore }) => {
   const { id } = useParams();
-  const [questions, setQuestions] = useState([]);
+  const [questions, setQuestions] = useState({});
   // eslint-disable-next-line no-undef
   if (Number(id) !== Number(productStore.id) || questions.length === 0) {
     getQuestions(id).then((result) => {
@@ -19,7 +19,6 @@ const QuestionAnswer = ({ productStore }) => {
       setQuestions(result);
     });
   }
-
   return (
     <div>
       <h3>
