@@ -28,7 +28,7 @@ const QuestionAnswer = ({ productStore }) => {
         QUESTIONS & ANSWER
       </h3>
       <SearchBar />
-      <Questions />
+      <Questions questions={questions} />
     </div>
   );
 };
