@@ -7,25 +7,21 @@ import ProductOverview from './product-overview/ProductOverview';
 import QuestionAnswer from './question-answer/QuestionAnswer';
 import Reviews from './reviews/Reviews';
 
+/* eslint-disable no-undef */
+const getProduct = (id) => fetch(`http://3.134.102.30/products/${id}`).then((res) => res.json());
+
 const Product = ({ productStore, setProductInStore }) => {
-  const { id } = useParams();
   //  set the initial product variable to what we have as our product in our store
-  const [product, setProduct] = useState(productStore);
+  const { id } = useParams();
 
-  /* eslint-disable no-undef */
-  fetch(`http://3.134.102.30/products/${id}`)
-    .then((res) => res.json())
-    .then((result) => {
-      //  we could call props.setProduct here but we can
-      //  let the useEffect callback handle that change
-      setProduct(result);
+  // if the param id does not match the productStore.id then we need to make
+  // a new api request and update the store
+  if (Number(id) !== Number(productStore.id)) {
+    getProduct(id).then((result) => {
+      // update the product in the store
+      setProductInStore(result);
     });
-
-  //  useEffect listens for the product to change and runs the anonymous callback
-  //  This is where we want to fill our store with the returned product
-  useEffect(() => {
-    setProductInStore(product);
-  }, ['product']);
+  }
 
   return (
     <div className="product">
