@@ -13,7 +13,8 @@ const Answers = ({ question_id, answers }) => {
     // need to make API call for answers and then render after the call is made
     return Object.values(answers).map((answer) => <Answer id={answer.id} {...answer} />);
   }
-  getAnswers(question_id).then((result) => Object.values(result).results.map((answer) => (<Answer id={answer.id} {...answer} />);
+	getAnswers(question_id).then((result) => Object.values(result).results.map((answer) => (<Answer id={answer.id} {...answer} />);
+	
   console.log(answers);
   return (
     <div />
