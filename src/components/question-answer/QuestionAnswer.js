@@ -7,20 +7,18 @@ import SearchBar from './SearchBar';
 import Questions from './Questions';
 import sampleQuestions from '../../../sampleData/qAndA/questions';
 
-const QuestionAnswer = ({ productStore }) => {
-  const { product } = useParams();
-  const [questions, setQuestions] = useState(productStore);
-  // eslint-disable-next-line no-undef
-  useEffect(() => {});
+const getQuestions = (id) => fetch(`http://3.134.102.30/qa/${id}`).then((res) => res.json());
 
-  // how to get questions based on the id that gets pulled down from global state
-  const getQuestions = () => {
-    fetch(`http://3.134.102.30/qa/${product}`)
-      .then((res) => res.json())
-      .then((result) => {
-        setQuestions(result);
-      });
-  };
+const QuestionAnswer = ({ productStore }) => {
+  const { id } = useParams();
+  const [questions, setQuestions] = useState([]);
+  // eslint-disable-next-line no-undef
+  if (Number(id) !== Number(productStore.id) || questions.length === 0) {
+    getQuestions(id).then((result) => {
+      // update the questions in state
+      setQuestions(result);
+    });
+  }
 
   return (
     <div>
