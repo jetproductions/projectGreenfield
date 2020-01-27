@@ -5,15 +5,15 @@ import { useParams } from 'react-router-dom';
 
 import SearchBar from './SearchBar';
 import Questions from './Questions';
+import sampleQuestions from '../../../sampleData/qAndA/questions';
 
 const QuestionAnswer = ({ productStore }) => {
   const { product } = useParams();
   const [questions, setQuestions] = useState(productStore);
   // eslint-disable-next-line no-undef
-  useEffect(() => {
+  useEffect(() => {});
 
-  });
-
+  // how to get questions based on the id that gets pulled down from global state
   const getQuestions = () => {
     fetch(`http://3.134.102.30/qa/${product}`)
       .then((res) => res.json())
