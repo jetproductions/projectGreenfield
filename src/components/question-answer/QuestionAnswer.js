@@ -5,18 +5,18 @@ import { useParams } from 'react-router-dom';
 
 import SearchBar from './SearchBar';
 import Questions from './Questions';
-import sampleQuestions from '../../../sampleData/qAndA/questions';
 
 const getQuestions = (id) => fetch(`http://3.134.102.30/qa/${id}`).then((res) => res.json());
 
 const QuestionAnswer = ({ productStore }) => {
   const { id } = useParams();
-  const [questions, setQuestions] = useState({});
+  const [questions, setQuestions] = useState([]);
+  // looking to see if product has changed or if startup and nothing in questions
   // eslint-disable-next-line no-undef
-  if (Number(id) !== Number(productStore.id) || questions === {}) {
+  if (Number(id) !== Number(productStore.id) || questions.length === 0) {
     getQuestions(id).then((result) => {
       // update the questions in state
-      setQuestions(result);
+      setQuestions(result.results);
     });
   }
   return (
