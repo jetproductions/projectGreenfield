@@ -12,7 +12,8 @@ const Questions = ({ questions }) => {
   return questions.results.map((question) => {
     const { question_id } = question;
     return (
-      <Question key={question_id} />
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      <Question key={question_id} {...question} />
     );
   });
 };
