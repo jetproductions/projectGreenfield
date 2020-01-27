@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Star from './Star';
 
-const StarRatings = ({ weighted }) => {
+const StarRatings = ({ weighted, size = 25 }) => {
   /* eslint-disable no-param-reassign */
   weighted = weighted || 0;
   const remainder = weighted % 1;
@@ -12,7 +12,7 @@ const StarRatings = ({ weighted }) => {
 
   return (
     <div className="flex">
-      { stars.map((percent, i) => <Star percent={percent} key={Math.random()} />) }
+      { stars.map((percent, i) => <Star percent={percent} size={size} key={Math.random()} />) }
     </div>
   );
 };

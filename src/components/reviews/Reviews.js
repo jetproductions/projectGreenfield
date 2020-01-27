@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import reviewsMetaData from '../../../sampleData/reviews/reviewMetaData';
 import Weighted from './weighted/Weighted';
+import RatingSlider from './slider/RatingSlider';
+import Characteristic from './characteristic/CharacteristicSlider';
 import StarRatings from '../utility/stars/StarRatings';
 import './reviews.css';
 
@@ -16,8 +18,9 @@ class Reviews extends Component {
     this.getReviewsMeta(id);
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     const { product: { id } } = this.props;
+    if (id === prevProps.product.id) return;
     this.getReviewsMeta(id);
   }
 
@@ -41,27 +44,53 @@ class Reviews extends Component {
     setWeightedState(Math.round(average * 4) / 4);
   }
 
+  calcRecommended = () => {
+    const { reviewsMeta: { recommended = {} } } = this.state;
+    const total = Object.values(recommended).reduce((acc, curr) => acc + curr, 0);
+    const recommendations = recommended[1] || 0;
+    const percentage = (recommendations / total) * 100;
+    return percentage;
+  }
+
   render() {
     const { reviewsMeta } = this.state;
-    const { ratings } = reviewsMeta;
+    const { ratings, characteristics } = reviewsMeta;
     const totalRatings = this.getTotalRatings(ratings);
+    const recommended = this.calcRecommended();
+    const ratingsArray = Object.keys(ratings).map((key) => ([key, ratings[key]])).sort((a, b) => b[0] - a[0]);
+    const characteristicArray = Object.keys(characteristics)
+      .map((char) => {
+        const { value } = characteristics[char];
+        return [char, value];
+      });
 
     return (
       <div className="reviews py-12">
         <div className="container mx-auto px-4">
-          <div className="flex w-full -mx-4 mb-3">
+          <div className="flex w-full -mx-4 mb-4">
             <div className="w-full px-4">
               <h5 className="uppercase font-thin text-lg">Ratings & Reviews</h5>
             </div>
           </div>
           <div className="flex w-full -mx-4">
-            <div className="flex flex-col w-full md:w-1/3 px-4">
-              <div className="w-full">
+            <div className="flex flex-col w-full md:w-1/3 pl-4 pr-8">
+              <div className="flex w-full mb-4">
                 <Weighted />
-                <StarRatings />
+                <StarRatings size="20" />
+              </div>
+              <div className="mb-4 py-2">
+                <span>{ `${recommended}% of people recommend this product` }</span>
+              </div>
+              <div className="mb-4">
+                { ratingsArray.map((rating) => (
+                  <RatingSlider total={totalRatings} rating={rating} key={rating[0]} />))}
+              </div>
+              <div className="mb-4">
+                { characteristicArray.map((characteristic) => (
+                  <Characteristic characteristic={characteristic} key={characteristic[0]} />))}
               </div>
             </div>
-            <div className="w-full md:w-2/3 px-4">
+            <div className="w-full md:w-2/3 pr-4 pl-8">
               <div className="font-bold text-lg">
                 <span className="mr-2">{ totalRatings }</span>
                 reviews, sorted by
