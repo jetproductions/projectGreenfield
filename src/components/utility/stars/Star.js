@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Star = ({ percent }) => (
-  <svg id="Star" style={{ width: '25px', height: '25px' }} viewBox="0 0 550 550" xmlns="http://www.w3.org/2000/svg">
+const Star = ({ percent, size }) => (
+  <svg id="Star" style={{ width: `${size}px`, height: `${size}px` }} viewBox="0 0 550 550" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <linearGradient id={`half_grad_${percent}`}>
         <stop offset={`${percent * 100}%`} stopColor="#2d3748" />
