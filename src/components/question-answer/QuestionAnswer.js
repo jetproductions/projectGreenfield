@@ -13,7 +13,7 @@ const QuestionAnswer = ({ productStore }) => {
   const { id } = useParams();
   const [questions, setQuestions] = useState([]);
   // eslint-disable-next-line no-undef
-  if (Number(id) !== Number(productStore.id)) {
+  if (Number(id) !== Number(productStore.id) || questions.length === 0) {
     getQuestions(id).then((result) => {
       // update the questions in state
       setQuestions(result);
