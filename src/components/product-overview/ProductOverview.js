@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import StarRatings from '../utility/stars/StarRatings';
+
 
 // Product Main View - Class Component
 //       <> STATE:
@@ -121,10 +124,47 @@ import React from 'react';
 //                 > Possibly make dummy form/modal that takes email
 
 
-const ProductOverview = (props) => (
-  <div>
-      Product Overview
-  </div>
-);
+class ProductOverview extends Component {
+  constructor(props) {
+    super(props);
+    const { product: { id } } = props;
 
-export default ProductOverview;
+    this.state = {
+      productStyles: [],
+    };
+
+    this.getProductStyles(id);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { product: { id } } = this.props;
+
+    if (id === prevProps.product.id) {
+      return;
+    }
+    this.getProductStyles(id);
+  }
+
+  getProductStyles(productId) {
+    fetch(`http://3.134.102.30/products/${productId}/styles`)
+      .then((res) => res.json())
+      .catch((err) => console.log(`OOPS!  A problem occurred in Product Overview!${err}`))
+      .then((response) => this.setState({ productStyles: response.results }));
+  }
+
+  render() {
+    return (
+      <div>
+        <h3>Product Overview</h3>
+        <div id="leftColumn" className=""> </div>
+        <div id="rightColumn" className=""> </div>
+      </div>
+    );
+  }
+}
+
+const mapPropsToState = (state) => ({
+  product: state.product,
+});
+
+export default connect(mapPropsToState)(ProductOverview);
