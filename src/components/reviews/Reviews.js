@@ -67,6 +67,7 @@ class Reviews extends Component {
     const { reviewsMeta } = this.state;
     const { reviewsList: { results } } = this.state;
     const { ratings, characteristics } = reviewsMeta;
+    const { weighted } = this.props;
     const totalRatings = this.getTotalRatings(ratings);
     const recommended = this.calcRecommended();
     const ratingsArray = Object.keys(ratings).map((key) => ([key, ratings[key]])).sort((a, b) => b[0] - a[0]);
@@ -88,7 +89,7 @@ class Reviews extends Component {
             <div className="flex flex-col w-full md:w-1/3 pl-4 pr-8">
               <div className="flex w-full mb-4">
                 <Weighted />
-                <StarRatings size="20" />
+                <StarRatings rating={weighted} size="20" />
               </div>
               <div className="mb-4 py-2">
                 <span>{ `${recommended}% of people recommend this product` }</span>
@@ -119,6 +120,7 @@ class Reviews extends Component {
 
 const mapPropsToState = (state) => ({
   product: state.product,
+  weighted: state.weighted,
 });
 
 const mapDispatchToState = (dispatch) => ({
