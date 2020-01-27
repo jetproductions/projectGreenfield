@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import reviewsMetaData from '../../../sampleData/reviews/reviewMetaData';
+import reviewsListData from '../../../sampleData/reviews/reviewsList';
+import ReviewsList from './list/ReviewsList';
 import Weighted from './weighted/Weighted';
 import RatingSlider from './slider/RatingSlider';
 import Characteristic from './characteristic/CharacteristicSlider';
@@ -14,14 +16,17 @@ class Reviews extends Component {
 
     this.state = {
       reviewsMeta: reviewsMetaData,
+      reviewsList: reviewsListData,
     };
     this.getReviewsMeta(id);
+    this.getReviewsList(id);
   }
 
   componentDidUpdate(prevProps) {
     const { product: { id } } = this.props;
     if (id === prevProps.product.id) return;
     this.getReviewsMeta(id);
+    this.getReviewsList(id);
   }
 
   getReviewsMeta = async (id) => {
@@ -31,6 +36,12 @@ class Reviews extends Component {
     this.setState({ reviewsMeta }, () => {
       this.setWeightedAverage(ratings);
     });
+  }
+
+  getReviewsList = async (id) => {
+    /* eslint-disable no-undef */
+    const reviewsList = await fetch(`http://3.134.102.30/reviews/${id}/list`).then((res) => res.json());
+    this.setState({ reviewsList });
   }
 
   getTotalRatings = (ratings) => Object.values(ratings).reduce((acc, value) => acc + value, 0)
@@ -54,6 +65,7 @@ class Reviews extends Component {
 
   render() {
     const { reviewsMeta } = this.state;
+    const { reviewsList: { results } } = this.state;
     const { ratings, characteristics } = reviewsMeta;
     const totalRatings = this.getTotalRatings(ratings);
     const recommended = this.calcRecommended();
@@ -90,12 +102,13 @@ class Reviews extends Component {
                   <Characteristic characteristic={characteristic} key={characteristic[0]} />))}
               </div>
             </div>
-            <div className="w-full md:w-2/3 pr-4 pl-8">
-              <div className="font-bold text-lg">
+            <div className="flex flex-col w-full md:w-2/3 pr-4 pl-8">
+              <div className="w-full font-bold text-lg mb-8">
                 <span className="mr-2">{ totalRatings }</span>
                 reviews, sorted by
                 <u className="ml-1">relevance</u>
               </div>
+              <ReviewsList reviews={results} />
             </div>
           </div>
         </div>

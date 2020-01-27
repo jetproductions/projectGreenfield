@@ -13,7 +13,9 @@ const Questions = ({ questions }) => {
     const { question_id } = question;
     return (
       // eslint-disable-next-line react/jsx-props-no-spreading
-      <Question key={question_id} {...question} />
+      <div>
+        <Question question={question} key={question_id} />
+      </div>
     );
   });
 };
