@@ -1,5 +1,6 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable camelcase */
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Answers from './Answers';
 
 const Question = ({
@@ -13,8 +14,8 @@ Q:
           {' '}
           {question_body}
         </h4>
+        <Answers questionId={question_id} {...answers} />
       </div>
-			<Answers questionId={ question_id } {...answers} />
     );
   }
   return (
