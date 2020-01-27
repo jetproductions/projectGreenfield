@@ -2,10 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Answer from './Answer';
 
-const Answers = ({ answers }) => (
-  <div>
-    {Object.values(answers).map((answer) => <Answer {...answer} />)}
-  </div>
-);
+// eslint-disable-next-line max-len
+const Answers = ({ answers }) => (answers ? Object.values(answers).map((answer) => <Answer {...answer} />) : <div />);
 
 export default Answers;
