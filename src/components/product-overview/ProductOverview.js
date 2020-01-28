@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import StarRatings from '../utility/stars/StarRatings';
-
+/* eslint-disable no-undef */
+/* eslint-disable react/no-unused-state */
 
 // Product Main View - Class Component
 //       <> STATE:
@@ -146,9 +147,9 @@ class ProductOverview extends Component {
   }
 
   getProductStyles(productId) {
-    fetch(`http://3.134.102.30/products/${productId}/styles`)
+    return fetch(`http://3.134.102.30/products/${productId}/styles`)
       .then((res) => res.json())
-      .catch((err) => console.log(`OOPS!  A problem occurred in Product Overview!${err}`))
+      .catch((err) => { throw err; })
       .then((response) => this.setState({ productStyles: response.results }));
   }
 
