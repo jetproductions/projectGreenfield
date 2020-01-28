@@ -31,9 +31,11 @@ import StyleSelector from './StyleSelector';
 //         > Add to Cart Size change
 //         > Add to Cart Qty change
 //         > Add to Cart button click
-//         > Image view change
+//         > Current Image view change
+//         > Image View State [normal, expanded, zoom]
 //
 //        ## [Q] ##:  Could/Should the columns be different components themselves, or is this needless complication?
+//        ## [A] ##:  Needlessly complicated, if state is used correctly
 
 
 //       * LEFT COLUMN - GRID - Tailwind styled div
