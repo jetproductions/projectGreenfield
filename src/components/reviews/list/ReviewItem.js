@@ -1,8 +1,9 @@
 import React from 'react';
 import moment from 'moment';
+import ReviewThumbnail from './thumbnail/ReviewThumbnail';
 import Star from '../../utility/stars/Star';
 
-const Review = ({ review }) => {
+const Review = ({ review, openModal }) => {
   const {
     rating, body, date, reviewer_name: reviewerName, summary, response, recommend, helpfulness, photos,
   } = review;
@@ -28,11 +29,7 @@ const Review = ({ review }) => {
         {
           photos.length > 0 && (
             <ul className="flex mt-3">
-              { photos.map(({ id, url }) => (
-                <li className="mr-4 w-32 h-24 bg-gray-100 shadow overflow-hidden relative" key={id}>
-                  <img className="absolute -mt-12" src={url} width="50" alt={id} />
-                </li>
-              )) }
+              { photos.map((image) => <ReviewThumbnail key={image.id} image={image} openModal={openModal} />) }
             </ul>
           )
         }
