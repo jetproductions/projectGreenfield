@@ -16,9 +16,9 @@ const ReviewThumbnail = ({ image: { url, id }, openModal }) => {
           e.preventDefault();
           openModal({ show: true, content });
         }}
-        className="absolute inset-0"
+        className="absolute inset-0 cursor-pointer"
       >
-        <img className="absolute -mt-12" src={url} width="50" alt={id} />
+        <img className="w-full cursor-pointer" src={url} alt={id} />
       </a>
     </li>
   );

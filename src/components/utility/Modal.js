@@ -1,14 +1,14 @@
 import React from 'react';
 
+/* eslint-disable react/no-danger */
 const Modal = ({ show, children, toggleModal }) => {
-  /* eslint-disable react/no-danger */
   const style = {
     backgroundColor: 'rgba(0,0,0,0.3)',
     display: (show ? 'flex' : 'none'),
   };
   return (
-    <div className="fixed justify-center items-center inset-0" style={style}>
-      <div className="p-10 bg-white relative">
+    <div className="fixed justify-center items-center inset-0 z-50" style={style}>
+      <div className="p-10 bg-white relative w-full lg:max-w-5xl">
         <a
           onClick={(e) => {
             e.preventDefault();
@@ -19,7 +19,13 @@ const Modal = ({ show, children, toggleModal }) => {
         >
           <small className="absolute font-bold text-2xl w-full text-center" style={{ marginTop: '-3px', marginLeft: '2px', transform: 'rotate(45deg)' }}>+</small>
         </a>
-        <div dangerouslySetInnerHTML={{ __html: children }} />
+        <div className="w-full">
+          {
+            (typeof children === 'object')
+              ? children
+              : <div dangerouslySetInnerHTML={{ __html: children }} />
+          }
+        </div>
       </div>
     </div>
   );
