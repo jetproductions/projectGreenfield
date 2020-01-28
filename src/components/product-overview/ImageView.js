@@ -52,8 +52,24 @@ import React, { Component } from 'react';
 //                   > CLICKING on the image returns to the Expanded View State
 
 
-const ImageView = (props) => (
-  <div id="imageView">Image View</div>
-);
+const ImageView = (props) => {
+  const { productStyles } = props;
+
+  const { currentStyle } = props;
+
+  const url = productStyles.length === 0 ? null : productStyles[currentStyle.toString()].photos['0'].url;
+
+  console.log(url);
+  const bgImageString = `url(${url !== null ? url.split('"')[0] : url})`;
+
+
+  return (
+    <div id="imageView">
+      <h3>Image View</h3>
+      {/* <div className="bg-auto" style={{ backgroundImage: bgImageString }} /> */}
+      <img className="object-scale-down" src={bgImageString} alt="Picture of a garment" />
+    </div>
+  );
+};
 
 export default ImageView;

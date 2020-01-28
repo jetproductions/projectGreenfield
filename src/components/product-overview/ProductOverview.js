@@ -140,6 +140,7 @@ class ProductOverview extends Component {
 
     this.state = {
       productStyles: [],
+      currentStyle: 0,
     };
 
     this.getProductStyles(id);
@@ -163,7 +164,8 @@ class ProductOverview extends Component {
 
   render() {
     const { product } = this.props;
-    const productStyles = this.state;
+    const { productStyles } = this.state;
+    const { currentStyle } = this.state;
     return (
       <div>
         <h3>Product Overview</h3>
@@ -171,7 +173,7 @@ class ProductOverview extends Component {
 
           <div id="leftColumn" className="w-1/2 ml-auto bg-gray-300 h-100">
             <h1>Left Column</h1>
-            <ImageView product={product} productStyles={productStyles} />
+            <ImageView product={product} currentStyle={currentStyle} productStyles={productStyles} />
             <ProductDetails product={product} productStyles={productStyles} />
           </div>
 
