@@ -26,6 +26,8 @@ import StarRatings from '../utility/stars/StarRatings';
 //         > Add to Cart Qty change
 //         > Add to Cart button click
 //         > Image view change
+//
+//        ## [Q] ##:  Could/Should the columns be different components themselves, or is this needless complication?
 
 
 //       * LEFT COLUMN - GRID - Tailwind styled div
@@ -38,59 +40,59 @@ import StarRatings from '../utility/stars/StarRatings';
 //         > Currently Selected Style determines photos (passed from Main View's state)
 //         > Updates when style Changes (i.e. re-renders when Main View's state is changed)
 //         > Allow customer to browse between and zoom in on the photos
+//
+//        * Image Viewer
+//          * Default View
+//            > Default image is main image
+//            > Overlaid by 'list' of thumbnail images
+//              > Could be own component, with BG image being the selected one (as per tutorial)
+//               > Has up and down arrows to scroll
+//               > Displays up to 7 images at a time, scrolling if more
+//              > Should auto scroll if the image nav'd to by arrow is not on the visible list
+//            > When switching styles, the INDEX of the image selected is maintained on galler update
+//              > Will probably need to check to see if there are same number of images
+//             > Clicking on thumbnail updates main image
+//             > Thumbnail should be highlighted when selected
+//            > Selected thumbnail is inert - clicking it will have no effect.
+//            > Has left and right buttons if main image is not at either end of list
+//              > last image has no right, first image has no left, for obvious reasons
+//            > On hover over the image NOT over the thumbnails or arrows, magnifying glass cursor
+//               > If user clicks while magnifying glass is displayed, go to expanded view
+//                > Use handler passed from Main View
 
-//         * Default View
-//           > Default image is main image
-//           > Overlaid by 'list' of thumbnail images
-//             > Could be own component, with BG image being the selected one (as per tutorial)
-//             > Has up and down arrows to scroll
-//             > Displays up to 7 images at a time, scrolling if more
-//             > Should auto scroll if the image nav'd to by arrow is not on the visible list
-//           > When switching styles, the INDEX of the image selected is maintained on galler update
-//             > Will probably need to check to see if there are same number of images
-//           > Clicking on thumbnail updates main image
-//           > Thumbnail should be highlighted when selected
-//           > Selected thumbnail is inert - clicking it will have no effect.
-//           > Has left and right buttons if main image is not at either end of list
-//             > last image has no right, first image has no left, for obvious reasons
-//           > On hover over the image NOT over the thumbnails or arrows, magnifying glass cursor
-//             > If user clicks while magnifying glass is displayed, go to expanded view
-//               > Use handler passed from Main View
-
-//         * Expanded View
-//           > Overlays the rest of the item detail area (i.e. Covers RIGHT COLUMN)
-//           > Has right and left arrows which function as above
-//           > The magifying glass is now a + symbol
-//           > Thumbnails no longer appear (hide this component, or switch render to mini-icons)
-//             > Instead icons indicating each image appear.
-//               > They are much smaller than the list thumbnails
-//               > The current image's icon is emphasized/different
-//           > If user clicks the expanded view, the image is zoomed in 250%
-//             > This will obviously make it larger than the space provided
-//           > WHEN IN ZOOMED VIEW MODE (see above)
-//             > The shown portion of the image is relative to the mouse position on the screen
-//               > (i.e. on the gallery image display area)
-//               > Moving the mouse left pans left, etc.
-//               > Moving the mouse up pans up, etc.
-//               > Pans should be SMOOTH
-//               > No arrow or thumbnail selection icons are displayed
-//               > The mouse cursor is a - symbol
-//                 > CLICKING on the image returns to the Expanded View State
-
-//       * RIGHT COLUMN - GRID - Tailwind styled div
-//         * Product information - Functional Component
-//           > Category ( thru props from Main View state.item)
-
-//           *  Stars/Review - Utility (Functional?) Component
-//             > In this case, contains "[5 STARS WIDGET] (Read all __NUM__ Reviews)" on one line
-
-//           * Social Media Widget Component
+//          * Expanded View
+//             > Overlays the rest of the item detail area (i.e. Covers RIGHT COLUMN)
+//            > Has right and left arrows which function as above
+//            > The magifying glass is now a + symbol
+//            > Thumbnails no longer appear (hide this component, or switch render to mini-icons)
+//              > Instead icons indicating each image appear.
+//                > They are much smaller than the list thumbnails
+//                > The current image's icon is emphasized/different
+//            > If user clicks the expanded view, the image is zoomed in 250%
+//              > This will obviously make it larger than the space provided
+//            > WHEN IN ZOOMED VIEW MODE (see above)
+//              > The shown portion of the image is relative to the mouse position on the screen
+//                 > (i.e. on the gallery image display area)
+//                 > Moving the mouse left pans left, etc.
+//                > Moving the mouse up pans up, etc.
+//                > Pans should be SMOOTH
+//                > No arrow or thumbnail selection icons are displayed
+//                 > The mouse cursor is a - symbol
+//                   > CLICKING on the image returns to the Expanded View State
+//         * Product Details - Functional Component
+//            * Social Media Widget Component
 //             > May be partially functional - depends on some Auth stuff, user, etc. (?)
 //             > Allows user to share item on the following:
 //               # FaceBook
 //               # Twitter
 //               # Pinterest
-
+//
+//       * RIGHT COLUMN - GRID - Tailwind styled div
+//         * Product information - Functional Component
+//           > Category ( thru props from Main View state.item)
+//           *  Stars/Review - Utility (Functional?) Component
+//             > In this case, contains "[5 STARS WIDGET] (Read all __NUM__ Reviews)" on one line
+//
 //         * Style Selector - Functional Component
 //           * Style Display Component
 //             > Makes rows of 4 and renders as:
@@ -157,8 +159,11 @@ class ProductOverview extends Component {
     return (
       <div>
         <h3>Product Overview</h3>
-        <div id="leftColumn" className=""> </div>
-        <div id="rightColumn" className=""> </div>
+        <div className="flex mb-4">
+
+          <div id="leftColumn" className="w-1/2 ml-auto bg-gray-300 h-100"> Left Column</div>
+          <div id="rightColumn" className="w-1/4 mr-auto bg-gray-100 h-100"> Right Column</div>
+        </div>
       </div>
     );
   }
