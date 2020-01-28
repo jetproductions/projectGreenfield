@@ -6,7 +6,7 @@ import Questions from './Questions/Questions';
 const QuestionAnswer = () => (
   <div>
     <h3>
-        QUESTIONS & ANSWER
+        QUESTIONS & ANSWERS
     </h3>
     <SearchBar />
     <Questions />

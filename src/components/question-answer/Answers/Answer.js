@@ -11,7 +11,7 @@ A:
       {body}
     </h2>
     <span>
-      {`By ${answerer_name}, ${date}`}
+      {`By ${answerer_name}, ${date} | Helpful? Yes ${helpfulness} | Report`}
     </span>
     {photos.length > 0 ? (
       <>
@@ -24,11 +24,3 @@ A:
 );
 
 export default Answer;
-// {
-// 	"answer_id": 124960,
-// 	"body": "we don't like it",
-// 	"date": "2019-12-21T00:00:00.000Z",
-// 	"answerer_name": "ewe",
-// 	"helpfulness": 0,
-// 	"photos": []
-// },
