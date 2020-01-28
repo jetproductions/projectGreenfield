@@ -169,15 +169,15 @@ class ProductOverview extends Component {
 
           <div id="leftColumn" className="w-1/2 ml-auto bg-gray-300 h-100">
             <h3>Left Column</h3>
-            <ImageView />
-            <ProductDetails />
+            <ImageView product={this.props.product} productStyles={this.state.productStyles} />
+            <ProductDetails product={this.props.product} productStyles={this.state.productStyles} />
           </div>
 
           <div id="rightColumn" className="w-1/4 mr-auto bg-gray-100 h-100">
             <h3>Right Column</h3>
-            <ProductInformation />
-            <StyleSelector />
-            <AddToCart />
+            <ProductInformation product={this.props.product} productStyles={this.state.productStyles} />
+            <StyleSelector product={this.props.product} productStyles={this.state.productStyles} />
+            <AddToCart product={this.props.product} productStyles={this.state.productStyles} />
           </div>
 
 
