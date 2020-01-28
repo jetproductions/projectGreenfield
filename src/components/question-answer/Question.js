@@ -12,7 +12,7 @@ Q:
       {' '}
       {question_body}
     </h4>
-    {/* <Answers questionId={question_id} {...answers} /> */}
+    {/* {answers ? <Answers questionId={question_id} {...answers} /> : null} */}
   </div>
 );
 export default Question;
