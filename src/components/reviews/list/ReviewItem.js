@@ -4,7 +4,7 @@ import Star from '../../utility/stars/Star';
 
 const Review = ({ review }) => {
   const {
-    rating, body, date, reviewer_name: reviewerName, summary, response, recommend, helpfulness,
+    rating, body, date, reviewer_name: reviewerName, summary, response, recommend, helpfulness, photos,
   } = review;
   const dateString = moment(date).format('MMMM Do, YYYY');
   const stars = [...Array(rating)].map((e) => 1);
@@ -25,6 +25,17 @@ const Review = ({ review }) => {
           { summary }
         </h3>
         <p className="text-gray-600">{ body }</p>
+        {
+          photos.length > 0 && (
+            <ul className="flex mt-3">
+              { photos.map(({ id, url }) => (
+                <li className="mr-4 w-32 h-24 bg-gray-100 shadow overflow-hidden relative" key={id}>
+                  <img className="absolute -mt-12" src={url} width="50" alt={id} />
+                </li>
+              )) }
+            </ul>
+          )
+        }
         {
           recommend > 0 && (
             <div className="my-3">
