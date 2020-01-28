@@ -80,9 +80,9 @@ class Reviews extends Component {
     return (
       <div className="reviews py-12">
         <div className="container mx-auto px-4">
-          <div className="flex w-full -mx-4 mb-4">
+          <div className="flex w-full -mx-4 mb-8">
             <div className="w-full px-4">
-              <h5 className="uppercase font-thin text-lg">Ratings & Reviews</h5>
+              <h5 className="uppercase font-thin text-xl">Ratings & Reviews</h5>
             </div>
           </div>
           <div className="flex w-full -mx-4">
@@ -104,7 +104,7 @@ class Reviews extends Component {
               </div>
             </div>
             <div className="flex flex-col w-full md:w-2/3 pr-4 pl-8">
-              <div className="w-full font-bold text-lg mb-8">
+              <div className="w-full font-bold text-2xl mb-8">
                 <span className="mr-2">{ totalRatings }</span>
                 reviews, sorted by
                 <u className="ml-1">relevance</u>
