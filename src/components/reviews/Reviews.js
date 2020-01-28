@@ -7,6 +7,7 @@ import Weighted from './weighted/Weighted';
 import RatingSlider from './slider/RatingSlider';
 import Characteristic from './characteristic/CharacteristicSlider';
 import StarRatings from '../utility/stars/StarRatings';
+import Modal from '../utility/Modal';
 import './reviews.css';
 
 class Reviews extends Component {
@@ -17,6 +18,10 @@ class Reviews extends Component {
     this.state = {
       reviewsMeta: reviewsMetaData,
       reviewsList: reviewsListData,
+      modal: {
+        show: false,
+        content: null,
+      },
     };
     this.getReviewsMeta(id);
     this.getReviewsList(id);
@@ -63,9 +68,14 @@ class Reviews extends Component {
     return percentage;
   }
 
+  toggleModal = ({ show, content }) => {
+    this.setState({ modal: { show, content } });
+  }
+
   render() {
     const { reviewsMeta } = this.state;
     const { reviewsList: { results } } = this.state;
+    const { modal: { show, content } } = this.state;
     const { ratings, characteristics } = reviewsMeta;
     const { weighted } = this.props;
     const totalRatings = this.getTotalRatings(ratings);
@@ -109,10 +119,16 @@ class Reviews extends Component {
                 reviews, sorted by
                 <u className="ml-1">relevance</u>
               </div>
-              <ReviewsList reviews={results} />
+              <ReviewsList
+                openModal={this.toggleModal}
+                reviews={results}
+              />
             </div>
           </div>
         </div>
+        <Modal show={show} toggleModal={this.toggleModal}>
+          {content}
+        </Modal>
       </div>
     );
   }
