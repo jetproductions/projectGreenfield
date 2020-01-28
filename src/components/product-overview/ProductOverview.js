@@ -10,30 +10,6 @@ import StyleSelector from './StyleSelector';
 /* eslint-disable no-undef */
 /* eslint-disable react/no-unused-state */
 
-// Product Main View - Class Component
-//       <> STATE:
-//         [Item]: passed from PRODUCT OVERVIEW in props, from store
-//         [ItemStyles]: passed from API call method in constructor.
-//         [SelectedStyle]: defaults to FIRST style in list.  Changed by Style Selector component
-//         [SelectedSize]: defaults to "Select Size".  Changed by Add to Cart component
-//         [SelectedQty]: defaults to 1, max is 15.  Changed by Add to Cart component
-//         [ImageView]: default or expanded.   view slides out, over RIGHT COLUMN
-
-
-//       > State contains the information relevant to all child components
-//         > This is passed down through props
-//       > State is passed Item from store by PRODUCT OVERVIEW component
-//         > Stores it in state
-//       > Contains API Call(s) for:
-//         > Product STYLES - store in state.ItemStyles
-//       > Contains Handlers for:
-//         > Style Selector change
-//         > Add to Cart Size change
-//         > Add to Cart Qty change
-//         > Add to Cart button click
-//         > Current Image view change
-//         > Image View State [normal, expanded, zoom]
-//
 //        ## [Q] ##:  Could/Should the columns be different components themselves, or is this needless complication?
 //        ## [A] ##:  Needlessly complicated, if state is used correctly
 
@@ -135,14 +111,33 @@ import StyleSelector from './StyleSelector';
 //                 > Possibly make dummy form/modal that takes email
 
 
+// Product Main View - Class Component
+
+
+//       > State contains the information relevant to all child components
+//         > This is passed down through props
+//       > State is passed Item from store
+//         > Stores it in state
+
 class ProductOverview extends Component {
   constructor(props) {
     super(props);
     const { product: { id } } = props;
-
+    //  STATE:
     this.state = {
+
+      //         [product]: passed from PRODUCT OVERVIEW in props, from store
+      //         [productStyles]: passed from API call method in constructor.
+      //         [currentStyle]: defaults to FIRST style in list.  Changed by Style Selector component
+      //         [SelectedSize]: defaults to "Select Size".  Changed by Add to Cart component
+      //         [SelectedQty]: defaults to 1, max is 15.  Changed by Add to Cart component
+      //         [ImageView]: default, expanded or zoomed.   view slides out, over RIGHT COLUMN
       productStyles: [],
       currentStyle: 0,
+      selectedSize: '',
+      selectQty: 0,
+      selectedImage: 0,
+      selectedViewFormat: 'default',
     };
 
     this.getProductStyles(id);
@@ -157,12 +152,47 @@ class ProductOverview extends Component {
     this.getProductStyles(id);
   }
 
+
+  // API CALLS:
+  //    > Product STYLES - store in state.productStyles
   getProductStyles(productId) {
     return fetch(`http://3.134.102.30/products/${productId}/styles`)
       .then((res) => res.json())
       .catch((err) => { throw err; })
       .then((response) => this.setState({ productStyles: response.results }));
   }
+
+  //  HANDLERS:
+  //         > Style Selector change
+  styleChangeHandler() {
+
+  }
+
+  //         > Add to Cart Size change
+  sizeChangeHandler() {
+
+  }
+
+  //         > Add to Cart Qty change
+  qtyChangeHandler() {
+
+  }
+
+  //         > Add to Cart button click
+  addToCartClickHandler() {
+
+  }
+
+  //         > Current Image view change
+  currentImageChangeHandler() {
+
+  }
+
+  imageViewStateHandler() {
+
+  }
+  //           > Image View State [normal, expanded, zoom]
+
 
   render() {
     const { product } = this.props;
