@@ -162,26 +162,29 @@ class ProductOverview extends Component {
   }
 
   render() {
+    const { product } = this.props;
+    const productStyles = this.state;
     return (
       <div>
         <h3>Product Overview</h3>
         <div className="flex mb-4">
 
           <div id="leftColumn" className="w-1/2 ml-auto bg-gray-300 h-100">
-            <h3>Left Column</h3>
-            <ImageView product={this.props.product} productStyles={this.state.productStyles} />
-            <ProductDetails product={this.props.product} productStyles={this.state.productStyles} />
+            <h1>Left Column</h1>
+            <ImageView product={product} productStyles={productStyles} />
+            <ProductDetails product={product} productStyles={productStyles} />
           </div>
 
           <div id="rightColumn" className="w-1/4 mr-auto bg-gray-100 h-100">
-            <h3>Right Column</h3>
-            <ProductInformation product={this.props.product} productStyles={this.state.productStyles} />
-            <StyleSelector product={this.props.product} productStyles={this.state.productStyles} />
-            <AddToCart product={this.props.product} productStyles={this.state.productStyles} />
+            <h1>Right Column</h1>
+            <ProductInformation product={product} productStyles={productStyles} />
+            <StyleSelector product={product} productStyles={productStyles} />
+            <AddToCart product={product} productStyles={productStyles} />
           </div>
 
 
         </div>
+        <div id="endOfOverview" />
       </div>
     );
   }
