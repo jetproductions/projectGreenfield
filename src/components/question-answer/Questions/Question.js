@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable camelcase */
 import React from 'react';
-import Answers from './Answers';
+import Answers from '../Answers/Answers';
 
 const Question = ({
   question_id, question_body, asker_name, question_helpfulness, answers,
