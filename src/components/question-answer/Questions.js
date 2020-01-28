@@ -1,14 +1,30 @@
+/* eslint-disable no-undef */
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { useParams } from 'react-router-dom';
+
 import Question from './Question';
 
-const Questions = ({ questions }) => {
+const getQuestions = (id) => fetch(`http://3.134.102.30/qa/${id}`).then((res) => res.json());
+
+const Questions = ({ productStore }) => {
+  const { id } = useParams();
+  const [questions, setQuestions] = useState([]);
+  // looking to see if product has changed or if startup and nothing in questions
+  // eslint-disable-next-line no-undef
+  if (Number(id) !== Number(productStore.id) || questions.length === 0) {
+    getQuestions(id).then((result) => {
+      // update the questions in state
+      setQuestions(result.results);
+    });
+  }
   if (questions.length > 0) {
     return questions.map((question) => {
-      const id = question.question_id ? question.question_id : null;
+      const qid = question.question_id ? question.question_id : null;
       return (
       // eslint-disable-next-line react/jsx-props-no-spreading
-        <Question key={id} {...question} />
+        <Question key={qid} {...question} />
       );
     });
   }
@@ -18,4 +34,8 @@ const Questions = ({ questions }) => {
   );
 };
 
-export default Questions;
+const mapStateToProps = (state) => ({
+  productStore: state.product,
+});
+
+export default connect(mapStateToProps)(Questions);
