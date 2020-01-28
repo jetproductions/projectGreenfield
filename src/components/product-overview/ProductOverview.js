@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import StarRatings from '../utility/stars/StarRatings';
+import AddToCart from './AddToCart';
+import ImageView from './ImageView';
+import ProductDetails from './ProductDetails';
+import ProductInformation from './ProductInformation';
+import StyleSelector from './StyleSelector';
+
 /* eslint-disable no-undef */
 /* eslint-disable react/no-unused-state */
 
@@ -161,8 +167,20 @@ class ProductOverview extends Component {
         <h3>Product Overview</h3>
         <div className="flex mb-4">
 
-          <div id="leftColumn" className="w-1/2 ml-auto bg-gray-300 h-100"> Left Column</div>
-          <div id="rightColumn" className="w-1/4 mr-auto bg-gray-100 h-100"> Right Column</div>
+          <div id="leftColumn" className="w-1/2 ml-auto bg-gray-300 h-100">
+            <h3>Left Column</h3>
+            <ImageView />
+            <ProductDetails />
+          </div>
+
+          <div id="rightColumn" className="w-1/4 mr-auto bg-gray-100 h-100">
+            <h3>Right Column</h3>
+            <ProductInformation />
+            <StyleSelector />
+            <AddToCart />
+          </div>
+
+
         </div>
       </div>
     );
