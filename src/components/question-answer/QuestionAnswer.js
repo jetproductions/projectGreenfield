@@ -15,7 +15,7 @@ class QuestionAnswer extends Component {
     const { product: { id } } = props;
     this.state = {
       questions: [],
-      questionModal: true,
+      questionModal: false,
       answerModal: false,
       searched: '',
       filteredQuestions: [],
