@@ -5,12 +5,17 @@ import React, { useState, useEffect } from 'react';
 import Question from './Question';
 import Modal from '../../utility/Modal';
 
-const Questions = ({ questions, answerModal, questionModal }) => {
-  if (questionModal) {
-    return (
-      <Modal />
-    );
+const getQuestions = (id) => fetch(`http://3.134.102.30/qa/${id}`).then((res) => res.json());
+const sortHelpfulness = (questionsArr) => questionsArr.sort((a, b) => {
+  if (a.helpfulness > b.helpfulness) {
+    return -1;
   }
+  return 1;
+});
+
+const Questions = ({ productStore }) => {
+  const { id } = useParams();
+  const [questions, setQuestions] = useState([]);
   // looking to see if product has changed or if startup and nothing in questions
   // eslint-disable-next-line no-undef
   if (questions.length > 0) {
