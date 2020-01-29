@@ -7,6 +7,12 @@ import { useParams } from 'react-router-dom';
 import Question from './Question';
 
 const getQuestions = (id) => fetch(`http://3.134.102.30/qa/${id}`).then((res) => res.json());
+const sortHelpfulness = (questionsArr) => questionsArr.sort((a, b) => {
+  if (a.helpfulness > b.helpfulness) {
+    return -1;
+  }
+  return 1;
+});
 
 const Questions = ({ productStore }) => {
   const { id } = useParams();
@@ -20,7 +26,8 @@ const Questions = ({ productStore }) => {
     });
   }
   if (questions.length > 0) {
-    return questions.map((question) => {
+    return sortHelpfulness(questions).map((question) => {
+
       const qid = question.question_id ? question.question_id : null;
       return (
       // eslint-disable-next-line react/jsx-props-no-spreading
