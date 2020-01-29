@@ -54,21 +54,23 @@ import React, { Component } from 'react';
 
 const ImageView = (props) => {
   const { productStyles } = props;
-
   const { currentStyle } = props;
+  const { selectedImage } = props;
+  const { selectedViewFormat } = props;
+  const { currentImageChangeHandler } = props;
+  const { imageViewFormatChangeHandler } = props;
+  const { imageUrl } = props;
 
-  // const url = productStyles.length === 0 ? null : productStyles[currentStyle.toString()].photos['0'].url;
 
-  // console.log(url);
-  // const bgString = `url(${url !== null ? url.split('"')[0] : url})`;
+  // const html = (
+  //   {/* <div className=" w-1/2 h-100" style={{ backgroundImage: imageUrl, backgroundSize: 'cover', backgroundPosition: 'center' }} /> */}
+
+
+  // );
 
 
   return (
-    <div id="imageView">
-      <h3>Image View</h3>
-      {/* <div className="bg-auto" style={{ backgroundImage: bgImageString }} /> */}
-      {/* <img className="object-scale-down" src={bgString} alt="A model wearing a garment" /> */}
-    </div>
+    <img className="ml-auto mr-auto object-center" src={imageUrl} alt="A model wearing a garment" />
   );
 };
 
