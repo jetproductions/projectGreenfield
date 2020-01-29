@@ -4,6 +4,7 @@
 /* eslint-disable no-undef */
 import React, { useState, Component } from 'react';
 import Answer from './Answer';
+import Button from '../../utility/Button';
 
 class Answers extends Component {
   constructor({ questionId }) {
@@ -26,6 +27,12 @@ class Answers extends Component {
       });
   }
 
+  sortHelpfulness = (questionsArr) => questionsArr.sort((a, b) => {
+    if (a.helpfulness > b.helpfulness) {
+      return -1;
+    }
+    return 1;
+  });
 
   render() {
     const { answers } = this.state;

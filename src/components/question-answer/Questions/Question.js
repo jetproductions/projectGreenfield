@@ -12,7 +12,9 @@ Q:
       {' '}
       {question_body}
     </h4>
-    <Answers questionId={question_id || null} />
+    <Answers question_id={question_id || null} />
+
   </div>
 );
+
 export default Question;
