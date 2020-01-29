@@ -9,13 +9,14 @@ import Answer from './Answer';
 const getAnswers = (questionId) => fetch(`http://3.134.102.30/qa/${questionId}/answers`).then((res) => res.json());
 // eslint-disable-next-line max-len
 const Answers = async ({ questionId, answers }) => {
-  console.log('question_id: ', questionId);
   if (answers !== undefined) {
     // need to make API call for answers and then render after the call is made
     return Object.values(answers).map((answer) => <Answer id={answer.id} {...answer} />);
   }
-  const render = await getAnswers(questionId).then((result) => Object.values(result).map((answer) => (<Answer id={answer_id} {...answer} />)));
-  return render;
+  const foundAnswers = await getAnswers(questionId).then((found) => found.results.map((answer) => (<Answer {...answer} />)));
+  // const render = (foundAnswers) => {  };
+  console.log('foundAnswers: ', foundAnswers);
+  return foundAnswers;
 };
-
 export default Answers;
+// console.log('result: ', result);
