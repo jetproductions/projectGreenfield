@@ -5,18 +5,6 @@
 import React, { useState, Component } from 'react';
 import Answer from './Answer';
 
-// eslint-disable-next-line max-len
-// const Answers = async ({ questionId, answers }) => {
-//   const [answersList, setAnswers] = useState([]);
-//   if (answers !== undefined) {
-//     // need to make API call for answers and then render after the call is made
-//     return Object.values(answers).map((answer) => <Answer id={answer.id} {...answer} />);
-//   }
-//   const foundAnswers = await getAnswers(questionId);
-//   setAnswers(foundAnswers);
-//   return (answersList.results.length === 0 || undefined ? null : answersList.map((answer) => (<Answer {...answer} />)));
-// };
-// console.log('result: ', result);
 class Answers extends Component {
   constructor({ questionId }) {
     super({ questionId });

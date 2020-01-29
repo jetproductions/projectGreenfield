@@ -5,7 +5,8 @@ import React, { useState, useEffect } from 'react';
 import Question from './Question';
 import Modal from '../../utility/Modal';
 
-const Questions = ({ questions, answerModal, questionModal }) => {
+// should change questions modal show/hide to live here in state not in QA
+const Questions = ({ questions, questionModal }) => {
   if (questionModal) {
     return (
       <Modal />
