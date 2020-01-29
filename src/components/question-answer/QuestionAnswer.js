@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/no-unused-state */
 /* eslint-disable no-mixed-spaces-and-tabs */
 /* eslint-disable no-tabs */
@@ -17,9 +18,11 @@ class QuestionAnswer extends Component {
       questionModal: false,
       answerModal: false,
       searched: '',
+      filteredQuestions: [],
     };
     this.getQuestions(id);
   }
+
   // need to work on this get fucntioning better understanding needed
   // componentDidMount() {
   //   const { product: { id } } = this.props;
@@ -36,15 +39,24 @@ class QuestionAnswer extends Component {
   }
 
   getQuestions = async (id) => {
-    const fetchQuestions = fetch(`http://3.134.102.30/qa/${id}`).then((res) => res.json());
+    const fetchQuestions = await fetch(`http://3.134.102.30/qa/${id}`).then((res) => res.json());
+    console.log(fetchQuestions);
     const { results } = fetchQuestions;
     this.setState({ questions: results });
   }
 
   // need to update Search to handle this and to pass back up upon search
   // this might also need to handle filter for what questions get sent down?
-  onSearchChange = (e) => {
+  onSearchChange = async (e) => {
     this.setState({ searched: e.target.value });
+    // need to add in filter for questions array at question
+    const questions = { ...this.state.questions };
+    const filtered = questions.filter((question) => {
+      if (question.question_body.indexOf(this.state.searched) > -1) {
+        return true;
+      }
+      return false;
+    });
   }
 
   render() {
