@@ -6,8 +6,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SearchBar from './SearchBar';
-import Questions from './Questions';
-// import Modal from '../utility/Modal';
+import Questions from './Questions/Questions';
 
 class QuestionAnswer extends Component {
   constructor(props) {
