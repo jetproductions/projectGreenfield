@@ -5,19 +5,16 @@ import Answers from '../Answers/Answers';
 
 const Question = ({
   question_id, question_body, asker_name, question_helpfulness,
-}) => {
-
-  return (
-    <div>
-      <h4>
+}) => (
+  <div>
+    <h4>
 Q:
-        {' '}
-        {question_body}
-      </h4>
-      <Answers question_id={question_id || null} />
+      {' '}
+      {question_body}
+    </h4>
+    <Answers question_id={question_id || null} />
 
-    </div>
-  );
-};
+  </div>
+);
 
 export default Question;

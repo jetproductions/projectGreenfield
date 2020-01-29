@@ -1,8 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-undef */
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import React, { useState } from 'react';
 import Answer from './Answer';
 import Button from '../../utility/Button';
 
@@ -15,7 +14,7 @@ const sortHelpfulness = (questionsArr) => questionsArr.sort((a, b) => {
   return 1;
 });
 
-const Answers = ({ question_id }) => {
+const Answers = function ({ question_id }) {
   const [answers, setAnswers] = useState([]);
   const [questionId, setQuestionId] = useState('');
   const [numAnswers, setNumAnswers] = useState(0);
@@ -35,5 +34,7 @@ const Answers = ({ question_id }) => {
     })
     );
   }
+  return null;
+};
 
 export default Answers;
