@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 /* eslint-disable no-undef */
 /* eslint-disable react/no-unused-state */
-/* eslint-disable no-alert */
+
 
 // #### GUIDELINES ####
 //         * Add to Cart - Functional Component
@@ -23,10 +23,13 @@ import React, { Component } from 'react';
 //               > for extra flair, add message "GET NOTIFIED WHEN BACK IN STOCK"
 //                 > Possibly make dummy form/modal that takes email
 
-const AddToCart = (props) => (
-  <div id="addToCart">
-    <button className="cursor-pointer" type="button" onClick={(e) => { e.preventDefault(); return alert('Add to cart clicked'); }}>Add To Cart</button>
-  </div>
-);
+const AddToCart = (props) => {
+  const { addToCartClickHandler } = props;
 
+  return (
+    <div id="addToCart">
+      <button className="cursor-pointer" type="button" onClick={(e) => { addToCartClickHandler(e); }}>Add To Cart</button>
+    </div>
+  );
+};
 export default AddToCart;

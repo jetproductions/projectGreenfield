@@ -18,7 +18,7 @@ const ProductInformation = (props) => (
 
     {/* Rework this to nav to the ACTUAL Reviews component.  Coordinate with Troy to get an ID on it or a REF that can be scrolled to easily */}
     {/* Resolve issues with tag name... */}
-    <reviewlink className="cursor-pointer" role="navigation" onClick={(e) => { e.preventDefault(); return document.getElementById('endOfOverview').scrollIntoView(true, { behavior: 'smooth' }); }}>Read All Reviews</reviewlink>
+    <reviewlink className="cursor-pointer" role="navigation" onClick={(e) => { e.preventDefault(); return document.getElementById('reviews').scrollIntoView(true, { behavior: 'smooth' }); }}>Read All Reviews</reviewlink>
   </div>
 );
 

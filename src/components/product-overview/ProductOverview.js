@@ -9,110 +9,20 @@ import StyleSelector from './StyleSelector';
 
 /* eslint-disable no-undef */
 /* eslint-disable react/no-unused-state */
+/* eslint-disable no-alert */
 
 //        ## [Q] ##:  Could/Should the columns be different components themselves, or is this needless complication?
 //        ## [A] ##:  Needlessly complicated, if state is used correctly
 
+//        ## [Q] ##:  Should the image carousel be three, four, or five components?  Is there a clean way to do it with ONE?
+//        ## [A] ##:
 
-//       * LEFT COLUMN - GRID - Tailwind styled div
-//         > Expands OVER right column if expanded view is enabled
-
-//         * Image View - Carousel(Gallery) - Functional Component
-//         > Viewable in Two States (May need to use switcher in Main view to handle):
-//           # Default View
-//           # Expanded View
-//         > Currently Selected Style determines photos (passed from Main View's state)
-//         > Updates when style Changes (i.e. re-renders when Main View's state is changed)
-//         > Allow customer to browse between and zoom in on the photos
-//
-//        * Image Viewer
-//          * Default View
-//            > Default image is main image
-//            > Overlaid by 'list' of thumbnail images
-//              > Could be own component, with BG image being the selected one (as per tutorial)
-//               > Has up and down arrows to scroll
-//               > Displays up to 7 images at a time, scrolling if more
-//              > Should auto scroll if the image nav'd to by arrow is not on the visible list
-//            > When switching styles, the INDEX of the image selected is maintained on galler update
-//              > Will probably need to check to see if there are same number of images
-//             > Clicking on thumbnail updates main image
-//             > Thumbnail should be highlighted when selected
-//            > Selected thumbnail is inert - clicking it will have no effect.
-//            > Has left and right buttons if main image is not at either end of list
-//              > last image has no right, first image has no left, for obvious reasons
-//            > On hover over the image NOT over the thumbnails or arrows, magnifying glass cursor
-//               > If user clicks while magnifying glass is displayed, go to expanded view
-//                > Use handler passed from Main View
-
-//          * Expanded View
-//             > Overlays the rest of the item detail area (i.e. Covers RIGHT COLUMN)
-//            > Has right and left arrows which function as above
-//            > The magifying glass is now a + symbol
-//            > Thumbnails no longer appear (hide this component, or switch render to mini-icons)
-//              > Instead icons indicating each image appear.
-//                > They are much smaller than the list thumbnails
-//                > The current image's icon is emphasized/different
-//            > If user clicks the expanded view, the image is zoomed in 250%
-//              > This will obviously make it larger than the space provided
-//            > WHEN IN ZOOMED VIEW MODE (see above)
-//              > The shown portion of the image is relative to the mouse position on the screen
-//                 > (i.e. on the gallery image display area)
-//                 > Moving the mouse left pans left, etc.
-//                > Moving the mouse up pans up, etc.
-//                > Pans should be SMOOTH
-//                > No arrow or thumbnail selection icons are displayed
-//                 > The mouse cursor is a - symbol
-//                   > CLICKING on the image returns to the Expanded View State
-//         * Product Details - Functional Component
-//            * Social Media Widget Component
-//             > May be partially functional - depends on some Auth stuff, user, etc. (?)
-//             > Allows user to share item on the following:
-//               # FaceBook
-//               # Twitter
-//               # Pinterest
-//
-//       * RIGHT COLUMN - GRID - Tailwind styled div
-//         * Product information - Functional Component
-//           > Category ( thru props from Main View state.item)
-//           *  Stars/Review - Utility (Functional?) Component
-//             > In this case, contains "[5 STARS WIDGET] (Read all __NUM__ Reviews)" on one line
-//
-//         * Style Selector - Functional Component
-//           * Style Display Component
-//             > Makes rows of 4 and renders as:
-//             * Style Display Item Component / Mapped div variable (both will work)
-
-//           > Shows thumbnail of all styles in props.ItemStyles (passed from Main View)
-//           > Thumbnails are in rows of 4
-//           > Defaults to FIRST style (c
-//               > Can be done in Main View's constructor by defaulting ItemStyles to first
-//           > Clicking on a style changes the style in Main View's state -
-//             > via function passed from Main View
-//           > A check appears on top of a thumbnail to show it is selected
-//             > Use a transparency perhaps?
-//             > The selected style is inert - clicking on it does nothing.
-
-//         * Add to Cart - Functional Component
-//           # Size - dropdown
-//             > Needs access to Style Selector's selected style
-//             > Needs to know sizes available for that style, omit from dropdown those that aren't
-//             > Consider using a passed function or variable from Main View to
-//               > Could represent a matrix table of sizes for style
-
-//           # Qty - dropdown
-//             > Needs to know stock available per style/size
-//             > Passed in props from Main View
-
-//           # Add to Cart - button - conditional behavior - requires function passed from Main View
-//             > Size MUST be selected to add to cart
-//               > if not, opens size dropdown with message above it ("please select size")
-//             > If there is NO STOCK for style/size combo, this button is HIDDEN
-//               > for extra flair, add message "GET NOTIFIED WHEN BACK IN STOCK"
-//                 > Possibly make dummy form/modal that takes email
+//        ## [Q] ##:
+//        ## [A] ##:
 
 
+// GUIDELINES:
 // Product Main View - Class Component
-
 
 //       > State contains the information relevant to all child components
 //         > This is passed down through props
@@ -123,24 +33,31 @@ class ProductOverview extends Component {
   constructor(props) {
     super(props);
     const { product: { id } } = props;
-    //  STATE:
     this.state = {
-
       //         [product]: passed from PRODUCT OVERVIEW in props, from store
       //         [productStyles]: passed from API call method in constructor.
       //         [currentStyle]: defaults to FIRST style in list.  Changed by Style Selector component
       //         [SelectedSize]: defaults to "Select Size".  Changed by Add to Cart component
       //         [SelectedQty]: defaults to 1, max is 15.  Changed by Add to Cart component
-      //         [ImageView]: default, expanded or zoomed.   view slides out, over RIGHT COLUMN
+      //         [selectedImage]; defaults to 0, i.e. first.  Changed by ImageView component
+      //         [selectedViewFormat]: default, expanded or zoomed.   view slides out, over RIGHT COLUMN, zoom is responsive to mouse position 250% zoom
       productStyles: [],
       currentStyle: 0,
       selectedSize: '',
-      selectQty: 0,
+      selectQty: 1,
       selectedImage: 0,
       selectedViewFormat: 'default',
     };
 
     this.getProductStyles(id);
+
+    // Handler Binds
+    this.styleChangeHandler = this.styleChangeHandler.bind(this);
+    this.sizeChangeHandler = this.sizeChangeHandler.bind(this);
+    this.qtyChangeHandler = this.qtyChangeHandler.bind(this);
+    this.addToCartClickHandler = this.addToCartClickHandler.bind(this);
+    this.currentImageChangeHandler = this.currentImageChangeHandler.bind(this);
+    this.imageViewFormatChangeHandler = this.imageViewFormatChangeHandler.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -163,41 +80,47 @@ class ProductOverview extends Component {
   }
 
   //  HANDLERS:
-  //         > Style Selector change
-  styleChangeHandler() {
-
+  //  Style Selector change
+  styleChangeHandler = (styleNum) => {
+    this.setState({ currentStyle: styleNum });
   }
 
-  //         > Add to Cart Size change
-  sizeChangeHandler() {
-
+  //  Add to Cart Size change
+  sizeChangeHandler = (size) => {
+    this.setState({ selectedSize: size });
   }
 
-  //         > Add to Cart Qty change
-  qtyChangeHandler() {
-
+  //  Add to Cart Qty change
+  qtyChangeHandler = (qty) => {
+    this.setState({ selectQty: qty });
   }
 
-  //         > Add to Cart button click
-  addToCartClickHandler() {
-
+  //  Add to Cart button click
+  addToCartClickHandler = (e) => {
+  //  This could be a little complicated, depending on where it is handled.  Has several features.  See component.
+  //  Can handle in component or through handler.  If in component pass all relevant props
+    e.preventDefault();
+    return alert('Add to cart clicked');
   }
 
-  //         > Current Image view change
-  currentImageChangeHandler() {
 
+  // Current Image view change
+  currentImageChangeHandler = (imageNum) => {
+    this.setState({ selectedImage: imageNum });
   }
 
-  imageViewStateHandler() {
-
+  //  Image View State [default, expanded, zoom]
+  imageViewFormatChangeHandler = (format = 'default') => {
+    // default, expanded, or zoom.  Will be passed in as a string.  Set to default by default, unimaginative, but functional.
+    // if no format is passed, resets to default view anyway.
+    this.setState({ selectedViewFormat: format });
   }
-  //           > Image View State [normal, expanded, zoom]
-
 
   render() {
     const { product } = this.props;
     const { productStyles } = this.state;
     const { currentStyle } = this.state;
+    const { addToCartClickHandler } = this;
     return (
       <div>
         <h3>Product Overview</h3>
@@ -213,7 +136,7 @@ class ProductOverview extends Component {
             <h1>Right Column</h1>
             <ProductInformation product={product} productStyles={productStyles} />
             <StyleSelector product={product} productStyles={productStyles} />
-            <AddToCart product={product} productStyles={productStyles} />
+            <AddToCart product={product} productStyles={productStyles} addToCartClickHandler={addToCartClickHandler} />
           </div>
 
 
