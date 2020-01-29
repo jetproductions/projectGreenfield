@@ -7,8 +7,8 @@ const Modal = ({ show, children, toggleModal }) => {
     display: (show ? 'flex' : 'none'),
   };
   return (
-    <div className="fixed justify-center items-center inset-0 z-50" style={style}>
-      <div className="p-10 bg-white relative w-full lg:max-w-5xl">
+    <div className="fixed justify-center items-center inset-0 z-50 py-8 max-h-screen" style={style}>
+      <div className="py-10 bg-white relative w-full lg:max-w-5xl h-full">
         <a
           onClick={(e) => {
             e.preventDefault();
@@ -19,7 +19,7 @@ const Modal = ({ show, children, toggleModal }) => {
         >
           <small className="absolute font-bold text-2xl w-full text-center" style={{ marginTop: '-3px', marginLeft: '2px', transform: 'rotate(45deg)' }}>+</small>
         </a>
-        <div className="w-full">
+        <div className="w-full max-h-full overflow-y-scroll overflow-x-hiddena px-10">
           {
             (typeof children === 'object')
               ? children

@@ -24,19 +24,20 @@ class Reviews extends Component {
         content: null,
       },
     };
-    this.getReviewsMeta(id);
-    // this.getReviewsList(id);
+    this.getReviewsMeta();
+    // this.getReviewsList();
   }
 
   componentDidUpdate(prevProps) {
     const { product: { id } } = this.props;
     if (id === prevProps.product.id) return;
-    this.getReviewsMeta(id);
-    this.getReviewsList(id);
+    this.getReviewsMeta();
+    this.getReviewsList();
   }
 
-  getReviewsMeta = async (id) => {
+  getReviewsMeta = async () => {
     /* eslint-disable no-undef */
+    const { product: { id } } = this.props;
     const reviewsMeta = await fetch(`http://3.134.102.30/reviews/${id}/meta`).then((res) => res.json());
     const { ratings } = reviewsMeta;
     this.setState({ reviewsMeta }, () => {
@@ -44,8 +45,9 @@ class Reviews extends Component {
     });
   }
 
-  getReviewsList = async (id) => {
+  getReviewsList = async () => {
     /* eslint-disable no-undef */
+    const { product: { id } } = this.props;
     const reviewsList = await fetch(`http://3.134.102.30/reviews/${id}/list?count=10000`).then((res) => res.json());
     const { results } = reviewsList;
     const { setTotalReviewsState } = this.props;
@@ -75,6 +77,20 @@ class Reviews extends Component {
 
   toggleModal = ({ show, content }) => {
     this.setState({ modal: { show, content } });
+  }
+
+  createReview = async (review) => {
+    const { product: { id } } = this.props;
+    const { ok } = await fetch(`http://3.134.102.30/reviews/${id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(review),
+    });
+    if (!ok) return;
+
+    this.toggleModal({ show: false, content: null });
   }
 
   render() {
@@ -131,7 +147,7 @@ class Reviews extends Component {
               <div className="w-full mt-4">
                 <button
                   onClick={(e) => {
-                    this.toggleModal({ show: true, content: <ReviewForm /> });
+                    this.toggleModal({ show: true, content: <ReviewForm create={this.createReview} characteristics={characteristics} /> });
                   }}
                   type="button"
                   className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
