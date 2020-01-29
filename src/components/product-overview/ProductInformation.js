@@ -16,7 +16,7 @@ const ProductInformation = (props) => {
   return (
     <div id="productInformation">
       <h3> Product Information</h3>
-      <StarRatings rating={reviewScore} />
+      <StarRatings rating={reviewScore} size="12" />
 
       {/* Rework this to nav to the ACTUAL Reviews component.  Coordinate with Troy to get an ID on it or a REF that can be scrolled to easily */}
       {/* Resolve issues with tag name... */}
