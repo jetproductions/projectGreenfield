@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import StarRatings from '../utility/stars/StarRatings';
 import AddToCart from './AddToCart';
 import ImageView from './ImageView';
 import ProductDetails from './ProductDetails';
@@ -100,7 +99,7 @@ class ProductOverview extends Component {
   //  This could be a little complicated, depending on where it is handled.  Has several features.  See component.
   //  Can handle in component or through handler.  If in component pass all relevant props
     e.preventDefault();
-    return alert('Add to cart clicked');
+    return alert('Add to cart clicked'); // temporary debug/functionality proof
   }
 
 
@@ -122,6 +121,10 @@ class ProductOverview extends Component {
     const { currentStyle } = this.state;
     const { addToCartClickHandler } = this;
     const { weighted } = this.props;
+    const { selectedImage } = this.state;
+    const { selectedViewFormat } = this.state;
+    const { currentImageChangeHandler } = this;
+    const { imageViewFormatChangeHandler } = this;
     return (
       <div>
         <h3>Product Overview</h3>
@@ -129,7 +132,15 @@ class ProductOverview extends Component {
 
           <div id="leftColumn" className="w-1/2 ml-auto bg-gray-300 h-100">
             <h1>Left Column</h1>
-            <ImageView product={product} currentStyle={currentStyle} productStyles={productStyles} />
+            <ImageView
+              product={product}
+              currentStyle={currentStyle}
+              productStyles={productStyles}
+              selectedImage={selectedImage}
+              selectedViewFormat={selectedViewFormat}
+              currentImageChangeHandler={currentImageChangeHandler}
+              imageViewFormatChangeHandler={imageViewFormatChangeHandler}
+            />
             <ProductDetails product={product} productStyles={productStyles} />
           </div>
 

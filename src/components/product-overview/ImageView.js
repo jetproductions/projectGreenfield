@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 /* eslint-disable react/no-unused-state */
 
 //  #### GUIDELINES ####
-//      * Image View - Carousel(Gallery) - Functional Component
+//      * Image View - Carousel(Gallery) - Class Component
 //         > Viewable in Two States (May need to use switcher in Main view to handle):
 //           # Default View
 //           # Expanded View
@@ -52,24 +52,75 @@ import React, { Component } from 'react';
 //                   > CLICKING on the image returns to the Expanded View State
 
 
-const ImageView = (props) => {
-  const { productStyles } = props;
+class ImageView extends Component {
+  constructor(props) {
+    super(props);
 
-  const { currentStyle } = props;
+    this.state = {
+      productStyles: props.productStyles,
+      currentStyle: props.currentStyle,
+      selectedImage: props.selectedImage,
+      selectedViewFormat: props.selectedViewFormat,
+      currentImageChangeHandler: props.currentImageChangeHandler,
+      imageViewFormatChangeHandler: props.imageViewFormatChangeHandler,
+      url: undefined,
+    };
+    this.getUrl = this.getUrl.bind(this);
+  }
 
-  // const url = productStyles.length === 0 ? null : productStyles[currentStyle.toString()].photos['0'].url;
+  componentDidMount() {
+    const { currentStyle } = this.state;
+    const { selectedImage } = this.state;
+    this.getUrl(currentStyle, selectedImage);
+  }
 
-  // console.log(url);
-  // const bgString = `url(${url !== null ? url.split('"')[0] : url})`;
+  componentDidUpdate(prevProps) {
+    const { product: { id } } = this.props;
+    const { currentStyle } = this.state;
+    const { selectedImage } = this.state;
 
 
-  return (
-    <div id="imageView">
-      <h3>Image View</h3>
-      {/* <div className="bg-auto" style={{ backgroundImage: bgImageString }} /> */}
-      {/* <img className="object-scale-down" src={bgString} alt="A model wearing a garment" /> */}
-    </div>
-  );
-};
+    if (prevProps.currentStyle === currentStyle && prevProps.selectedImage === selectedImage) {
+      return;
+    }
+
+    this.getUrl(currentStyle, selectedImage);
+  }
+
+  getUrl = (styleNum = 0, imageNum = 0) => {
+    const { productStyles } = this.state;
+    if (productStyles.length === 0) {
+      return;
+    }
+    const newUrl = productStyles[styleNum].photos[imageNum].url;
+    this.setState({ url: newUrl });
+  }
+
+  render() {
+    const { productStyles } = this.state;
+    const { currentStyle } = this.state;
+    const { selectedImage } = this.state;
+    const { selectedViewFormat } = this.state;
+    const { currentImageChangeHandler } = this.state;
+    const { imageViewFormatChangeHandler } = this.state;
+    const { url } = this.state;
+
+
+    const html = productStyles.length === 0 ? (
+      <div id="imageView">
+        <h3>Image View</h3>
+      </div>
+    ) : (
+      <div id="imageView">
+        <h3>Image View</h3>
+        <div className="bg-auto" style={{ backgroundImage: url }} />
+        {/* <img className="object-scale-down" src={bgString} alt="A model wearing a garment" /> */}
+      </div>
+    );
+
+
+    return html;
+  }
+}
 
 export default ImageView;
