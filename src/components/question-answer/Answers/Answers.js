@@ -35,7 +35,5 @@ const Answers = ({ question_id }) => {
     })
     );
   }
-  return (<div />);
-};
 
 export default Answers;

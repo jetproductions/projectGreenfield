@@ -27,6 +27,7 @@ const Questions = ({ productStore }) => {
   }
   if (questions.length > 0) {
     return sortHelpfulness(questions).map((question) => {
+
       const qid = question.question_id ? question.question_id : null;
       return (
       // eslint-disable-next-line react/jsx-props-no-spreading
