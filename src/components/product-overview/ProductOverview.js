@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import StarRatings from '../utility/stars/StarRatings';
 import AddToCart from './AddToCart';
 import ImageView from './ImageView';
 import ProductDetails from './ProductDetails';
@@ -42,11 +41,12 @@ class ProductOverview extends Component {
       //         [selectedImage]; defaults to 0, i.e. first.  Changed by ImageView component
       //         [selectedViewFormat]: default, expanded or zoomed.   view slides out, over RIGHT COLUMN, zoom is responsive to mouse position 250% zoom
       productStyles: [],
-      currentStyle: 0,
+      currentStyle: 0, // The first style doesn't necessarily have a value of 0.  Some items (such as 2) don't have pictures.
       selectedSize: '',
       selectQty: 1,
       selectedImage: 0,
       selectedViewFormat: 'default',
+      imageUrl: '',
     };
 
     this.getProductStyles(id);
@@ -58,6 +58,7 @@ class ProductOverview extends Component {
     this.addToCartClickHandler = this.addToCartClickHandler.bind(this);
     this.currentImageChangeHandler = this.currentImageChangeHandler.bind(this);
     this.imageViewFormatChangeHandler = this.imageViewFormatChangeHandler.bind(this);
+    this.imageUrlChangeHandler = this.imageUrlChangeHandler.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -76,7 +77,7 @@ class ProductOverview extends Component {
     return fetch(`http://3.134.102.30/products/${productId}/styles`)
       .then((res) => res.json())
       .catch((err) => { throw err; })
-      .then((response) => this.setState({ productStyles: response.results }));
+      .then((response) => this.setState({ productStyles: response.results }, this.imageUrlChangeHandler));
   }
 
   //  HANDLERS:
@@ -100,7 +101,7 @@ class ProductOverview extends Component {
   //  This could be a little complicated, depending on where it is handled.  Has several features.  See component.
   //  Can handle in component or through handler.  If in component pass all relevant props
     e.preventDefault();
-    return alert('Add to cart clicked');
+    return alert('Add to cart clicked'); // temporary debug/functionality proof
   }
 
 
@@ -113,7 +114,15 @@ class ProductOverview extends Component {
   imageViewFormatChangeHandler = (format = 'default') => {
     // default, expanded, or zoom.  Will be passed in as a string.  Set to default by default, unimaginative, but functional.
     // if no format is passed, resets to default view anyway.
-    this.setState({ selectedViewFormat: format });
+    this.setState({ selectedViewFormat: format }, this.imageUrlChangeHandler);
+  }
+
+  imageUrlChangeHandler() {
+    const { currentStyle } = this.state;
+    const { selectedImage } = this.state;
+    const { productStyles } = this.state;
+    const newUrl = productStyles[currentStyle].photos[selectedImage].url;
+    this.setState({ imageUrl: newUrl });
   }
 
   render() {
@@ -121,6 +130,12 @@ class ProductOverview extends Component {
     const { productStyles } = this.state;
     const { currentStyle } = this.state;
     const { addToCartClickHandler } = this;
+    const { weighted } = this.props;
+    const { selectedImage } = this.state;
+    const { selectedViewFormat } = this.state;
+    const { currentImageChangeHandler } = this;
+    const { imageViewFormatChangeHandler } = this;
+    const { imageUrl } = this.state;
     return (
       <div>
         <h3>Product Overview</h3>
@@ -128,13 +143,22 @@ class ProductOverview extends Component {
 
           <div id="leftColumn" className="w-1/2 ml-auto bg-gray-300 h-100">
             <h1>Left Column</h1>
-            <ImageView product={product} currentStyle={currentStyle} productStyles={productStyles} />
+            <ImageView
+              product={product}
+              currentStyle={currentStyle}
+              productStyles={productStyles}
+              selectedImage={selectedImage}
+              selectedViewFormat={selectedViewFormat}
+              currentImageChangeHandler={currentImageChangeHandler}
+              imageViewFormatChangeHandler={imageViewFormatChangeHandler}
+              imageUrl={imageUrl}
+            />
             <ProductDetails product={product} productStyles={productStyles} />
           </div>
 
           <div id="rightColumn" className="w-1/4 mr-auto bg-gray-100 h-100">
             <h1>Right Column</h1>
-            <ProductInformation product={product} productStyles={productStyles} />
+            <ProductInformation product={product} productStyles={productStyles} reviewScore={weighted} />
             <StyleSelector product={product} productStyles={productStyles} />
             <AddToCart product={product} productStyles={productStyles} addToCartClickHandler={addToCartClickHandler} />
           </div>
@@ -149,6 +173,7 @@ class ProductOverview extends Component {
 
 const mapPropsToState = (state) => ({
   product: state.product,
+  weighted: state.weighted,
 });
 
 export default connect(mapPropsToState)(ProductOverview);
