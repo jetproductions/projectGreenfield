@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 
 import Question from './Question';
-import Modal from '../utility/Modal';
+import Modal from '../../utility/Modal';
 
 const Questions = ({ questions, answerModal, questionModal }) => {
   if (questionModal) {
