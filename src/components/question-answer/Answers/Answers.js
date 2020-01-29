@@ -14,7 +14,7 @@ const sortHelpfulness = (questionsArr) => questionsArr.sort((a, b) => {
   return 1;
 });
 
-const Answers = function ({ question_id }) {
+const Answers = ({ question_id }) => {
   const [answers, setAnswers] = useState([]);
   const [questionId, setQuestionId] = useState('');
   const [numAnswers, setNumAnswers] = useState(0);
