@@ -121,6 +121,7 @@ class ProductOverview extends Component {
     const { productStyles } = this.state;
     const { currentStyle } = this.state;
     const { addToCartClickHandler } = this;
+    const { weighted } = this.props;
     return (
       <div>
         <h3>Product Overview</h3>
@@ -134,7 +135,7 @@ class ProductOverview extends Component {
 
           <div id="rightColumn" className="w-1/4 mr-auto bg-gray-100 h-100">
             <h1>Right Column</h1>
-            <ProductInformation product={product} productStyles={productStyles} />
+            <ProductInformation product={product} productStyles={productStyles} reviewScore={weighted} />
             <StyleSelector product={product} productStyles={productStyles} />
             <AddToCart product={product} productStyles={productStyles} addToCartClickHandler={addToCartClickHandler} />
           </div>
@@ -149,6 +150,7 @@ class ProductOverview extends Component {
 
 const mapPropsToState = (state) => ({
   product: state.product,
+  weighted: state.weighted,
 });
 
 export default connect(mapPropsToState)(ProductOverview);
