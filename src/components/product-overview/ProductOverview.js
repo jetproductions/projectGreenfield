@@ -41,11 +41,12 @@ class ProductOverview extends Component {
       //         [selectedImage]; defaults to 0, i.e. first.  Changed by ImageView component
       //         [selectedViewFormat]: default, expanded or zoomed.   view slides out, over RIGHT COLUMN, zoom is responsive to mouse position 250% zoom
       productStyles: [],
-      currentStyle: 0,
+      currentStyle: 0, // The first style doesn't necessarily have a value of 0.  Some items (such as 2) don't have pictures.
       selectedSize: '',
       selectQty: 1,
       selectedImage: 0,
       selectedViewFormat: 'default',
+      imageUrl: '',
     };
 
     this.getProductStyles(id);
@@ -57,6 +58,7 @@ class ProductOverview extends Component {
     this.addToCartClickHandler = this.addToCartClickHandler.bind(this);
     this.currentImageChangeHandler = this.currentImageChangeHandler.bind(this);
     this.imageViewFormatChangeHandler = this.imageViewFormatChangeHandler.bind(this);
+    this.imageUrlChangeHandler = this.imageUrlChangeHandler.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -75,7 +77,7 @@ class ProductOverview extends Component {
     return fetch(`http://3.134.102.30/products/${productId}/styles`)
       .then((res) => res.json())
       .catch((err) => { throw err; })
-      .then((response) => this.setState({ productStyles: response.results }));
+      .then((response) => this.setState({ productStyles: response.results }, this.imageUrlChangeHandler));
   }
 
   //  HANDLERS:
@@ -112,7 +114,15 @@ class ProductOverview extends Component {
   imageViewFormatChangeHandler = (format = 'default') => {
     // default, expanded, or zoom.  Will be passed in as a string.  Set to default by default, unimaginative, but functional.
     // if no format is passed, resets to default view anyway.
-    this.setState({ selectedViewFormat: format });
+    this.setState({ selectedViewFormat: format }, this.imageUrlChangeHandler);
+  }
+
+  imageUrlChangeHandler() {
+    const { currentStyle } = this.state;
+    const { selectedImage } = this.state;
+    const { productStyles } = this.state;
+    const newUrl = productStyles[currentStyle].photos[selectedImage].url;
+    this.setState({ imageUrl: newUrl });
   }
 
   render() {
@@ -125,6 +135,7 @@ class ProductOverview extends Component {
     const { selectedViewFormat } = this.state;
     const { currentImageChangeHandler } = this;
     const { imageViewFormatChangeHandler } = this;
+    const { imageUrl } = this.state;
     return (
       <div>
         <h3>Product Overview</h3>
@@ -140,6 +151,7 @@ class ProductOverview extends Component {
               selectedViewFormat={selectedViewFormat}
               currentImageChangeHandler={currentImageChangeHandler}
               imageViewFormatChangeHandler={imageViewFormatChangeHandler}
+              imageUrl={imageUrl}
             />
             <ProductDetails product={product} productStyles={productStyles} />
           </div>
