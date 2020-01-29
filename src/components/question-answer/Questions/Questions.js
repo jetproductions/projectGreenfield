@@ -19,7 +19,7 @@ const Questions = ({ questions, questionModal }) => {
       const qid = question.question_id ? question.question_id : null;
       return (
       // eslint-disable-next-line react/jsx-props-no-spreading
-        <Question key={qid} {...question} {...answerModal} {...questionModal} />
+        <Question key={qid} {...question} {...questionModal} />
       );
     });
   }
