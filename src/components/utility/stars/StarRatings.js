@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import Star from './Star';
 
 const StarRatings = ({ rating, size = 25 }) => {
@@ -16,9 +15,5 @@ const StarRatings = ({ rating, size = 25 }) => {
     </div>
   );
 };
-
-// const mapStateToProps = (state) => ({
-//   weighted: state.weighted,
-// });
 
 export default StarRatings;
