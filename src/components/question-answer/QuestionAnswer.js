@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import SearchBar from './SearchBar';
-import Questions from './Questions';
+import Questions from './Questions/Questions';
 
 
 const QuestionAnswer = () => (
