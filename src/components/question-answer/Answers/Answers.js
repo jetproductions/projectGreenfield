@@ -27,12 +27,12 @@ class Answers extends Component {
       });
   }
 
-  sortHelpfulness = (questionsArr) => questionsArr.sort((a, b) => {
-    if (a.helpfulness > b.helpfulness) {
-      return -1;
-    }
-    return 1;
-  });
+  // sortHelpfulness = (questionsArr) => questionsArr.sort((a, b) => {
+  //   if (a.helpfulness > b.helpfulness) {
+  //     return -1;
+  //   }
+  //   return 1;
+  // });
 
   render() {
     const { answers } = this.state;
