@@ -1,12 +1,10 @@
 /* eslint-disable no-undef */
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { useParams } from 'react-router-dom';
 
 import Question from './Question';
 
-const Questions = ({ questions }) => {
+const Questions = ({ questions, answerModal, questionModal }) => {
   // looking to see if product has changed or if startup and nothing in questions
   // eslint-disable-next-line no-undef
   if (questions.length > 0) {
@@ -14,7 +12,7 @@ const Questions = ({ questions }) => {
       const qid = question.question_id ? question.question_id : null;
       return (
       // eslint-disable-next-line react/jsx-props-no-spreading
-        <Question key={qid} {...question} />
+        <Question key={qid} {...question} {...answerModal} {...questionModal} />
       );
     });
   }

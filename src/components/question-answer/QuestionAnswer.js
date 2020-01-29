@@ -47,9 +47,8 @@ class QuestionAnswer extends Component {
 
   // need to update Search to handle this and to pass back up upon search
   // this might also need to handle filter for what questions get sent down?
-  onSearchChange = async (e) => {
+  onSearchChange = (e) => {
     this.setState({ searched: e.target.value });
-    // need to add in filter for questions array at question
     const questions = { ...this.state.questions };
     const filtered = questions.filter((question) => {
       if (question.question_body.indexOf(this.state.searched) > -1) {
@@ -57,12 +56,14 @@ class QuestionAnswer extends Component {
       }
       return false;
     });
+    this.setState({ filteredQuestions: filtered });
   }
 
   render() {
 	  const { questions } = this.state;
 	  const { answerModal } = this.state;
-	  const { questionModal } = this.state;
+    const { questionModal } = this.state;
+    const { filteredQuestions } = this.state;
 	  return (
   <div>
     <div className="w-full px-4">
@@ -70,7 +71,11 @@ class QuestionAnswer extends Component {
     </div>
     <div>
       <SearchBar onChangeHandler={this.onSearchChange} />
-      <Questions questions={questions} answerModal={answerModal} questionModal={questionModal} />
+      <Questions
+        questions={filteredQuestions.length === 0 ? questions : filteredQuestions}
+        answerModal={answerModal}
+        questionModal={questionModal}
+      />
     </div>
   </div>
 	  );
