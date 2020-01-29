@@ -1,9 +1,6 @@
 import React from 'react';
 
 const Button = ({ name, submitHandler }) => (
-<<<<<<< HEAD
-  <button type="submit" onClick={(e) => submitHandler(e)}>{ name }</button>
-=======
   <button
     onClick={(e) => submitHandler(e)}
     type="button"
@@ -11,7 +8,6 @@ const Button = ({ name, submitHandler }) => (
   >
     { name }
   </button>
->>>>>>> 54cf6b6ac2f2da12f390baa237990f3156692395
 );
 
 export default Button;
