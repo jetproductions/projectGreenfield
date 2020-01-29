@@ -3,8 +3,14 @@
 import React, { useState, useEffect } from 'react';
 
 import Question from './Question';
+import Modal from '../utility/Modal';
 
 const Questions = ({ questions, answerModal, questionModal }) => {
+  if (questionModal) {
+    return (
+      <Modal />
+    );
+  }
   // looking to see if product has changed or if startup and nothing in questions
   // eslint-disable-next-line no-undef
   if (questions.length > 0) {

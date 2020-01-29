@@ -15,7 +15,7 @@ class QuestionAnswer extends Component {
     const { product: { id } } = props;
     this.state = {
       questions: [],
-      questionModal: false,
+      questionModal: true,
       answerModal: false,
       searched: '',
       filteredQuestions: [],
@@ -40,7 +40,6 @@ class QuestionAnswer extends Component {
 
   getQuestions = async (id) => {
     const fetchQuestions = await fetch(`http://3.134.102.30/qa/${id}`).then((res) => res.json());
-    console.log(fetchQuestions);
     const { results } = fetchQuestions;
     this.setState({ questions: results });
   }

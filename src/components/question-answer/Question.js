@@ -4,7 +4,7 @@ import React from 'react';
 import Answers from './Answers';
 
 const Question = ({
-  question_id, question_body, asker_name, question_helpfulness, answers,
+  question_id, question_body, asker_name, question_helpfulness, answers, answerModal,
 }) => (
   <div>
     <h4>
