@@ -14,7 +14,6 @@ const sortHelpfulness = (questionsArr) => questionsArr.sort((a, b) => {
 });
 
 const Questions = ({ productStore }) => {
-  const { id } = useParams();
   const [questions, setQuestions] = useState([]);
   // looking to see if product has changed or if startup and nothing in questions
   // eslint-disable-next-line no-undef
