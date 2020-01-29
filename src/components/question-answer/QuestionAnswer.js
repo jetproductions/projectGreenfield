@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-state */
 /* eslint-disable no-mixed-spaces-and-tabs */
 /* eslint-disable no-tabs */
 /* eslint-disable no-undef */
@@ -5,7 +6,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SearchBar from './SearchBar';
 import Questions from './Questions';
-import Modal from '../utility/Modal';
+// import Modal from '../utility/Modal';
 
 class QuestionAnswer extends Component {
   constructor(props) {
@@ -19,8 +20,13 @@ class QuestionAnswer extends Component {
     };
     this.getQuestions(id);
   }
+  // need to work on this get fucntioning better understanding needed
+  // componentDidMount() {
+  //   const { product: { id } } = this.props;
+  //   this.getQuestions(id);
+  // }
 
-
+  // not sure this is setup properly
   componentDidUpdate(prevProps) {
 	  const { product: { id } } = this.props;
 	  // eslint-disable-next-line no-useless-return
