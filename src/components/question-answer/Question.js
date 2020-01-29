@@ -5,14 +5,17 @@ import Answers from './Answers';
 
 const Question = ({
   question_id, question_body, asker_name, question_helpfulness, answers, answerModal,
-}) => (
-  <div>
-    <h4>
+}) => {
+  console.log('answers: ', answers);
+  return (
+    <div>
+      <h4>
 Q:
-      {' '}
-      {question_body}
-    </h4>
-    {/* {answers ? <Answers questionId={question_id ? question_id : null} {...answers} /> : null} */}
-  </div>
-);
+        {' '}
+        {question_body}
+      </h4>
+      {answers ? <Answers questionId={question_id || null} {...answers} /> : null}
+    </div>
+  );
+};
 export default Question;
