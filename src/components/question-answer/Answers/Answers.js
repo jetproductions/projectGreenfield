@@ -25,7 +25,7 @@ class Answers extends Component {
     // console.log(question_id);
     fetch(`http://3.134.102.30/qa/${question_id}/answers`).then((res) => res.json())
       .then((result) => {
-        console.log('resultAnswers: ', result);
+        // console.log('resultAnswers: ', result);
         this.setState({ answers: result.results, count: result.count });
       });
   }
@@ -40,7 +40,7 @@ class Answers extends Component {
   render() {
     const { answers } = this.state;
     const filtered = this.sortHelpfulness(answers);
-    console.log('answers in render: ', answers);
+    // console.log('answers in render: ', answers);
     if (answers.length === 0) {
       return (
         <div>No Answers for This Question Yet</div>

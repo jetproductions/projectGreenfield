@@ -46,20 +46,11 @@ class QuestionAnswer extends Component {
   // this might also need to handle filter for what questions get sent down?
   onSearchChange = (e) => {
     this.setState({ searched: e.target.value });
-    const questions = { ...this.state.questions };
-    const filtered = questions.filter((question) => {
-      if (question.question_body.indexOf(this.state.searched) > -1) {
-        return true;
-      }
-      return false;
-    });
-    this.setState({ filteredQuestions: filtered });
   }
 
   render() {
 	  const { questions } = this.state;
     const { questionModal } = this.state;
-    const { filteredQuestions } = this.state;
     const { searched } = this.state;
 	  return (
   <div>

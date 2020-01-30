@@ -13,7 +13,7 @@ const sortHelpfulness = (questionsArr) => questionsArr.sort((a, b) => {
 });
 
 const searchQuestions = (searched, questions) => questions.filter((question) => {
-  console.log(question);
+  // console.log(question);
   if (question.question_body.indexOf(searched) > -1) {
     return true;
   }
