@@ -36,16 +36,20 @@ class QuestionAnswer extends Component {
     this.getQuestions(id);
   }
 
+
+  // need to update Search to handle this and to pass back up upon search
+  // this might also need to handle filter for what questions get sent down?
+
+
   getQuestions = async (id) => {
     const fetchQuestions = await fetch(`http://3.134.102.30/qa/${id}`).then((res) => res.json());
     const { results } = fetchQuestions;
     this.setState({ questions: results });
   }
 
-  // need to update Search to handle this and to pass back up upon search
-  // this might also need to handle filter for what questions get sent down?
-  onSearchChange = (e) => {
-    this.setState({ searched: e.target.value });
+  searchChangeHandler = (event) => {
+    console.log(event.target.value);
+    this.setState({ searched: event.target.value });
   }
 
   render() {
@@ -58,7 +62,7 @@ class QuestionAnswer extends Component {
       <h5 className="uppercase font-thin text-xl">QUESTIONS & ANSWERS</h5>
     </div>
     <div>
-      <SearchBar onChangeHandler={this.onSearchChange} />
+      <SearchBar searchChangeHandler={this.searchChangeHandler} />
       <Questions
         questions={questions}
         questionModal={questionModal}
