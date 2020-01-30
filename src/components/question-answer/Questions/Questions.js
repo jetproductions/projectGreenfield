@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 
 import Question from './Question';
 import QuestionModal from './QuestionModal';
-// import Modal from '../../utility/Modal';
 
 const sortHelpfulness = (questionsArr) => questionsArr.sort((a, b) => {
   if (a.helpfulness > b.helpfulness) {
@@ -24,11 +23,11 @@ const searchQuestions = (searched, questions) => questions.filter((question) => 
 
 // should change questions modal show/hide to live here in state not in QA
 const Questions = ({ questions, questionModal, searchBar }) => {
-  const [createView, setCreateView] = useState(false);
-  if (createView) {
+  const [createQuestion, createQuestionView] = useState(false);
+  if (createQuestion) {
     return (
       <div>
-        <QuestionModal show={createView} toggleModal={setCreateView} />
+        <QuestionModal show={createQuestion} toggleModal={createQuestionView} />
         <p>Modal will be shown</p>
       </div>
     );
@@ -47,14 +46,14 @@ const Questions = ({ questions, questionModal, searchBar }) => {
             <Question key={qid} {...question} {...questionModal} />
           );
         })}
-        <button type="button" onClick={(e) => { e.preventDefault(); setCreateView(!createView); }}>Add Question +</button>
+        <button type="button" onClick={(e) => { e.preventDefault(); createQuestionView(!createQuestion); }}>Add Question +</button>
       </div>
     );
   }
   return (
     <>
       <div>No Questions Asked Yet</div>
-      <button type="button" onClick={(e) => { e.preventDefault(); setCreateView(!createView); }}>Add Question +</button>
+      <button type="button" onClick={(e) => { e.preventDefault(); createQuestionView(!createQuestion); }}>Add Question +</button>
     </>
   );
 };

@@ -2,6 +2,7 @@
 /* eslint-disable camelcase */
 import React, { useState } from 'react';
 import moment from 'moment';
+import AnswerModal from './AnswerModal';
 
 // could eventualy refactor these two functions into one that can handle both based on parameters/args
 const helpfulUpdate = async (e, id) => {
@@ -23,6 +24,7 @@ const Answer = ({
   const [helpfulButton, buttonUsed] = useState(false);
   const [helpfulnessState, helpfulnessUpdate] = useState(helpfulness);
   const [reportState, reportStateUpdate] = useState(false);
+  // const [showModal, changeModal] = useState(false);
   const helpfulnessHander = async (e) => {
     const updated = await helpfulUpdate(e, answer_id);
     if (updated) {

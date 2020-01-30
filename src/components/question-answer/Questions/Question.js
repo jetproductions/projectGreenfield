@@ -3,6 +3,7 @@
 /* eslint-disable camelcase */
 import React, { useState } from 'react';
 import Answers from '../Answers/Answers';
+import AnswerModal from '../Answers/AnswerModal';
 
 // should be able to refactor both of these to be just one function in long run,
 // also maybe refactor to be own module work with both question and answer
@@ -24,6 +25,7 @@ const Question = ({
   const [helpfulButton, buttonUsed] = useState(false);
   const [helpfulnessState, helpfulnessUpdate] = useState(question_helpfulness);
   const [reportState, reportStateUpdate] = useState(false);
+  const [createAnswer, createAnswerView] = useState(false);
 
   const helpfulnessHander = async (e) => {
     const updated = await helpfulUpdate(e, question_id);
@@ -39,6 +41,11 @@ const Question = ({
       reportStateUpdate(true);
     }
   };
+  if (createAnswer) {
+    return (
+      <AnswerModal show={createAnswer} toggleModal={createAnswerView} />
+    );
+  }
   return (
     <div>
       <h4>
@@ -61,9 +68,10 @@ Helpfulness?
         >
           Report
         </button>
+        {'  '}
+        <button type="button" onClick={(e) => { e.preventDefault(); createAnswerView(true); }}>Add Answer</button>
       </span>
       <Answers question_id={question_id || null} />
-
     </div>
   );
 };
