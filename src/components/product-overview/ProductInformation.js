@@ -29,8 +29,8 @@ const ProductInformation = (props) => {
 
       </div>
 
-      <h1 className="mx-2 my-2 text-xl" id="category">{` CATEGORY >  ${category.toUpperCase()}`}</h1>
-      <h1 className="mx-2 my-2 text-5xl" id="productName">
+      <h1 className="h1 mx-2 my-2 text-xl" id="category">{` CATEGORY >  ${category.toUpperCase()}`}</h1>
+      <h1 className="h1 mx-2 my-2 text-5xl" id="productName">
         {name}
       </h1>
     </div>

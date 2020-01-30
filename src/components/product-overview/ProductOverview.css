@@ -1,4 +1,4 @@
-h1{
+.h1{
     color: #525252;
 }
 #upperBar{
@@ -22,6 +22,7 @@ h1{
 #reviewNavButton{
     color: #525252;
 }
+
 #logo{
     color:#e6e6e6;
 }
