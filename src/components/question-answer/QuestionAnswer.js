@@ -60,6 +60,7 @@ class QuestionAnswer extends Component {
 	  const { questions } = this.state;
     const { questionModal } = this.state;
     const { filteredQuestions } = this.state;
+    const { searched } = this.state;
 	  return (
   <div>
     <div className="w-full px-4">
@@ -68,8 +69,9 @@ class QuestionAnswer extends Component {
     <div>
       <SearchBar onChangeHandler={this.onSearchChange} />
       <Questions
-        questions={filteredQuestions.length === 0 ? questions : filteredQuestions}
+        questions={questions}
         questionModal={questionModal}
+        searchBar={searched}
       />
     </div>
   </div>
