@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import moment from 'moment';
 import ReviewThumbnail from './thumbnail/ReviewThumbnail';
 import Star from '../../utility/stars/Star';
 
-const Review = ({ review, openModal }) => {
+const Review = ({ review, openModal, update }) => {
   const {
     rating, body, date, reviewer_name: reviewerName, summary, response, recommend, helpfulness, photos,
   } = review;
   const dateString = moment(date).format('MMMM Do, YYYY');
   const stars = [...Array(rating)].map((e) => 1);
+  const [reported, setReported] = useState(false);
   return (
     <div className="flex flex-col w-full mb-6 pb-6 border-b border-gray-300">
       <header className="flex items-center justify-between w-full text-xs mb-4">
@@ -56,7 +57,10 @@ const Review = ({ review, openModal }) => {
         <span className="mr-2">Helpful?</span>
         <span>
           <a
-            onClick={(e) => { e.preventDefault(); }}
+            onClick={(e) => {
+              e.preventDefault();
+              update({ action: { type: 'HELPFUL' }, payload: review });
+            }}
             className="underline mr-1"
             href="/"
           >
@@ -69,14 +73,24 @@ const Review = ({ review, openModal }) => {
           </span>
           <span className="mx-3 text-gray-500">|</span>
           <span>
-
-            <a
-              onClick={(e) => { e.preventDefault(); }}
-              className="underline mr-1"
-              href="/"
-            >
-              Report
-            </a>
+            { reported ? (
+              <span>
+                <small className="bg-gray-400 rounded-full mr-2 font-black h-auto" style={{ fontSize: '8px', padding: '2px 3.5px' }}>{String.fromCharCode(10003)}</small>
+                <span>Reported</span>
+              </span>
+            ) : (
+              <a
+                onClick={(e) => {
+                  e.preventDefault();
+                  update({ action: { type: 'REPORT' }, payload: review });
+                  setReported(true);
+                }}
+                className="underline mr-1"
+                href="/"
+              >
+                Report
+              </a>
+            )}
           </span>
         </span>
       </footer>
