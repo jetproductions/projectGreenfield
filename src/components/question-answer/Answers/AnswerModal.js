@@ -1,5 +1,10 @@
+/* eslint-disable no-undef */
 /* eslint-disable react/prefer-stateless-function */
 import React from 'react';
+
+const submitAnswer = (text, id) => {
+  fetch();
+};
 
 const AnswerModal = ({ show, toggleModal }) => {
   const style = {
