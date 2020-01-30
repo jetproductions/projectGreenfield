@@ -1,13 +1,20 @@
 /* eslint-disable no-undef */
 /* eslint-disable camelcase */
-import React from 'react';
+import React, { useState } from 'react';
 import moment from 'moment';
 
-const markHelpful = (yesNo) => fetch(`http://3.134.102.30/qa/${questionId}/answers`, 'POST', { yesNo }).then((res) => res.json());
+const helpfulUpdate = (e, id) => {
+  console.log('answerid: ', id);
+  e.preventDefault();
+  // eslint-disable-next-line no-undef
+  fetch(`http://3.134.102.30/qa/answer/${id}/helpful`, { method: 'PUT', headers: { 'Content-Type': 'application/json' } }).then((result) => { console.log(result); });
+};
+
 const Answer = ({
-  answerer_name, body, helpfulness, date, photos,
+  answerer_name, body, helpfulness, date, photos, answer_id,
 }) => {
   const dateString = moment(date).format('MMMM Do, YYYY');
+  const [helpfulButton, buttonUsed] = useState(false);
   return (
     <div>
       <h2>
@@ -21,7 +28,10 @@ A:
         <span className="ml-1">
           { dateString }
           {' '}
-          {`| Helpful? Yes ${helpfulness} | Report`}
+          {'| Helpful?'}
+          <button type="button" disabled={helpfulButton} onClick={(e) => { buttonUsed(true); helpfulUpdate(e, answer_id); }}>Yes</button>
+          {' '}
+          {`${helpfulness} | Report`}
         </span>
       </div>
       {photos.length > 0 ? (
