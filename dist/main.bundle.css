@@ -1,3 +1,36 @@
+.h1{
+  color: #525252;
+}
+
+#upperBar{
+  background-color: #525252;
+}
+
+#addToCartButton{
+  color: #525252;
+}
+
+#productName{
+  /* font-family: Arial, Helvetica, sans-serif; */
+  font-weight: bolder;
+  color: #525252;
+}
+
+#category{
+  color: #525252;
+}
+
+#leftColumn{
+  background-color: #e6e6e6;
+}
+
+#reviewNavButton{
+  color: #525252;
+}
+
+#logo{
+  color:#e6e6e6;
+}
 input[type="range"]{
   width: 100%;
   height: 0.5rem;
