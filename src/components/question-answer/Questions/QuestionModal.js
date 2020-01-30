@@ -1,22 +1,30 @@
 /* eslint-disable react/prefer-stateless-function */
-import React, { Component } from 'react';
+import React from 'react';
 
-class SubmitQuestion extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-
-    };
-  }
-  formChangeHandler = () => {
- 
-};
-  render = () => {
-
+const QuestionModal = ({ show, toggleModal }) => {
+  const style = {
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    display: (show ? 'flex' : 'none'),
   };
-}
+  return (
+    <div className="fixed justify-center items-center inset-0 z-50 py-8 max-h-screen" style={style}>
+      <div className="py-10 bg-white relative w-full lg:max-w-5xl h-full">
+        <a
+          onClick={(e) => {
+            e.preventDefault();
+            toggleModal(false);
+          }}
+          href="/"
+          className="absolute top-0 right-0 -mt-5 -mr-5 text-white bg-gray-800 rounded-full w-8 h-8 cursor-pointer"
+        >
+          <small className="absolute font-bold text-2xl w-full text-center" style={{ marginTop: '-3px', marginLeft: '2px', transform: 'rotate(45deg)' }}>+</small>
+        </a>
+        <div className="w-full max-h-full overflow-y-scroll overflow-x-hiddena px-10">
+          Form Will Go Here
+        </div>
+      </div>
+    </div>
+  );
+};
 
-
-
-
-export default SubmitQuestion;
+export default QuestionModal;

@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 
 import Question from './Question';
-import Modal from '../../utility/Modal';
-import Button from '../../utility/Button';
+import QuestionModal from './QuestionModal';
+// import Modal from '../../utility/Modal';
 
 const sortHelpfulness = (questionsArr) => questionsArr.sort((a, b) => {
   if (a.helpfulness > b.helpfulness) {
@@ -28,7 +28,7 @@ const Questions = ({ questions, questionModal, searchBar }) => {
   if (createView) {
     return (
       <div>
-        <Modal />
+        <QuestionModal show={createView} toggleModal={setCreateView} />
         <p>Modal will be shown</p>
       </div>
     );
