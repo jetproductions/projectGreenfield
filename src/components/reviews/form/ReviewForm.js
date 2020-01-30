@@ -20,6 +20,7 @@ class ReviewForm extends Component {
         summary: '',
         body: '',
         rating,
+        photos: [],
         recommend: true,
         characteristics: {},
       },
@@ -52,10 +53,25 @@ class ReviewForm extends Component {
   handleOnSubmit = (e) => {
     e.preventDefault();
     const { create } = this.props;
-    const { form, form: { rating } } = this.state;
+    const { form, form: { rating, photos: photoList } } = this.state;
     const total = rating.reduce((a, c) => a + c);
-    const review = { ...form, rating: total };
+    const photos = photoList.filter((photo) => photo.length);
+    const review = { ...form, rating: total, photos };
     create(review);
+  }
+
+  addRow = () => {
+    const { form, form: { photos } } = this.state;
+    const added = [...photos, ''];
+    this.setState({ form: { ...form, photos: added } });
+  }
+
+  updatePhoto = (e, i) => {
+    const { form, form: { photos } } = this.state;
+    const { target: { value } } = e;
+    const added = [...photos];
+    added[i] = value;
+    this.setState({ form: { ...form, photos: added } });
   }
 
   render = () => {
@@ -63,7 +79,7 @@ class ReviewForm extends Component {
     const charOptions = Object.keys(chars).map((key) => ([key, chars[key].id]));
     const {
       form: {
-        rating, name, email, summary, body,
+        rating, name, email, summary, body, photos,
       },
     } = this.state;
     const ratingIndex = rating.lastIndexOf(1);
@@ -154,6 +170,35 @@ class ReviewForm extends Component {
           { charOptions.map((characteristic) => (
             <RangeSlider change={this.setCharacteristic} characteristic={characteristic} key={characteristic[1]} />
           ))}
+        </div>
+        <div className="flex flex-wrap -mx-4 mb-8">
+          <div className="w-full flex flex-col px-4">
+            { photos.length > 0
+              ? photos.map((photo, i) => (
+                <div className="w-full flex mb-3" key={i}>
+                  <input onBlur={(e) => { this.updatePhoto(e, i); }} name="photo" defaultValue={photo} className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" type="text" placeholder="https://source.unsplash.com/random/800x600" />
+                  <a
+                    href="/"
+                    className="flex justify-center items-center w-8 h-8 rounded-full bg-teal-500 text-white font-bold text-xl ml-2"
+                    onClick={(e) => { e.preventDefault(); this.addRow(); }}
+                  >
++
+                  </a>
+                </div>
+              ))
+              : (
+                <div className="w-full flex items-center text-xl">
+                  <a
+                    href="/"
+                    className="flex justify-center items-center w-8 h-8 rounded-full bg-teal-500 text-white font-bold text-xl"
+                    onClick={(e) => { e.preventDefault(); this.addRow(); }}
+                  >
+  +
+                  </a>
+                  <span className="ml-2">Add Photo(s)</span>
+                </div>
+              )}
+          </div>
         </div>
         <div className="flex flex-wrap -mx-4 mt-12">
           <div className="w-full px-4">

@@ -29,7 +29,7 @@ class Reviews extends Component {
       },
     };
     this.getReviewsMeta();
-    // this.getReviewsList();
+    this.getReviewsList();
   }
 
   componentDidUpdate(prevProps) {
@@ -73,7 +73,7 @@ class Reviews extends Component {
     const { reviewsMeta: { recommended = {} } } = this.state;
     const total = Object.values(recommended).reduce((acc, curr) => acc + curr, 0);
     const recommendations = recommended[1] || 0;
-    const percentage = (recommendations / total) * 100;
+    const percentage = Math.floor((recommendations / total) * 100);
     return percentage;
   }
 
@@ -92,6 +92,31 @@ class Reviews extends Component {
     this.setState({ modal: { show, content } });
   }
 
+  updateReview = async ({ action: { type }, payload: review }) => {
+    let endpoint = '';
+    switch (type) {
+      case 'HELPFUL':
+        endpoint += 'helpful';
+        break;
+      case 'REPORT':
+        endpoint += 'report';
+        break;
+      default:
+    }
+    const { review_id: id } = review;
+    const { ok } = await fetch(`http://3.134.102.30/reviews/${endpoint}/${id}`, {
+      method: 'PUT',
+    });
+    if (!ok || endpoint === 'report') return;
+    const { reviewsList, reviewsList: { results }, cached } = this.state;
+    const reviewIndex = results.findIndex((r) => r.review_id === id);
+    const updated = { ...review, helpfulness: review.helpfulness + 1 };
+    const reviews = [...results];
+    reviews.splice(reviewIndex, 1, updated);
+
+    this.setState({ reviewsList: { ...reviewsList, results: reviews }, cached: { ...cached, results: reviews } });
+  }
+
   createReview = async (review) => {
     const { product: { id } } = this.props;
     const { ok } = await fetch(`http://3.134.102.30/reviews/${id}`, {
@@ -104,6 +129,8 @@ class Reviews extends Component {
     if (!ok) return;
 
     this.toggleModal({ show: false, content: null });
+    this.getReviewsList();
+    this.getReviewsMeta();
   }
 
   render() {
@@ -162,6 +189,7 @@ class Reviews extends Component {
                 allReviews.length > 0
                   ? (
                     <ReviewsList
+                      update={this.updateReview}
                       openModal={this.toggleModal}
                       reviews={allReviews}
                     />

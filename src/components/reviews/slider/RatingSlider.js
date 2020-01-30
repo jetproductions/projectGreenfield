@@ -18,7 +18,7 @@ const RatingSlider = ({ total, rating: [rating, value], filter }) => {
       </div>
       <div className="flex-grow bg-gray-200 h-4 ml-3">
         <div style={{ width: `${percent}%` }} className="flex justify-end items-center h-full bg-teal-700">
-          <span className="mr-2 text-xs text-white">
+          <span className="mr-1 text-xs text-white">
             { `${value}` }
           </span>
         </div>
