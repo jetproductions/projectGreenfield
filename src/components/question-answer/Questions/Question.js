@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable camelcase */
-import React from 'react';
+import React, { useState } from 'react';
 import Answers from '../Answers/Answers';
 
 const helpfulUpdate = (e, id) => {
@@ -10,23 +10,27 @@ const helpfulUpdate = (e, id) => {
 };
 const Question = ({
   question_id, question_body, asker_name, question_helpfulness,
-}) => (
-  <div>
-    <h4>
+}) => {
+  const [helpfulButton, buttonUsed] = useState(false);
+  return (
+    <div>
+      <h4>
 Q:
-      {' '}
-      {question_body}
-    </h4>
-    <span>
+        {' '}
+        {question_body}
+      </h4>
+      <span>
 Helpfulness?
-      <button onClick={(e) => { helpfulUpdate(e, question_id); }}>Yes</button>
-      '('
-      {question_helpfulness}
-')'
-    </span>
-    <Answers question_id={question_id || null} />
+        <button type="button" disabled={helpfulButton} onClick={(e) => { buttonUsed(true); helpfulUpdate(e, question_id); }}>Yes</button>
+      (
+        {question_helpfulness}
+)
+      </span>
+      <Answers question_id={question_id || null} />
 
-  </div>
-);
+    </div>
+  );
+};
+
 
 export default Question;
