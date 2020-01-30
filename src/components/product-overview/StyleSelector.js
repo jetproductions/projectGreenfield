@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 /* eslint-disable no-undef */
 /* eslint-disable react/no-unused-state */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 
 //  #### GUIDELINES ####
 //         * Style Selector - Functional Component
@@ -19,8 +21,22 @@ import React, { Component } from 'react';
 //             > Use a transparency perhaps?
 //             > The selected style is inert - clicking on it does nothing.
 
-const StyleSelector = (props) => (
-  <div id="styleSelector">Style Selector</div>
-);
+const StyleSelector = (props) => {
+  const { productStyles } = props;
+  const { styleChangeHandler } = props;
+  const styles = productStyles.map((style, index) => (
+    <div className="w-1/4 px-1 py-1 h-40">
+      <img className="object-cover ml-auto mr-auto h-32 bg-gray-200 cursor-pointer" src={style.photos[0].thumbnail_url} alt={style.name} onClick={(e) => { e.preventDefault(); styleChangeHandler(index); }} />
+    </div>
+  ));
+  return (
+    <div>
+      <h1 className="mx-2" id="styleSelector">Style Selector</h1>
+      <div className="flex flex-wrap">
+        {styles}
+      </div>
+    </div>
+  );
+};
 
 export default StyleSelector;

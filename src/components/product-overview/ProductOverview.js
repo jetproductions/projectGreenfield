@@ -5,10 +5,13 @@ import ImageView from './ImageView';
 import ProductDetails from './ProductDetails';
 import ProductInformation from './ProductInformation';
 import StyleSelector from './StyleSelector';
+import './ProductOverview.css';
 
 /* eslint-disable no-undef */
 /* eslint-disable react/no-unused-state */
 /* eslint-disable no-alert */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+
 
 //        ## [Q] ##:  Could/Should the columns be different components themselves, or is this needless complication?
 //        ## [A] ##:  Needlessly complicated, if state is used correctly
@@ -83,7 +86,7 @@ class ProductOverview extends Component {
   //  HANDLERS:
   //  Style Selector change
   styleChangeHandler = (styleNum) => {
-    this.setState({ currentStyle: styleNum });
+    this.setState({ currentStyle: styleNum }, this.imageUrlChangeHandler);
   }
 
   //  Add to Cart Size change
@@ -136,13 +139,17 @@ class ProductOverview extends Component {
     const { currentImageChangeHandler } = this;
     const { imageViewFormatChangeHandler } = this;
     const { imageUrl } = this.state;
+    const { styleChangeHandler } = this;
     return (
-      <div>
-        <h3>Product Overview</h3>
+      <div id="productOverview">
+        <div id="upperBar" className="w-full h-20 my-2">
+          <h2 id="logo" className="font-extrabold text-xl ml-48 italic">LOGO</h2>
+        </div>
+
         <div className="flex mb-4">
 
-          <div id="leftColumn" className="w-1/2 ml-auto bg-gray-300 h-100">
-            <h1>Left Column</h1>
+          <div id="leftColumn" className="w-1/2 ml-auto">
+            {/* <h1>Left Column</h1> */}
             <ImageView
               product={product}
               currentStyle={currentStyle}
@@ -156,10 +163,10 @@ class ProductOverview extends Component {
             <ProductDetails product={product} productStyles={productStyles} />
           </div>
 
-          <div id="rightColumn" className="w-1/4 mr-auto bg-gray-100 h-100">
-            <h1>Right Column</h1>
+          <div id="rightColumn" className="w-1/4 mr-auto bg-gray-100">
+            {/* <h1>Right Column</h1> */}
             <ProductInformation product={product} productStyles={productStyles} reviewScore={weighted} />
-            <StyleSelector product={product} productStyles={productStyles} />
+            <StyleSelector product={product} productStyles={productStyles} styleChangeHandler={styleChangeHandler} />
             <AddToCart product={product} productStyles={productStyles} addToCartClickHandler={addToCartClickHandler} />
           </div>
 

@@ -70,7 +70,7 @@ const ImageView = (props) => {
 
 
   return (
-    <img className="ml-auto mr-auto object-center" src={imageUrl} alt="A model wearing a garment" />
+    <img className="h-screen my-3 ml-auto mr-auto object-scale-down cursor-pointer" src={imageUrl} alt="A model wearing a garment" />
   );
 };
 
