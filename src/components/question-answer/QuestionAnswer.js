@@ -57,7 +57,7 @@ class QuestionAnswer extends Component {
     const { questionModal } = this.state;
     const { searched } = this.state;
 	  return (
-  <div>
+  <div id="questions-answers">
     <div className="w-full px-4">
       <h5 className="uppercase font-thin text-xl">QUESTIONS & ANSWERS</h5>
     </div>
