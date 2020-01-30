@@ -1,7 +1,9 @@
+/* eslint-disable no-undef */
 /* eslint-disable camelcase */
 import React from 'react';
 import moment from 'moment';
 
+const markHelpful = (yesNo) => fetch(`http://3.134.102.30/qa/${questionId}/answers`, 'POST', { yesNo }).then((res) => res.json());
 const Answer = ({
   answerer_name, body, helpfulness, date, photos,
 }) => {

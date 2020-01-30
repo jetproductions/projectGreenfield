@@ -12,6 +12,10 @@ Q:
       {' '}
       {question_body}
     </h4>
+    <span>
+Helpfulness?
+      {question_helpfulness}
+    </span>
     <Answers question_id={question_id || null} />
 
   </div>
