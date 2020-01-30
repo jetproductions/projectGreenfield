@@ -1,40 +1,57 @@
+/* eslint-disable react/no-unused-state */
 /* eslint-disable camelcase */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-undef */
-import React, { useState } from 'react';
+import React, { useState, Component } from 'react';
 import Answer from './Answer';
 import Button from '../../utility/Button';
 
-// eslint-disable-next-line no-undef
-const getAnswers = (questionId) => fetch(`http://3.134.102.30/qa/${questionId}/answers`).then((res) => res.json());
-const sortHelpfulness = (questionsArr) => questionsArr.sort((a, b) => {
-  if (a.helpfulness > b.helpfulness) {
-    return -1;
+class Answers extends Component {
+  constructor(props) {
+    super(props);
+    const { question_id } = this.props;
+    this.state = {
+      answers: [],
+      question_id,
+      count: 0,
+    };
+    this.getAnswers();
   }
-  return 1;
-});
 
-const Answers = ({ question_id }) => {
-  const [answers, setAnswers] = useState([]);
-  const [questionId, setQuestionId] = useState('');
-  const [numAnswers, setNumAnswers] = useState(0);
-  const addMoreButton = answers.length === numAnswers ? null : <Button name="Show More Answers" />;
-
-  if (question_id !== questionId) {
-    getAnswers(question_id).then((result) => { setAnswers(result.results); setNumAnswers(parseInt(result.count, 10)); });
-    setQuestionId(question_id);
+  // this only gets two answers need to figure out how to get the rest of the answers
+  // eslint-disable-next-line no-undef
+  getAnswers = () => {
+    const { question_id } = this.state;
+    // console.log(question_id);
+    fetch(`http://3.134.102.30/qa/${question_id}/answers`).then((res) => res.json())
+      .then((result) => {
+        // console.log('resultAnswers: ', result);
+        this.setState({ answers: result.results, count: result.count });
+      });
   }
-  if (answers.length > 0) {
-    console.log(`numAnswers: ${numAnswers}`);
-    return (sortHelpfulness(answers).map((answer) => {
-      const aid = answer.answer_id ? answer.answer_id : null;
+
+  sortHelpfulness = (answersArr) => answersArr.sort((a, b) => {
+    if (a.helpfulness > b.helpfulness) {
+      return -1;
+    }
+    return 1;
+  });
+
+  render() {
+    const { answers } = this.state;
+    const filtered = this.sortHelpfulness(answers);
+    // console.log('answers in render: ', answers);
+    if (answers.length === 0) {
       return (
-        <Answer key={aid} {...answer} />
+        <div>No Answers for This Question Yet</div>
       );
-    })
+    }
+    return (
+      filtered.map((answer) => (
+        <Answer key={answer.answer_id} {...answer} />
+      ))
     );
   }
-  return null;
-};
+}
 
 export default Answers;
