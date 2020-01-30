@@ -16,16 +16,17 @@ class Answers extends Component {
       count: 0,
       answerModalShow: false,
     };
-    this.getAnswers(question_id);
+    this.getAnswers();
   }
 
   // this only gets two answers need to figure out how to get the rest of the answers
   // eslint-disable-next-line no-undef
   getAnswers = () => {
-    const { question_id: { id } } = this.state;
-    fetch(`http://3.134.102.30/qa/${id}/answers`).then((res) => res.json())
+    const { question_id } = this.state;
+    // console.log(question_id);
+    fetch(`http://3.134.102.30/qa/${question_id}/answers`).then((res) => res.json())
       .then((result) => {
-        // console.log('resultAnswers: ', result);
+        console.log('resultAnswers: ', result);
         this.setState({ answers: result.results, count: result.count });
       });
   }
