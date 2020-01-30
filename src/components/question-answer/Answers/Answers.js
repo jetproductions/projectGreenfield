@@ -31,15 +31,16 @@ class Answers extends Component {
       });
   }
 
-  // sortHelpfulness = (questionsArr) => questionsArr.sort((a, b) => {
-  //   if (a.helpfulness > b.helpfulness) {
-  //     return -1;
-  //   }
-  //   return 1;
-  // });
+  sortHelpfulness = (answersArr) => answersArr.sort((a, b) => {
+    if (a.helpfulness > b.helpfulness) {
+      return -1;
+    }
+    return 1;
+  });
 
   render() {
     const { answers } = this.state;
+    const filtered = this.sortHelpfulness(answers);
     console.log('answers in render: ', answers);
     if (answers.length === 0) {
       return (
@@ -47,7 +48,7 @@ class Answers extends Component {
       );
     }
     return (
-      answers.map((answer) => (
+      filtered.map((answer) => (
         <Answer key={answer.answer_id} {...answer} />
       ))
     );
