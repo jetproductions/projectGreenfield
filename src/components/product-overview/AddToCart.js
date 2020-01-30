@@ -27,8 +27,8 @@ const AddToCart = (props) => {
   const { addToCartClickHandler } = props;
 
   return (
-    <div id="addToCart">
-      <button className="cursor-pointer" type="button" onClick={(e) => { addToCartClickHandler(e); }}>Add To Cart</button>
+    <div id="addToCart" className="mt-6">
+      <button id="addToCartButton" className="mx-2 my-2 cursor-pointer" type="button" onClick={(e) => { addToCartClickHandler(e); }}>Add To Cart</button>
     </div>
   );
 };

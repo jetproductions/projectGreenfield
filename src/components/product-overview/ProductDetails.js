@@ -12,10 +12,14 @@ import React, { Component } from 'react';
 //               # Twitter
 //               # Pinterest
 
-const ProductDetails = (props) => (
-  <div id="productDetails">
-    <h3>Product Details</h3>
-  </div>
-);
+const ProductDetails = (props) => {
+  const { product: { description } } = props;
+  return (
+    <div id="productDetails" className="">
+      <h1 className="h1 font-semibold ml-32 my-6 mx-2 text-2xl">Product Details</h1>
+      <h1 className="h1 my-6 ml-32 mx-6 text-base">{description}</h1>
+    </div>
+  );
+};
 
 export default ProductDetails;

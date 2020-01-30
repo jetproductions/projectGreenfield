@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import StarRatings from '../utility/stars/StarRatings';
+
+
 /* eslint-disable no-undef */
 /* eslint-disable react/no-unused-state */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
@@ -13,14 +15,24 @@ import StarRatings from '../utility/stars/StarRatings';
 
 const ProductInformation = (props) => {
   const { reviewScore } = props;
+  const { product: { category } } = props;
+  const { product: { name } } = props;
   return (
     <div id="productInformation">
-      <h3> Product Information</h3>
-      <StarRatings rating={reviewScore} size="12" />
+      <div id="starRating" className="mx-4 my-8 content-center flex flex-wrap self-center ">
+        <div className="self-center">
+          <StarRatings rating={reviewScore} size="24" />
+        </div>
 
-      {/* Rework this to nav to the ACTUAL Reviews component.  Coordinate with Troy to get an ID on it or a REF that can be scrolled to easily */}
-      {/* Resolve issues with tag name... */}
-      <button type="button" className="cursor-pointer" aria-label="Main" role="link" onClick={(e) => { e.preventDefault(); return document.getElementById('reviews').scrollIntoView(true, { behavior: 'smooth' }); }}>Read All Reviews</button>
+
+        <button id="reviewNavButton" type="button" className="text-lg mx-2 my-2 cursor-pointer" aria-label="Main" role="link" onClick={(e) => { e.preventDefault(); return document.getElementById('reviews').scrollIntoView(true, { behavior: 'smooth' }); }}>Read All Reviews</button>
+
+      </div>
+
+      <h1 className="h1 mx-2 my-2 text-xl" id="category">{` CATEGORY >  ${category.toUpperCase()}`}</h1>
+      <h1 className="h1 mx-2 my-2 text-5xl" id="productName">
+        {name}
+      </h1>
     </div>
   );
 };
