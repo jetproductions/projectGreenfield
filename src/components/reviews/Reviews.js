@@ -11,6 +11,8 @@ import StarRatings from '../utility/stars/StarRatings';
 import Modal from '../utility/Modal';
 import './reviews.css';
 
+/* eslint-disable no-undef */
+/* eslint-disable react/no-unused-state */
 class Reviews extends Component {
   constructor(props) {
     super(props);
@@ -19,6 +21,8 @@ class Reviews extends Component {
     this.state = {
       reviewsMeta: reviewsMetaData,
       reviewsList: reviewsListData,
+      cached: reviewsListData,
+      filtered: false,
       modal: {
         show: false,
         content: null,
@@ -36,7 +40,6 @@ class Reviews extends Component {
   }
 
   getReviewsMeta = async () => {
-    /* eslint-disable no-undef */
     const { product: { id } } = this.props;
     const reviewsMeta = await fetch(`http://3.134.102.30/reviews/${id}/meta`).then((res) => res.json());
     const { ratings } = reviewsMeta;
@@ -46,12 +49,11 @@ class Reviews extends Component {
   }
 
   getReviewsList = async () => {
-    /* eslint-disable no-undef */
     const { product: { id } } = this.props;
     const reviewsList = await fetch(`http://3.134.102.30/reviews/${id}/list?count=10000`).then((res) => res.json());
     const { results } = reviewsList;
     const { setTotalReviewsState } = this.props;
-    this.setState({ reviewsList }, () => {
+    this.setState({ reviewsList, cached: reviewsList }, () => {
       setTotalReviewsState(results.length);
     });
   }
@@ -75,6 +77,17 @@ class Reviews extends Component {
     return percentage;
   }
 
+  filterByRating = (selected) => {
+    const { reviewsList, cached: { results } } = this.state;
+    const filtered = results.filter(({ rating }) => rating === Number(selected));
+    this.setState({ reviewsList: { ...reviewsList, results: filtered }, filtered: true });
+  }
+
+  clearFilter = () => {
+    const { reviewsList, cached: { results } } = this.state;
+    this.setState({ reviewsList: { ...reviewsList, results }, filtered: false });
+  }
+
   toggleModal = ({ show, content }) => {
     this.setState({ modal: { show, content } });
   }
@@ -95,7 +108,7 @@ class Reviews extends Component {
 
   render() {
     const { reviewsMeta } = this.state;
-    const { reviewsList: { results: allReviews } } = this.state;
+    const { reviewsList: { results: allReviews }, filtered } = this.state;
     const { modal: { show, content } } = this.state;
     const { ratings, characteristics } = reviewsMeta;
     const { weighted } = this.props;
@@ -127,7 +140,12 @@ class Reviews extends Component {
               </div>
               <div className="mb-4">
                 { ratingsArray.map((rating) => (
-                  <RatingSlider total={totalRatings} rating={rating} key={rating[0]} />))}
+                  <RatingSlider filter={this.filterByRating} total={totalRatings} rating={rating} key={rating[0]} />))}
+                { filtered && (
+                  <div className="mt-4 text-right">
+                    <a onClick={(e) => { e.preventDefault(); this.clearFilter(); }} href="/" className="text-xs underline">clear filter</a>
+                  </div>
+                )}
               </div>
               <div className="mb-4">
                 { characteristicArray.map((characteristic) => (
@@ -140,11 +158,19 @@ class Reviews extends Component {
                 reviews, sorted by
                 <u className="ml-1">relevance</u>
               </div>
-              <ReviewsList
-                openModal={this.toggleModal}
-                reviews={allReviews}
-              />
-              <div className="w-full mt-4">
+              {
+                allReviews.length > 0
+                  ? (
+                    <ReviewsList
+                      openModal={this.toggleModal}
+                      reviews={allReviews}
+                    />
+                  )
+                  : (
+                    <h3 className="text-xl font-bold">No reviews yet...add one below!</h3>
+                  )
+              }
+              <div className="w-full mt-8">
                 <button
                   onClick={(e) => {
                     this.toggleModal({ show: true, content: <ReviewForm create={this.createReview} characteristics={characteristics} /> });
