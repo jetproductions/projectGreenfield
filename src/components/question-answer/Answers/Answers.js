@@ -14,7 +14,6 @@ class Answers extends Component {
       answers: [],
       question_id,
       count: 0,
-      answerModalShow: false,
     };
     this.getAnswers();
   }
