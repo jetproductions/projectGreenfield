@@ -3,11 +3,11 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 
-const helpfulUpdate = (e, id) => {
-  console.log('answerid: ', id);
+const helpfulUpdate = async (e, id) => {
   e.preventDefault();
   // eslint-disable-next-line no-undef
-  fetch(`http://3.134.102.30/qa/answer/${id}/helpful`, { method: 'PUT', headers: { 'Content-Type': 'application/json' } }).then((result) => { console.log(result); });
+  const status = await fetch(`http://3.134.102.30/qa/answer/${id}/helpful`, { method: 'PUT', headers: { 'Content-Type': 'application/json' } }).then((result) => result.status);
+  return status === 204;
 };
 
 const Answer = ({
@@ -15,6 +15,14 @@ const Answer = ({
 }) => {
   const dateString = moment(date).format('MMMM Do, YYYY');
   const [helpfulButton, buttonUsed] = useState(false);
+  const [helpfulnessState, helpfulnessUpdate] = useState(helpfulness);
+  const helpfulnessHander = async (e) => {
+    const updated = await helpfulUpdate(e, answer_id);
+    if (updated) {
+      helpfulnessUpdate(helpfulnessState + 1);
+      buttonUsed(true);
+    }
+  };
   return (
     <div>
       <h2>
@@ -29,9 +37,15 @@ A:
           { dateString }
           {' '}
           {'| Helpful?'}
-          <button type="button" disabled={helpfulButton} onClick={(e) => { buttonUsed(true); helpfulUpdate(e, answer_id); }}>Yes</button>
+          <button
+            type="button"
+            disabled={helpfulButton}
+            onClick={(e) => { helpfulnessHander(e); }}
+          >
+            Yes
+          </button>
           {' '}
-          {`${helpfulness} | Report`}
+          {`${helpfulnessState} | Report`}
         </span>
       </div>
       {photos.length > 0 ? (
