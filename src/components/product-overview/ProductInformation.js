@@ -19,15 +19,20 @@ const ProductInformation = (props) => {
   const { product: { name } } = props;
   return (
     <div id="productInformation">
-      <h1 className="mx-2 my-2 text-xl" id="category">{` CATEGORY >  ${category.toUpperCase()}`}</h1>
-      <h1 className="mx-2 my-2 text-3xl" id="productName">
-        {name}
-      </h1>
-      <div className="mx-2 my-2">
-        <StarRatings rating={reviewScore} size="18" />
+      <div id="starRating" className="mx-4 my-8 content-center flex flex-wrap self-center ">
+        <div className="self-center">
+          <StarRatings rating={reviewScore} size="24" />
+        </div>
+
+
+        <button id="reviewNavButton" type="button" className="text-lg mx-2 my-2 cursor-pointer" aria-label="Main" role="link" onClick={(e) => { e.preventDefault(); return document.getElementById('reviews').scrollIntoView(true, { behavior: 'smooth' }); }}>Read All Reviews</button>
+
       </div>
 
-      <button id="reviewNavButton" type="button" className="mx-2 my-2 cursor-pointer" aria-label="Main" role="link" onClick={(e) => { e.preventDefault(); return document.getElementById('reviews').scrollIntoView(true, { behavior: 'smooth' }); }}>Read All Reviews</button>
+      <h1 className="mx-2 my-2 text-xl" id="category">{` CATEGORY >  ${category.toUpperCase()}`}</h1>
+      <h1 className="mx-2 my-2 text-5xl" id="productName">
+        {name}
+      </h1>
     </div>
   );
 };

@@ -9,16 +9,26 @@ const Carousel = (props) => {
 
   const { selectedImage } = props;
 
-  const fullSlideDeck = currentSlideDeck.map((item, index) => (
-    <div className="flex mx-2 my-2 border border-gray-600 z-10 ">
-      <img className="h-20 w-20  object-cover " key={Math.random() * Math.random() * 10} src={item} alt={`thumbnail ${index} for style`} onClick={(e) => { e.preventDefault(); currentImageChangeHandler(index); }} />
-    </div>
-  ));
+  const fullSlideDeck = currentSlideDeck.map((item, index) => {
+    const border = index === selectedImage ? 'border-2 border-blue-300' : 'border border-gray-600';
+    return (
+      <div className={` mx-2 my-2  ${border} z-10 `}>
+        <img className="h-20 w-20  object-cover " key={Math.random() * Math.random() * 10} src={item} alt={`thumbnail ${index} for style`} onClick={(e) => { e.preventDefault(); currentImageChangeHandler(index); }} />
+      </div>
+    );
+  });
+
   const sevenSlideDeck = fullSlideDeck.length > 7 ? fullSlideDeck.slice(selectedImage, selectedImage + 7) : fullSlideDeck;
   const htmlList = sevenSlideDeck;
-  return (
-    <div className="absolute mt-12 object-left z-10 h-screen">
+  const prettyHtml = (
+    <div className="h-screen ">
       {htmlList}
+    </div>
+  );
+
+  return (
+    <div className="absolute mt-12 object-left z-10 h-screen ">
+      {prettyHtml}
     </div>
   );
 };

@@ -11,6 +11,7 @@ import './ProductOverview.css';
 /* eslint-disable react/no-unused-state */
 /* eslint-disable no-alert */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/accessible-emoji */
 
 
 //        ## [Q] ##:  Could/Should the columns be different components themselves, or is this needless complication?
@@ -142,8 +143,10 @@ class ProductOverview extends Component {
     const { styleChangeHandler } = this;
     return (
       <div id="productOverview">
-        <div id="upperBar" className="w-full h-20 my-2">
-          <h2 id="logo" className=" font-extrabold text-xl pt-6 ml-48 underline italic">Logo</h2>
+        <div id="upperBar" className="flex w-full h-20 my-2">
+          <h2 id="logo" className=" font-extrabold text-2xl self-center ml-48 mr-auto underline italic">Logo</h2>
+          <input className="h-4 self-center mr-4" />
+          <span className="object-left self-center mr-64 cursor-pointer">&#128269;</span>
         </div>
 
         <div className="flex mb-4">
