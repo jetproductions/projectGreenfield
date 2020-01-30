@@ -7,20 +7,23 @@ import Answer from './Answer';
 import Button from '../../utility/Button';
 
 class Answers extends Component {
-  constructor({ questionId }) {
-    super({ questionId });
+  constructor(props) {
+    super(props);
+    const { question_id } = this.props;
     this.state = {
       answers: [],
-      questionId,
+      question_id,
       count: 0,
+      answerModalShow: false,
     };
-    this.getAnswers(questionId);
+    this.getAnswers(question_id);
   }
 
   // this only gets two answers need to figure out how to get the rest of the answers
   // eslint-disable-next-line no-undef
-  getAnswers = (questionId) => {
-    fetch(`http://3.134.102.30/qa/${questionId}/answers`).then((res) => res.json())
+  getAnswers = () => {
+    const { question_id: { id } } = this.state;
+    fetch(`http://3.134.102.30/qa/${id}/answers`).then((res) => res.json())
       .then((result) => {
         // console.log('resultAnswers: ', result);
         this.setState({ answers: result.results, count: result.count });
@@ -36,7 +39,8 @@ class Answers extends Component {
 
   render() {
     const { answers } = this.state;
-    if (answers === []) {
+    console.log('answers in render: ', answers);
+    if (answers.length === 0) {
       return (
         <div>No Answers for This Question Yet</div>
       );
