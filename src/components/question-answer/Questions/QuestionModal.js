@@ -1,10 +1,10 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-undef */
 /* eslint-disable react/prefer-stateless-function */
 import React from 'react';
 
 
-
-const QuestionModal = ({ show, toggleModal question_id }) => {
+const QuestionModal = ({ show, toggleModal, question_id }) => {
   const style = {
     backgroundColor: 'rgba(0,0,0,0.3)',
     display: (show ? 'flex' : 'none'),
