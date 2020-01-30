@@ -15,8 +15,8 @@ import React, { Component } from 'react';
 const ProductDetails = (props) => {
   const { product: { description } } = props;
   return (
-    <div id="productDetails">
-      <h1 className="font-semibold ml-24 my-6 mx-2 text-2xl">Product Details</h1>
+    <div id="productDetails" className="">
+      <h1 className=" font-semibold ml-32 my-6 mx-2 text-2xl">Product Details</h1>
       <h1 className="my-6 ml-32 mx-6 text-base">{description}</h1>
     </div>
   );

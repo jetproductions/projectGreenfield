@@ -110,7 +110,7 @@ class ProductOverview extends Component {
 
   // Current Image view change
   currentImageChangeHandler = (imageNum) => {
-    this.setState({ selectedImage: imageNum });
+    this.setState({ selectedImage: imageNum }, this.imageUrlChangeHandler);
   }
 
   //  Image View State [default, expanded, zoom]
@@ -143,24 +143,29 @@ class ProductOverview extends Component {
     return (
       <div id="productOverview">
         <div id="upperBar" className="w-full h-20 my-2">
-          <h2 id="logo" className="font-extrabold text-xl ml-48 italic">LOGO</h2>
+          <h2 id="logo" className=" font-extrabold text-xl pt-6 ml-48 underline italic">Logo</h2>
         </div>
 
         <div className="flex mb-4">
 
-          <div id="leftColumn" className="w-1/2 ml-auto">
+          <div id="leftColumn" className=" w-1/2 ml-auto">
             {/* <h1>Left Column</h1> */}
-            <ImageView
-              product={product}
-              currentStyle={currentStyle}
-              productStyles={productStyles}
-              selectedImage={selectedImage}
-              selectedViewFormat={selectedViewFormat}
-              currentImageChangeHandler={currentImageChangeHandler}
-              imageViewFormatChangeHandler={imageViewFormatChangeHandler}
-              imageUrl={imageUrl}
-            />
-            <ProductDetails product={product} productStyles={productStyles} />
+            <div className="w-full h-auto">
+              <ImageView
+                product={product}
+                currentStyle={currentStyle}
+                productStyles={productStyles}
+                selectedImage={selectedImage}
+                selectedViewFormat={selectedViewFormat}
+                currentImageChangeHandler={currentImageChangeHandler}
+                imageViewFormatChangeHandler={imageViewFormatChangeHandler}
+                imageUrl={imageUrl}
+              />
+            </div>
+            <div className="w-full">
+              <ProductDetails product={product} productStyles={productStyles} />
+            </div>
+
           </div>
 
           <div id="rightColumn" className="w-1/4 mr-auto bg-gray-100">

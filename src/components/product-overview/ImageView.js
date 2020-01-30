@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Carousel from './Carousel';
 
 /* eslint-disable no-undef */
 /* eslint-disable react/no-unused-state */
@@ -60,6 +61,8 @@ const ImageView = (props) => {
   const { currentImageChangeHandler } = props;
   const { imageViewFormatChangeHandler } = props;
   const { imageUrl } = props;
+  const slidelist = productStyles.map((style) => style.photos);
+  const currentSlideDeck = slidelist[currentStyle] ? slidelist[currentStyle].map((entry) => entry.thumbnail_url) : [];
 
 
   // const html = (
@@ -70,7 +73,13 @@ const ImageView = (props) => {
 
 
   return (
-    <img className="h-screen my-3 ml-auto mr-auto object-scale-down cursor-pointer" src={imageUrl} alt="A model wearing a garment" />
+    <div className="">
+      <div className="flex flex-auto ml-auto mr-auto ">
+        <Carousel className="z-10 " currentSlideDeck={currentSlideDeck} currentImageChangeHandler={currentImageChangeHandler} selectedImage={selectedImage} />
+        <img className="ml-auto mr-auto static h-screen w-full z-0  my-3  object-cover cursor-pointer" src={imageUrl} alt="A model wearing a garment" />
+
+      </div>
+    </div>
   );
 };
 
