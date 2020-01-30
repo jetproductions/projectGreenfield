@@ -14,7 +14,6 @@ class QuestionAnswer extends Component {
     const { product: { id } } = props;
     this.state = {
       questions: [],
-      questionModal: false,
       searched: '',
       filteredQuestions: [],
     };
@@ -54,7 +53,6 @@ class QuestionAnswer extends Component {
 
   render() {
 	  const { questions } = this.state;
-    const { questionModal } = this.state;
     const { searched } = this.state;
 	  return (
   <div id="questions-answers">
@@ -65,7 +63,6 @@ class QuestionAnswer extends Component {
       <SearchBar searchChangeHandler={this.searchChangeHandler} />
       <Questions
         questions={questions}
-        questionModal={questionModal}
         searchBar={searched}
       />
     </div>
