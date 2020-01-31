@@ -24,6 +24,8 @@ import React, { Component } from 'react';
 const StyleSelector = (props) => {
   const { productStyles } = props;
   const { styleChangeHandler } = props;
+  const { currentStyle } = props;
+  const styleName = productStyles[currentStyle] ? productStyles[currentStyle].name : '';
   const styles = productStyles.map((style, index) => (
     <div className="w-1/4 px-1 py-1 h-40">
       <img className="object-cover ml-auto mr-auto h-32 bg-gray-200 cursor-pointer" src={style.photos[0].thumbnail_url} alt={style.name} onClick={(e) => { e.preventDefault(); styleChangeHandler(index); }} />
@@ -31,7 +33,10 @@ const StyleSelector = (props) => {
   ));
   return (
     <div>
-      <h1 className="mx-2" id="styleSelector">Style Selector</h1>
+      <h1 className="mx-2" id="styleSelector">
+        {`STYLE > ${styleName}`}
+      </h1>
+      <h1 className="mx-8" id="styleSelector">{'Choose A Style >'}</h1>
       <div className="flex flex-wrap">
         {styles}
       </div>

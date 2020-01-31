@@ -25,10 +25,36 @@ import React, { Component } from 'react';
 
 const AddToCart = (props) => {
   const { addToCartClickHandler } = props;
+  const { skus } = props;
+  const { productStyles } = props;
+  const { qtyChangeHandler } = props;
+  const { sizeChangeHandler } = props;
+  const { selectedSize } = props;
+  const { selectedQty } = props;
+  const sizeList = skus.map((item, index) => {
+    if (item[0] === 'null') {
+      return (
+        <option>One Size</option>
+      );
+    }
+    return (
+      <option>{item[0]}</option>
+    );
+  });
+  // const qtyList=
 
   return (
     <div id="addToCart" className="mt-6">
-      <button id="addToCartButton" className="mx-2 my-2 cursor-pointer" type="button" onClick={(e) => { addToCartClickHandler(e); }}>Add To Cart</button>
+      <div className="flex">
+        <div>Select Size</div>
+        <select onChange={(e) => sizeChangeHandler(e)}>
+          {sizeList}
+        </select>
+      </div>
+      <div className="flex">
+        <button id="addToCartButton" className="mx-2 my-2 cursor-pointer" type="button" onClick={(e) => { addToCartClickHandler(e); }}>Add To Cart</button>
+
+      </div>
     </div>
   );
 };

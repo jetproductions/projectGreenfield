@@ -47,10 +47,11 @@ class ProductOverview extends Component {
       productStyles: [],
       currentStyle: 0, // The first style doesn't necessarily have a value of 0.  Some items (such as 2) don't have pictures.
       selectedSize: '',
-      selectQty: 1,
+      selectedQty: 1,
       selectedImage: 0,
       selectedViewFormat: 'default',
       imageUrl: '',
+      skus: [],
     };
 
     this.getProductStyles(id);
@@ -63,6 +64,7 @@ class ProductOverview extends Component {
     this.currentImageChangeHandler = this.currentImageChangeHandler.bind(this);
     this.imageViewFormatChangeHandler = this.imageViewFormatChangeHandler.bind(this);
     this.imageUrlChangeHandler = this.imageUrlChangeHandler.bind(this);
+    this.skuChangeHandler = this.skuChangeHandler.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -81,13 +83,13 @@ class ProductOverview extends Component {
     return fetch(`http://3.134.102.30/products/${productId}/styles`)
       .then((res) => res.json())
       .catch((err) => { throw err; })
-      .then((response) => this.setState({ productStyles: response.results }, this.imageUrlChangeHandler));
+      .then((response) => this.setState({ productStyles: response.results }, () => { this.imageUrlChangeHandler(); this.skuChangeHandler(); }));
   }
 
   //  HANDLERS:
   //  Style Selector change
   styleChangeHandler = (styleNum) => {
-    this.setState({ currentStyle: styleNum }, this.imageUrlChangeHandler);
+    this.setState({ currentStyle: styleNum }, () => { this.imageUrlChangeHandler(); this.skuChangeHandler(); });
   }
 
   //  Add to Cart Size change
@@ -95,9 +97,17 @@ class ProductOverview extends Component {
     this.setState({ selectedSize: size });
   }
 
+  //  SKU change
+  skuChangeHandler = () => {
+    const { productStyles } = this.state;
+    const { currentStyle } = this.state;
+    const skus = productStyles.length === 0 ? [] : Object.entries(productStyles[currentStyle].skus);
+    this.setState({ skus });
+  }
+
   //  Add to Cart Qty change
   qtyChangeHandler = (qty) => {
-    this.setState({ selectQty: qty });
+    this.setState({ selectedQty: qty });
   }
 
   //  Add to Cart button click
@@ -125,7 +135,7 @@ class ProductOverview extends Component {
     const { currentStyle } = this.state;
     const { selectedImage } = this.state;
     const { productStyles } = this.state;
-    const newUrl = productStyles[currentStyle].photos[selectedImage].url;
+    const newUrl = productStyles.length === 0 ? 'https://http.cat/204' : productStyles[currentStyle].photos[selectedImage].url;
     this.setState({ imageUrl: newUrl });
   }
 
@@ -141,6 +151,12 @@ class ProductOverview extends Component {
     const { imageViewFormatChangeHandler } = this;
     const { imageUrl } = this.state;
     const { styleChangeHandler } = this;
+    const { qtyChangeHandler } = this;
+    const { sizeChangeHandler } = this;
+    const { skus } = this.state;
+    const { selectedSize } = this.state;
+    const { selectedQty } = this.state;
+
     return (
       <div id="productOverview">
         <div id="upperBar" className="flex w-full h-20 my-2">
@@ -166,16 +182,37 @@ class ProductOverview extends Component {
               />
             </div>
             <div className="w-full">
-              <ProductDetails product={product} productStyles={productStyles} />
+              <ProductDetails
+                product={product}
+                productStyles={productStyles}
+              />
             </div>
 
           </div>
 
           <div id="rightColumn" className="w-1/4 mr-auto bg-gray-100">
             {/* <h1>Right Column</h1> */}
-            <ProductInformation product={product} productStyles={productStyles} reviewScore={weighted} />
-            <StyleSelector product={product} productStyles={productStyles} styleChangeHandler={styleChangeHandler} />
-            <AddToCart product={product} productStyles={productStyles} addToCartClickHandler={addToCartClickHandler} />
+            <ProductInformation
+              product={product}
+              productStyles={productStyles}
+              reviewScore={weighted}
+            />
+            <StyleSelector
+              product={product}
+              productStyles={productStyles}
+              styleChangeHandler={styleChangeHandler}
+              currentStyle={currentStyle}
+            />
+            <AddToCart
+              product={product}
+              productStyles={productStyles}
+              addToCartClickHandler={addToCartClickHandler}
+              skus={skus}
+              sizeChangeHandler={sizeChangeHandler}
+              qtyChangeHandler={qtyChangeHandler}
+              selectedSize={selectedSize}
+              selectedQty={selectedQty}
+            />
           </div>
 
 
