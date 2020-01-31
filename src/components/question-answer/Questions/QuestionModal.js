@@ -8,14 +8,15 @@ class SubmitQuestion extends Component {
 
     };
   }
+  formChangeHandler = () => {
+ 
+};
+  render = () => {
+
+  };
 }
 
-const formChangeHandler = () => {
 
-};
 
-render = () => {
-
-};
 
 export default SubmitQuestion;
