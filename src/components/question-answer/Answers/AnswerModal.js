@@ -2,6 +2,8 @@
 /* eslint-disable react/prefer-stateless-function */
 import React from 'react';
 
+import CreateAnswer from './CreateAnswer';
+
 const submitAnswer = (text, id) => {
   fetch();
 };
@@ -25,7 +27,7 @@ const AnswerModal = ({ show, toggleModal }) => {
           <small className="absolute font-bold text-2xl w-full text-center" style={{ marginTop: '-3px', marginLeft: '2px', transform: 'rotate(45deg)' }}>+</small>
         </a>
         <div className="w-full max-h-full overflow-y-scroll overflow-x-hiddena px-10">
-          Form Will Go Here
+          <CreateAnswer toggleModal={toggleModal} />
         </div>
       </div>
     </div>

@@ -24,7 +24,7 @@ class CreateQuestion extends Component {
   render() {
     return (
       <div>
-        No form Yet
+        <h3>Ask a Question</h3>
         <br />
         <label htmlFor="asked-question">
 Question:

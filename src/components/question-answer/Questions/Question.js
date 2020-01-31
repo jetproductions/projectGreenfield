@@ -63,7 +63,7 @@ Helpfulness?
         {' '}
         <button
           type="button"
-          disbled={reportState}
+          disabled={reportState}
           onClick={(e) => { reportHandler(e); }}
         >
           Report
