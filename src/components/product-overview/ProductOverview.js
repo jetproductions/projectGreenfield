@@ -52,6 +52,7 @@ class ProductOverview extends Component {
       selectedViewFormat: 'default',
       imageUrl: '',
       skus: [],
+      maxQty: 0,
     };
 
     this.getProductStyles(id);
@@ -93,8 +94,18 @@ class ProductOverview extends Component {
   }
 
   //  Add to Cart Size change
-  sizeChangeHandler = (size) => {
-    this.setState({ selectedSize: size });
+  sizeChangeHandler = (size = 'default') => {
+    const { skus } = this.state;
+    const skuObj = Object.fromEntries(skus);
+    if (skus.length) {
+      const defSize = skus[0][0];
+      const defVal = skuObj[defSize];
+      // console.log(defVal);
+      const newSize = size === 'default' ? skus[0][0] : size;
+      let max = size === 'default' ? skuObj[defSize] : skuObj[size];
+      max = max > 15 ? 15 : max;
+      this.setState({ selectedSize: (newSize) }, () => this.setState({ maxQty: max }));
+    }
   }
 
   //  SKU change
@@ -102,7 +113,7 @@ class ProductOverview extends Component {
     const { productStyles } = this.state;
     const { currentStyle } = this.state;
     const skus = productStyles.length === 0 ? [] : Object.entries(productStyles[currentStyle].skus);
-    this.setState({ skus });
+    this.setState({ skus }, this.sizeChangeHandler);
   }
 
   //  Add to Cart Qty change
@@ -156,6 +167,7 @@ class ProductOverview extends Component {
     const { skus } = this.state;
     const { selectedSize } = this.state;
     const { selectedQty } = this.state;
+    const { maxQty } = this.state;
 
     return (
       <div id="productOverview">
@@ -212,6 +224,7 @@ class ProductOverview extends Component {
               qtyChangeHandler={qtyChangeHandler}
               selectedSize={selectedSize}
               selectedQty={selectedQty}
+              maxQty={maxQty}
             />
           </div>
 

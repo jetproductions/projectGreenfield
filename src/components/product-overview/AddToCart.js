@@ -31,6 +31,7 @@ const AddToCart = (props) => {
   const { sizeChangeHandler } = props;
   const { selectedSize } = props;
   const { selectedQty } = props;
+  const { maxQty } = props;
   const sizeList = skus.map((item, index) => {
     if (item[0] === 'null') {
       return (
@@ -41,18 +42,30 @@ const AddToCart = (props) => {
       <option>{item[0]}</option>
     );
   });
-  // const qtyList=
 
+
+  const qtyArray = Array(maxQty).fill(1);
+  const qtyHtml = qtyArray.map((item, index) => {
+    const correctVal = index + 1; return (
+      <option key={correctVal} value={correctVal}>{correctVal}</option>
+    );
+  });
   return (
     <div id="addToCart" className="mt-6">
-      <div className="flex">
-        <div>Select Size</div>
-        <select onChange={(e) => sizeChangeHandler(e)}>
+      <div className="mx-8">{'Select Size > '}</div>
+      <div className="flex mx-8">
+
+        <select id="sizeSelect" className="ml-auto mr-auto my-4" onChange={(e) => { e.preventDefault(); sizeChangeHandler(e.target.value); }}>
           {sizeList}
         </select>
+        <select id="qtySelect" className="ml-auto mr-auto my-4" onChange={(e) => { e.preventDefault(); qtyChangeHandler(e.target.value); }}>
+          {qtyHtml}
+        </select>
+
       </div>
+
       <div className="flex">
-        <button id="addToCartButton" className="mx-2 my-2 cursor-pointer" type="button" onClick={(e) => { addToCartClickHandler(e); }}>Add To Cart</button>
+        <button id="addToCartButton" className="ml-auto mr-auto px-2 py-2 bg-gray-400 border border-2 my-2 cursor-pointer" type="button" onClick={(e) => { addToCartClickHandler(e); }}>Add To Cart</button>
 
       </div>
     </div>
