@@ -18,8 +18,23 @@ class CreateAnswer extends Component {
     this.setState({ location: value });
   }
 
-  submitQuestion = () => {
-    fetch();
+  submitAnswer = () => {
+    const { answer } = this.state;
+    const { nickname } = this.state;
+    const { email } = this.state;
+    const { photos } = this.state;
+    if (answer.length < 50 || answer.length > 1000) {
+      return 'Inavlid Answer';
+    }
+    // long run would validate with user credentials to make sure not actual name
+    if (nickname.length < 8 || nickname.length > 60) {
+      return 'Invalid Nickname';
+    }
+    if ((email.length < 8 || email.length > 60) || email.indexOf('@') === -1) {
+      return 'Invalid email';
+    }
+    // fetch();
+    return 'valid answer';
   }
 
   render() {
@@ -39,7 +54,13 @@ Your Answer:
         </label>
         <label htmlFor="answer-nickname">
 Nickname:
-          <input id="answer-nickname" type="text" onChange={(e) => this.formChangeHandler('nickname', e.target.value)} placeholder="Nickname" />
+          <input
+            id="answer-nickname"
+            type="text"
+            onChange={(e) => this.formChangeHandler('nickname', e.target.value)}
+            placeholder="Example: jack543!"
+            maxLength="60"
+          />
         </label>
         <label htmlFor="answer-email">
 Email:
@@ -48,14 +69,26 @@ Email:
             type="email"
             name="answer-email"
             onChange={(e) => this.formChangeHandler('email', e.target.value)}
-            placeholder="example@example.com"
+            placeholder="Example: jack@email.com"
+            maxLength="60"
           />
         </label>
         <label htmlFor="answer-photos">
           Add Photos:
-          <input id="answer-photos" type="url" onChange={(e) => { this.formChangeHandler('photos', e.target.value); }} />
+          <input
+            id="answer-photos"
+            type="url"
+            onChange={(e) => { this.formChangeHandler('photos', e.target.value); }}
+            placeholder="Put Link to Photos Here"
+          />
         </label>
-        <button type="button" onClick={(e) => { e.preventDefault(); this.submitAnswer(); }}>Submit Answer</button>
+        <button
+          type="button"
+          onClick={(e) => { e.preventDefault(); this.submitAnswer(); }}
+          className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Submit Answer
+        </button>
       </div>
     );
   }

@@ -20,7 +20,6 @@ const searchQuestions = (searched, questions) => questions.filter((question) => 
   return false;
 });
 
-
 // should change questions modal show/hide to live here in state not in QA
 const Questions = ({ questions, questionModal, searchBar }) => {
   const [createQuestion, createQuestionView] = useState(false);
@@ -28,7 +27,6 @@ const Questions = ({ questions, questionModal, searchBar }) => {
     return (
       <div>
         <QuestionModal show={createQuestion} toggleModal={createQuestionView} />
-        <p>Modal will be shown</p>
       </div>
     );
   }
@@ -46,14 +44,26 @@ const Questions = ({ questions, questionModal, searchBar }) => {
             <Question key={qid} {...question} {...questionModal} />
           );
         })}
-        <button type="button" onClick={(e) => { e.preventDefault(); createQuestionView(!createQuestion); }}>Add Question +</button>
+        <button
+          type="button"
+          onClick={(e) => { e.preventDefault(); createQuestionView(!createQuestion); }}
+          className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Add Question +
+        </button>
       </div>
     );
   }
   return (
     <>
       <div>No Questions Asked Yet</div>
-      <button type="button" onClick={(e) => { e.preventDefault(); createQuestionView(!createQuestion); }}>Add Question +</button>
+      <button
+        type="button"
+        onClick={(e) => { e.preventDefault(); createQuestionView(!createQuestion); }}
+        className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
+      >
+        Add Question +
+      </button>
     </>
   );
 };
