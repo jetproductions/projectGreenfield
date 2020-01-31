@@ -74,6 +74,7 @@ class ProductOverview extends Component {
     if (id === prevProps.product.id) {
       return;
     }
+
     this.getProductStyles(id);
   }
 
@@ -90,14 +91,15 @@ class ProductOverview extends Component {
   //  HANDLERS:
   //  Style Selector change
   styleChangeHandler = (styleNum) => {
-    this.setState({ currentStyle: styleNum }, () => { this.imageUrlChangeHandler(); this.skuChangeHandler(); });
+    this.setState({ currentStyle: styleNum, maxQty: 0 }, () => { this.imageUrlChangeHandler(); this.skuChangeHandler(); });
   }
 
   //  Add to Cart Size change
   sizeChangeHandler = (size = 'default') => {
     const { skus } = this.state;
-    const skuObj = Object.fromEntries(skus);
-    if (skus.length) {
+
+    if (skus.length && skus[0] !== 'null') {
+      const skuObj = Object.fromEntries(skus);
       const defSize = skus[0][0];
       const defVal = skuObj[defSize];
       // console.log(defVal);
@@ -107,6 +109,10 @@ class ProductOverview extends Component {
       this.setState({ selectedSize: (newSize) }, () => this.setState({ maxQty: max }));
     }
   }
+
+
+  // MAKE NEW HANDLER FOR maxQty change
+
 
   //  SKU change
   skuChangeHandler = () => {
