@@ -9,12 +9,12 @@ import AnswerModal from '../Answers/AnswerModal';
 // also maybe refactor to be own module work with both question and answer
 const helpfulUpdate = async (e, id) => {
   e.preventDefault();
-  const status = await fetch(`http://3.134.102.30/qa/question/${id}/helpful`, { method: 'PUT', headers: { 'Content-Type': 'application/json' } }).then((result) => result.status);
+  const status = await fetch(`http://52.26.193.201:3000/qa/question/${id}/helpful`, { method: 'PUT', headers: { 'Content-Type': 'application/json' } }).then((result) => result.status);
   return status === 204;
 };
 const reportUpdate = async (e, id) => {
   e.preventDefault();
-  const status = await fetch(`http://3.134.102.30/qa/question/${id}/report`, { method: 'PUT', headers: { 'Content-Type': 'application/json' } }).then((result) => result.status);
+  const status = await fetch(`http://52.26.193.201:3000qa/question/${id}/report`, { method: 'PUT', headers: { 'Content-Type': 'application/json' } }).then((result) => result.status);
   // console.log('report: ', status);
   return status === 204;
 };

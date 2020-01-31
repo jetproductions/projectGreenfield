@@ -42,12 +42,14 @@ class CreateQuestion extends Component {
       console.log('email');
       return 'Invalid Email';
     }
-    // const body = { body: question, email, name: nickname };
+    const data = { body, email, name };
     // get fetch call to go and then change form display to show submitted after
     const created = await fetch(`http://52.26.193.201:3000/qa/${id}`,
-      { method: 'POST', headers: { 'Content-Type': 'application/json' } },
-      { body, name, email });
-      // .then((res) => res.json());
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      }).then((res) => res.json());
     console.log('created: ', created.status);
     return created.status === 201;
   }
