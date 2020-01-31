@@ -14,6 +14,8 @@ import './reviews.css';
 /* eslint-disable no-undef */
 /* eslint-disable react/no-unused-state */
 class Reviews extends Component {
+  API_URL = 'http://52.26.193.201:3000';
+
   constructor(props) {
     super(props);
     const { product: { id } } = props;
@@ -41,7 +43,7 @@ class Reviews extends Component {
 
   getReviewsMeta = async () => {
     const { product: { id } } = this.props;
-    const reviewsMeta = await fetch(`http://3.134.102.30/reviews/${id}/meta`).then((res) => res.json());
+    const reviewsMeta = await fetch(`${this.API_URL}/reviews/${id}/meta`).then((res) => res.json());
     const { ratings } = reviewsMeta;
     this.setState({ reviewsMeta }, () => {
       this.setWeightedAverage(ratings);
@@ -50,7 +52,7 @@ class Reviews extends Component {
 
   getReviewsList = async () => {
     const { product: { id } } = this.props;
-    const reviewsList = await fetch(`http://3.134.102.30/reviews/${id}/list?count=10000`).then((res) => res.json());
+    const reviewsList = await fetch(`${this.API_URL}/reviews/${id}/list?count=10000`).then((res) => res.json());
     const { results } = reviewsList;
     const { setTotalReviewsState } = this.props;
     this.setState({ reviewsList, cached: reviewsList }, () => {
@@ -104,7 +106,7 @@ class Reviews extends Component {
       default:
     }
     const { review_id: id } = review;
-    const { ok } = await fetch(`http://3.134.102.30/reviews/${endpoint}/${id}`, {
+    const { ok } = await fetch(`${this.API_URL}/reviews/${endpoint}/${id}`, {
       method: 'PUT',
     });
     if (!ok || endpoint === 'report') return;
@@ -119,7 +121,7 @@ class Reviews extends Component {
 
   createReview = async (review) => {
     const { product: { id } } = this.props;
-    const { ok } = await fetch(`http://3.134.102.30/reviews/${id}`, {
+    const { ok } = await fetch(`${this.API_URL}/reviews/${id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
