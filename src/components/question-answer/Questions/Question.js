@@ -15,7 +15,7 @@ const helpfulUpdate = async (e, id) => {
 const reportUpdate = async (e, id) => {
   e.preventDefault();
   const status = await fetch(`http://3.134.102.30/qa/question/${id}/report`, { method: 'PUT', headers: { 'Content-Type': 'application/json' } }).then((result) => result.status);
-  console.log('report: ', status);
+  // console.log('report: ', status);
   return status === 204;
 };
 

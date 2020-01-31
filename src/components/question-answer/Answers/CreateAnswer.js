@@ -33,6 +33,7 @@ class CreateAnswer extends Component {
     if ((email.length < 8 || email.length > 60) || email.indexOf('@') === -1) {
       return 'Invalid email';
     }
+    // get fetch call to go and then change form display to show submitted after
     // fetch();
     return 'valid answer';
   }

@@ -24,7 +24,7 @@ class Answers extends Component {
   getAnswers = () => {
     const { question_id } = this.state;
     // console.log(question_id);
-    fetch(`http://3.134.102.30/qa/${question_id}/answers`).then((res) => res.json())
+    fetch(`http://52.26.193.201:3000/qa/${question_id}/answers`).then((res) => res.json())
       .then((result) => {
         // console.log('resultAnswers: ', result);
         this.setState({ answers: result.results, count: result.count });

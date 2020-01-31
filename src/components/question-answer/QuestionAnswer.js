@@ -41,7 +41,7 @@ class QuestionAnswer extends Component {
 
 
   getQuestions = async (id) => {
-    const fetchQuestions = await fetch(`http://3.134.102.30/qa/${id}`).then((res) => res.json());
+    const fetchQuestions = await fetch(`http://52.26.193.201:3000/qa/${id}`).then((res) => res.json());
     const { results } = fetchQuestions;
     this.setState({ questions: results });
   }
