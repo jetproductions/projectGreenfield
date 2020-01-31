@@ -3,6 +3,7 @@
 /* eslint-disable react/prefer-stateless-function */
 import React from 'react';
 
+import CreateQuestion from './CreateQuestion';
 
 const QuestionModal = ({ show, toggleModal, question_id }) => {
   const style = {
@@ -23,7 +24,7 @@ const QuestionModal = ({ show, toggleModal, question_id }) => {
           <small className="absolute font-bold text-2xl w-full text-center" style={{ marginTop: '-3px', marginLeft: '2px', transform: 'rotate(45deg)' }}>+</small>
         </a>
         <div className="w-full max-h-full overflow-y-scroll overflow-x-hiddena px-10">
-          Form Will Go Here
+          <CreateQuestion toggleModal={toggleModal} />
         </div>
       </div>
     </div>
