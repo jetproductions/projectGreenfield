@@ -73,8 +73,8 @@ class Reviews extends Component {
 
   calcRecommended = () => {
     const { reviewsMeta: { recommended = {} } } = this.state;
-    const total = Object.values(recommended).reduce((acc, curr) => acc + curr, 0);
-    const recommendations = recommended[1] || 0;
+    const total = Object.values(recommended).length ? Object.values(recommended).reduce((acc, curr) => acc + curr, 0) : 1;
+    const recommendations = recommended['1'] || 0;
     const percentage = Math.floor((recommendations / total) * 100);
     return percentage;
   }
