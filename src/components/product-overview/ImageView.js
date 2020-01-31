@@ -71,13 +71,15 @@ const ImageView = (props) => {
 
   // );
 
+  const imgHtml = imageUrl === 'https://http.cat/204' ? <img className="ml-auto mr-auto static h-screen w-full z-0  my-3  object-scale-down cursor-pointer" src={imageUrl} alt="A model wearing a garment" />
+    : (<img className="ml-auto mr-auto static h-screen w-full z-0  my-3  object-cover cursor-pointer" src={imageUrl} alt="A model wearing a garment" />
+    );
 
   return (
     <div className="">
       <div className="flex flex-auto ml-auto mr-auto ">
         <Carousel className="z-10 " currentSlideDeck={currentSlideDeck} currentImageChangeHandler={currentImageChangeHandler} selectedImage={selectedImage} />
-        <img className="ml-auto mr-auto static h-screen w-full z-0  my-3  object-cover cursor-pointer" src={imageUrl} alt="A model wearing a garment" />
-
+        {imgHtml}
       </div>
     </div>
   );
