@@ -11,8 +11,9 @@ const Carousel = (props) => {
 
   const fullSlideDeck = currentSlideDeck.map((item, index) => {
     const border = index === selectedImage ? 'border-2 border-blue-300' : 'border border-gray-600';
+    const keyNum = index;
     return (
-      <div className={` mx-2 my-2  ${border} z-10 `}>
+      <div key={keyNum} className={` mx-2 my-2  ${border} z-10 `}>
         <img className="h-20 w-20  object-cover " key={Math.random() * Math.random() * 10} src={item} alt={`thumbnail ${index} for style`} onClick={(e) => { e.preventDefault(); currentImageChangeHandler(index); }} />
       </div>
     );
