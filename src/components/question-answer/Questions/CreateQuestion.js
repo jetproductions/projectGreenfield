@@ -6,12 +6,14 @@ import { connect } from 'react-redux';
 class CreateQuestion extends Component {
   constructor(props) {
     super(props);
+    const { toggleModal } = props;
     this.state = {
       body: '',
       name: '',
       email: '',
+      success: false,
+      error: false,
     };
-    const { toggleModal } = props;
   }
 
   formChangeHandler = (location, value) => {
@@ -20,12 +22,15 @@ class CreateQuestion extends Component {
     this.setState(payload);
   }
 
+  // should be refactored into the upper level function
+  // eventually should probably put these in store to work more efficiently
   submitQuestion = async () => {
     // check to see if meets answer requirements
     const { body } = this.state;
     const { name } = this.state;
     const { email } = this.state;
     const { product: { id } } = this.props;
+    const { addQuestionHandler } = this.props;
 
     if (body.length < 25 || body.indexOf('?') === -1) {
       console.log('question: ', body);
@@ -50,17 +55,33 @@ class CreateQuestion extends Component {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
-    // .then((res) => res.json());
-    console.log('created: ', created.status);
-    return created.status === 201;
+    // console.log('created: ', created.status);
+    if (created.status === 201) {
+      addQuestionHandler(data);
+      this.setState({ success: true });
+    }
+    this.setState({ error: true });
+    // linter wanted a return at end of arrow function this is probably unnecessary
+    return null;
   }
 
   render() {
+    const { success } = this.state;
+    const { error } = this.state;
+    const errorMessage = (
+      <h5>There was an Error Submitting Your Question Please Try Again</h5>
+    );
+    if (success) {
+      return (
+        <h2>Your Question has been successfully submitted.</h2>
+      );
+    }
     return (
       <div>
         {/* need to have this render with current product name */}
         <h3>Ask a Question</h3>
         <br />
+        { error ? errorMessage : null }
         <label htmlFor="asked-question">
           {/* need to make this input field bigger, 1000 chars-ish */}
 Question:

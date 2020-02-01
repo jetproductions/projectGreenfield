@@ -20,13 +20,16 @@ const searchQuestions = (searched, questions) => questions.filter((question) => 
   return false;
 });
 
+
 // should change questions modal show/hide to live here in state not in QA
-const Questions = ({ questions, questionModal, searchBar }) => {
+const Questions = ({
+  questions, questionModal, searchBar, addQuestionHandler,
+}) => {
   const [createQuestion, createQuestionView] = useState(false);
   if (createQuestion) {
     return (
       <div>
-        <QuestionModal show={createQuestion} toggleModal={createQuestionView} />
+        <QuestionModal show={createQuestion} toggleModal={createQuestionView} addQuestionHandler={addQuestionHandler} />
       </div>
     );
   }

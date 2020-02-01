@@ -18,6 +18,7 @@ class QuestionAnswer extends Component {
       filteredQuestions: [],
     };
     this.getQuestions(id);
+    this.addQuestionHandler = this.addQuestionHandler.bind(this);
   }
 
   // need to work on this get fucntioning better understanding needed
@@ -36,10 +37,6 @@ class QuestionAnswer extends Component {
   }
 
 
-  // need to update Search to handle this and to pass back up upon search
-  // this might also need to handle filter for what questions get sent down?
-
-
   getQuestions = async (id) => {
     const fetchQuestions = await fetch(`http://52.26.193.201:3000/qa/${id}`).then((res) => res.json());
     const { results } = fetchQuestions;
@@ -49,6 +46,13 @@ class QuestionAnswer extends Component {
   searchChangeHandler = (event) => {
     // console.log(event.target.value);
     this.setState({ searched: event.target.value });
+  }
+
+  addQuestionHandler(questionAdded) {
+    const { questions } = this.state;
+    // since doesn't have username functionality pull added at top
+    questions.unshift(questionAdded);
+    this.setState({ questions });
   }
 
   render() {
@@ -64,6 +68,7 @@ class QuestionAnswer extends Component {
       <Questions
         questions={questions}
         searchBar={searched}
+        addQuestionHandler={this.addQuestionHandler}
       />
     </div>
   </div>
