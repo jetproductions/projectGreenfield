@@ -5,6 +5,11 @@ import React, { useState } from 'react';
 import Question from './Question';
 import QuestionModal from './QuestionModal';
 
+// TODO: change questions modal show/hide to live here in state not in QA
+// TODO: refactor multiple JSX returns to streamline
+// TODO: refactor sort to be used by Qs and As
+// TODO: when searching highlights text that is contained in search
+
 const sortHelpfulness = (questionsArr) => questionsArr.sort((a, b) => {
   if (a.helpfulness > b.helpfulness) {
     return -1;
@@ -13,7 +18,6 @@ const sortHelpfulness = (questionsArr) => questionsArr.sort((a, b) => {
 });
 
 const searchQuestions = (searched, questions) => questions.filter((question) => {
-  // console.log(question);
   if (question.question_body.indexOf(searched) > -1) {
     return true;
   }
@@ -21,9 +25,8 @@ const searchQuestions = (searched, questions) => questions.filter((question) => 
 });
 
 
-// should change questions modal show/hide to live here in state not in QA
 const Questions = ({
-  questions, questionModal, searchBar, addQuestionHandler,
+  questions, questionModal, searchBar,
 }) => {
   // should refactor the multiple return statements to streamline
   // can refactor search and sort into 1 function
@@ -36,9 +39,7 @@ const Questions = ({
       </div>
     );
   }
-  // looking for any search params
   const searched = searchQuestions(searchBar, questions);
-  // looking to see if product has changed or if startup and nothing in questions
   // eslint-disable-next-line no-undef
   const sorted = sortHelpfulness(searched);
   if ((sorted.length > 0 && sorted.length <= 2) || showMore) {
@@ -95,7 +96,7 @@ Show Less
       })}
       <button
         type="button"
-        onClick={(e) => { e.preventDefault(); showMoreToggle(!showMore); console.log('showmore'); }}
+        onClick={(e) => { e.preventDefault(); showMoreToggle(!showMore); }}
         className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
       >
         Show More

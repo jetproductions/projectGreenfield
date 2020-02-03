@@ -5,8 +5,10 @@ import React from 'react';
 
 import CreateQuestion from './CreateQuestion';
 
+// TODO: refactor to only 1 modal for Q and A
+
 const QuestionModal = ({
-  show, toggleModal, addQuestionHandler,
+  show, toggleModal,
 }) => {
   const style = {
     backgroundColor: 'rgba(0,0,0,0.3)',
@@ -26,7 +28,7 @@ const QuestionModal = ({
           <small className="absolute font-bold text-2xl w-full text-center" style={{ marginTop: '-3px', marginLeft: '2px', transform: 'rotate(45deg)' }}>+</small>
         </a>
         <div className="w-full max-h-full overflow-y-scroll overflow-x-hiddena px-10">
-          <CreateQuestion toggleModal={toggleModal} addQuestionHandler={addQuestionHandler} />
+          <CreateQuestion toggleModal={toggleModal} />
         </div>
       </div>
     </div>

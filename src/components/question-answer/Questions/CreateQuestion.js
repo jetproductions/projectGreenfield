@@ -3,6 +3,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+// TODO: createQuestion renders with current product name
+// TODO: input field bigger and scrollable vertically rather than moving horizontally when fills
+// above should already be formatted, look at review form and check styling
+// TODO: add error message when submission is incomplete telling which fields are inclomplete
+
 class CreateQuestion extends Component {
   constructor(props) {
     super(props);
@@ -50,21 +55,15 @@ class CreateQuestion extends Component {
     return null;
   }
 
-  // should be refactored into the upper level function
-  // eventually should probably put these in store to work more efficiently
   submitQuestion = async () => {
-    // check to see if meets answer requirements
     const { body } = this.state;
     const { name } = this.state;
     const { email } = this.state;
     const { product: { id } } = this.props;
-    // const { addQuestionHandler } = this.props;
 
     if (body.length < 25 || body.indexOf('?') === -1) {
-      // how to change styling and add a required text above the input field when requirement not met?
       return 'Invalid Question';
     }
-    // need to put disclaimer in form
     // would eventually check against user credentials and name
     if (name.length < 8 || name.length > 60) {
       return 'Invalid Nickname';
@@ -73,20 +72,16 @@ class CreateQuestion extends Component {
       return 'Invalid Email';
     }
     const data = { body, email, name };
-    // get fetch call to go and then change form display to show submitted after
     const created = await fetch(`http://52.26.193.201:3000/qa/${id}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
-    // console.log('created: ', created.status);
     if (created.status === 201) {
-      // addQuestionHandler(data);
       this.setState({ success: true });
     }
     this.setState({ error: true });
-    // linter wanted a return at end of arrow function this is probably unnecessary
     return null;
   }
 
@@ -158,6 +153,7 @@ Email:
             className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
             maxLength="60"
           />
+          <span>For authentication reasons, you will not be emailed</span>
         </label>
         <button
           type="button"

@@ -4,7 +4,10 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import Photos from './Photos';
 
-// could eventualy refactor these two functions into one that can handle both based on parameters/args
+// TODO: have Seller next to username if seller
+// TODO: refactor update functions to one function and work for both question and answer
+// TODO: add photo thumbnail functionality
+
 const helpfulUpdate = async (e, id) => {
   e.preventDefault();
   const status = await fetch(`http://3.134.102.30/qa/answer/${id}/helpful`, { method: 'PUT', headers: { 'Content-Type': 'application/json' } }).then((result) => result.status);
@@ -13,7 +16,6 @@ const helpfulUpdate = async (e, id) => {
 const reportUpdate = async (e, id) => {
   e.preventDefault();
   const status = await fetch(`http://52.26.193.201:3000/qa/answer/${id}/report`, { method: 'PUT', headers: { 'Content-Type': 'application/json' } }).then((result) => result.status);
-  console.log('report: ', status);
   return status === 204;
 };
 
@@ -24,7 +26,6 @@ const Answer = ({
   const [helpfulButton, buttonUsed] = useState(false);
   const [helpfulnessState, helpfulnessUpdate] = useState(helpfulness);
   const [reportState, reportStateUpdate] = useState(false);
-  // const [showModal, changeModal] = useState(false);
   const helpfulnessHander = async (e) => {
     const updated = await helpfulUpdate(e, answer_id);
     if (updated) {
@@ -33,7 +34,6 @@ const Answer = ({
     }
   };
   const reportHandler = async (event) => {
-    console.log('reportHandler');
     const reported = await reportUpdate(event, answer_id);
     if (reported) {
       reportStateUpdate(true);

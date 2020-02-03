@@ -3,6 +3,10 @@
 /* eslint-disable no-undef */
 import React, { Component } from 'react';
 
+// TODO: add error message when submission is incomplete telling which fields are inclomplete
+// TODO: add photos
+// TODO: how to validate photos uploads?
+
 class CreateAnswer extends Component {
   constructor(props) {
     super(props);
@@ -58,7 +62,6 @@ class CreateAnswer extends Component {
     const { photos } = this.state;
     const { question_id } = this.props;
     if (body.length < 25 || body.length > 1000) {
-      console.log('body length: ', body.length);
       return 'Inavlid Answer';
     }
     // long run would validate with user credentials to make sure not actual name
@@ -71,8 +74,6 @@ class CreateAnswer extends Component {
     const data = {
       body, email, name, photos,
     };
-
-    // get fetch call to go and then change form display to show submitted after
     const created = await fetch(`http://52.26.193.201:3000/qa/${question_id}/answers`,
       {
         method: 'POST',
@@ -150,6 +151,7 @@ Email:
             maxLength="60"
             className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
           />
+          <span>For authentication reasons, you will not be emailed</span>
         </label>
         <label htmlFor="answer-photos">
           Add Photos:
@@ -171,8 +173,6 @@ Email:
       </div>
     );
   }
-
-  // after submit could put timeer on submitted then close modal
 }
 
 export default CreateAnswer;

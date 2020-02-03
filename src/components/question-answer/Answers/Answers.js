@@ -6,6 +6,9 @@ import React, { useState, Component } from 'react';
 import Answer from './Answer';
 import AnswerModal from './AnswerModal';
 
+// TODO: format so at most takes up 1/2 screen
+// TODO: how to get all the answers for a question, lazy load? as scrolling?
+
 class Answers extends Component {
   constructor(props) {
     super(props);
@@ -19,7 +22,6 @@ class Answers extends Component {
     this.getAnswers();
   }
 
-  // this only gets two answers need to figure out how to get the rest of the answers
   // eslint-disable-next-line no-undef
   getAnswers = () => {
     const { question_id } = this.state;
@@ -83,7 +85,6 @@ class Answers extends Component {
         ) : null}
       </>
     );
-    // how to fetch more answers as scroll
   }
 }
 

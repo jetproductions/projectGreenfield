@@ -7,7 +7,3 @@ const QuestionSearch = ({ searchChangeHandler }) => (
 
 
 export default QuestionSearch;
-// should add questions to global state and reducer with actions to
-// get questions into store in component above this.
-// will need to have a display and !display functionality so when
-// search is in use only shows searched

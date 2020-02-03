@@ -2,9 +2,9 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/prefer-stateless-function */
 import React from 'react';
-
 import CreateAnswer from './CreateAnswer';
 
+// TODO: refactor so only 1 modal for Q and A
 
 const AnswerModal = ({ show, toggleModal, question_id }) => {
   const style = {

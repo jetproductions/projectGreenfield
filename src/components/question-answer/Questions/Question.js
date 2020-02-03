@@ -5,8 +5,8 @@ import React, { useState } from 'react';
 import Answers from '../Answers/Answers';
 import AnswerModal from '../Answers/AnswerModal';
 
-// should be able to refactor both of these to be just one function in long run,
-// also maybe refactor to be own module work with both question and answer
+// TODO: refactor both update functions to be just one function and usable in both question and answer
+// TODO: refactor to be own module work with both question and answer
 const helpfulUpdate = async (e, id) => {
   e.preventDefault();
   const status = await fetch(`http://52.26.193.201:3000/qa/question/${id}/helpful`, { method: 'PUT', headers: { 'Content-Type': 'application/json' } }).then((result) => result.status);
@@ -15,7 +15,6 @@ const helpfulUpdate = async (e, id) => {
 const reportUpdate = async (e, id) => {
   e.preventDefault();
   const status = await fetch(`http://52.26.193.201:3000/qa/question/${id}/report`, { method: 'PUT', headers: { 'Content-Type': 'application/json' } }).then((result) => result.status);
-  // console.log('report: ', status);
   return status === 204;
 };
 
@@ -35,7 +34,6 @@ const Question = ({
     }
   };
   const reportHandler = async (event) => {
-    // console.log('reportHandler');
     const reported = await reportUpdate(event, question_id);
     if (reported) {
       reportStateUpdate(true);
