@@ -21,12 +21,6 @@ class QuestionAnswer extends Component {
     this.addQuestionHandler = this.addQuestionHandler.bind(this);
   }
 
-  // need to work on this get fucntioning better understanding needed
-  // componentDidMount() {
-  //   const { product: { id } } = this.props;
-  //   this.getQuestions(id);
-  // }
-
   // not sure this is setup properly
   componentDidUpdate(prevProps) {
 	  const { product: { id } } = this.props;
@@ -49,17 +43,19 @@ class QuestionAnswer extends Component {
   }
 
   addQuestionHandler(questionAdded) {
-    const { questions } = this.state;
     // since doesn't have username functionality pull added at top
-    questions.unshift(questionAdded);
-    this.setState({ questions });
+    this.setState((prevState) => {
+      const questionsCopy = [...prevState.questions];
+      questionsCopy.unshift(questionAdded);
+      return { questions: questionsCopy };
+    });
   }
 
   render() {
 	  const { questions } = this.state;
     const { searched } = this.state;
 	  return (
-  <div id="questions-answers">
+  <div id="questions-answers" className="container mx-auto">
     <div className="w-full px-4">
       <h5 className="uppercase font-thin text-xl">QUESTIONS & ANSWERS</h5>
     </div>
