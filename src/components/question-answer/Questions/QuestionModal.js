@@ -5,7 +5,9 @@ import React from 'react';
 
 import CreateQuestion from './CreateQuestion';
 
-const QuestionModal = ({ show, toggleModal, question_id }) => {
+const QuestionModal = ({
+  show, toggleModal, addQuestionHandler,
+}) => {
   const style = {
     backgroundColor: 'rgba(0,0,0,0.3)',
     display: (show ? 'flex' : 'none'),
@@ -24,7 +26,7 @@ const QuestionModal = ({ show, toggleModal, question_id }) => {
           <small className="absolute font-bold text-2xl w-full text-center" style={{ marginTop: '-3px', marginLeft: '2px', transform: 'rotate(45deg)' }}>+</small>
         </a>
         <div className="w-full max-h-full overflow-y-scroll overflow-x-hiddena px-10">
-          <CreateQuestion toggleModal={toggleModal} />
+          <CreateQuestion toggleModal={toggleModal} addQuestionHandler={addQuestionHandler} />
         </div>
       </div>
     </div>

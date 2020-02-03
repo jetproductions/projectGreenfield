@@ -42,7 +42,9 @@ class QuestionAnswer extends Component {
     this.setState({ searched: event.target.value });
   }
 
-  addQuestionHandler(questionAdded) {
+  // this adds question but won't allow for functionality because doesn't have question_id for new question
+  addQuestionHandler = (questionAdded) => {
+    console.log('addQuestionHandler');
     // since doesn't have username functionality pull added at top
     this.setState((prevState) => {
       const questionsCopy = [...prevState.questions];
