@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable react/no-unused-state */
 /* eslint-disable no-undef */
 import React, { Component } from 'react';
@@ -6,49 +7,78 @@ class CreateAnswer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      answer: '',
-      nickname: '',
+      body: '',
+      name: '',
       email: '',
       photos: [],
+      error: false,
+      success: true,
     };
     const { toggleModal } = props;
+    const { question_id } = props;
   }
 
   formChangeHandler = (location, value) => {
-    this.setState({ location: value });
+    const payload = {};
+    payload[location] = value;
+    this.setState(payload);
   }
 
-  submitAnswer = () => {
-    const { answer } = this.state;
-    const { nickname } = this.state;
+  submitAnswer = async () => {
+    const { body } = this.state;
+    const { name } = this.state;
     const { email } = this.state;
     const { photos } = this.state;
-    if (answer.length < 50 || answer.length > 1000) {
+    const { question_id } = this.props;
+    if (body.length < 25 || body.length > 1000) {
+      console.log('body length: ', body.length);
       return 'Inavlid Answer';
     }
     // long run would validate with user credentials to make sure not actual name
-    if (nickname.length < 8 || nickname.length > 60) {
+    if (name.length < 8 || name.length > 60) {
       return 'Invalid Nickname';
     }
     if ((email.length < 8 || email.length > 60) || email.indexOf('@') === -1) {
       return 'Invalid email';
     }
+    const data = {
+      body, email, name, photos,
+    };
+
     // get fetch call to go and then change form display to show submitted after
-    // fetch();
-    return 'valid answer';
+    const created = await fetch(`http://52.26.193.201:3000/qa/${question_id}/answers`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+    // console.log('created: ', created.status);
+    if (created.status === 201) {
+      // addAnswerHandler(data);
+      this.setState({ success: true });
+      // toggleModal(false);
+    }
+    this.setState({ error: true });
+    // linter wanted a return at end of arrow function this is probably unnecessary
+    return null;
   }
 
   render() {
+    const { error } = this.state;
+    const errorMessage = (
+      <h5>There was an Error Submitting Your Answer Please Try Again</h5>
+    );
     return (
       <div>
         Answer a Question
         <br />
+        {error ? errorMessage : null}
         <label htmlFor="answer">
 Your Answer:
           <input
             id="answer"
             type="text"
-            onChange={(e) => this.formChangeHandler('answer', e.target.value)}
+            onChange={(e) => this.formChangeHandler('body', e.target.value)}
             placeholder="Your Answer Here"
           />
 
@@ -58,7 +88,7 @@ Nickname:
           <input
             id="answer-nickname"
             type="text"
-            onChange={(e) => this.formChangeHandler('nickname', e.target.value)}
+            onChange={(e) => this.formChangeHandler('name', e.target.value)}
             placeholder="Example: jack543!"
             maxLength="60"
           />

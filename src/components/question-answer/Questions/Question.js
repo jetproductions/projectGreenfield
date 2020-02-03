@@ -43,7 +43,7 @@ const Question = ({
   };
   if (createAnswer) {
     return (
-      <AnswerModal show={createAnswer} toggleModal={createAnswerView} />
+      <AnswerModal show={createAnswer} toggleModal={createAnswerView} question_id={question_id} />
     );
   }
   return (
