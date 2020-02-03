@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 class CreateQuestion extends Component {
   constructor(props) {
     super(props);
-    const { toggleModal } = props;
     this.state = {
       body: '',
       name: '',
@@ -68,10 +67,13 @@ class CreateQuestion extends Component {
   render() {
     const { success } = this.state;
     const { error } = this.state;
+    const { toggleModal } = this.props;
+
     const errorMessage = (
       <h5>There was an Error Submitting Your Question Please Try Again</h5>
     );
     if (success) {
+      setTimeout(() => { toggleModal(false); }, 1500);
       return (
         <h2>Your Question has been successfully submitted.</h2>
       );
