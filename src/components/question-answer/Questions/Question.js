@@ -35,7 +35,7 @@ const Question = ({
     }
   };
   const reportHandler = async (event) => {
-    console.log('reportHandler');
+    // console.log('reportHandler');
     const reported = await reportUpdate(event, question_id);
     if (reported) {
       reportStateUpdate(true);

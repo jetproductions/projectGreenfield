@@ -58,7 +58,7 @@ class CreateQuestion extends Component {
     const { name } = this.state;
     const { email } = this.state;
     const { product: { id } } = this.props;
-    const { addQuestionHandler } = this.props;
+    // const { addQuestionHandler } = this.props;
 
     if (body.length < 25 || body.indexOf('?') === -1) {
       // how to change styling and add a required text above the input field when requirement not met?
