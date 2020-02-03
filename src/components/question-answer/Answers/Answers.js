@@ -14,7 +14,7 @@ class Answers extends Component {
       answers: [],
       question_id,
       count: 0,
-      // showModal: false,
+      showMore: false,
     };
     this.getAnswers();
   }
@@ -36,20 +36,54 @@ class Answers extends Component {
     return 1;
   });
 
+  showMoreHandler = () => {
+    this.setState((prevState) => {
+      const { showMore } = prevState;
+      return { showMore: !showMore };
+    });
+  }
+
   render() {
     const { answers } = this.state;
     const filtered = this.sortHelpfulness(answers);
+    const { showMore } = this.state;
     if (answers.length === 0) {
       return (
         <div>No Answers for This Question Yet</div>
       );
     }
-    // how to fetch more answers as scroll
+    if (filtered.length > 2 && !showMore) {
+      return (
+        <>
+          <Answer key={filtered[0].answer_id} {...filtered[0]} />
+          <Answer key={filtered[1].answer_id} {...filtered[1]} />
+          <button
+            type="button"
+            className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
+            onClick={(e) => { e.preventDefault(); this.showMoreHandler(); }}
+          >
+            See More Answers
+          </button>
+        </>
+      );
+    }
     return (
-      filtered.map((answer) => (
-        <Answer key={answer.answer_id} {...answer} />
-      ))
+      <>
+        {filtered.map((answer) => (
+          <Answer key={answer.answer_id} {...answer} />
+        ))}
+        {filtered.length > 2 ? (
+          <button
+            type="button"
+            className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
+            onClick={(e) => { e.preventDefault(); this.showMoreHandler(); }}
+          >
+        Collapse Answers
+          </button>
+        ) : null}
+      </>
     );
+    // how to fetch more answers as scroll
   }
 }
 
