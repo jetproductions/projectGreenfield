@@ -18,7 +18,7 @@ class QuestionAnswer extends Component {
       filteredQuestions: [],
     };
     this.getQuestions(id);
-    this.addQuestionHandler = this.addQuestionHandler.bind(this);
+    // this.addQuestionHandler = this.addQuestionHandler.bind(this);
   }
 
   // not sure this is setup properly
@@ -42,16 +42,18 @@ class QuestionAnswer extends Component {
     this.setState({ searched: event.target.value });
   }
 
+  // commented out because won't be fully functional question component
+  // using another call to getQuestions once submitted to re-render
   // this adds question but won't allow for functionality because doesn't have question_id for new question
-  addQuestionHandler = (questionAdded) => {
-    console.log('addQuestionHandler');
-    // since doesn't have username functionality pull added at top
-    this.setState((prevState) => {
-      const questionsCopy = [...prevState.questions];
-      questionsCopy.unshift(questionAdded);
-      return { questions: questionsCopy };
-    });
-  }
+  // addQuestionHandler = async (questionAdded) => {
+  //   console.log('addQuestionHandler');
+  //   // since doesn't have username functionality pull added at top
+  //   await this.setState((prevState) => {
+  //     const questionsCopy = [...prevState.questions];
+  //     questionsCopy.unshift(questionAdded);
+  //     return { questions: questionsCopy };
+  //   });
+  // }
 
   render() {
 	  const { questions } = this.state;
@@ -66,7 +68,7 @@ class QuestionAnswer extends Component {
       <Questions
         questions={questions}
         searchBar={searched}
-        addQuestionHandler={this.addQuestionHandler}
+        // addQuestionHandler={() => this.getQuestions}
       />
     </div>
   </div>

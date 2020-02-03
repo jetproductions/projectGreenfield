@@ -57,7 +57,7 @@ class CreateQuestion extends Component {
       });
     // console.log('created: ', created.status);
     if (created.status === 201) {
-      addQuestionHandler(data);
+      // addQuestionHandler(data);
       this.setState({ success: true });
     }
     this.setState({ error: true });

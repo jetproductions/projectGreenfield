@@ -12,7 +12,7 @@ const sortHelpfulness = (questionsArr) => questionsArr.sort((a, b) => {
   return 1;
 });
 
-const searchQuestions = (searched = '', questions) => questions.filter((question) => {
+const searchQuestions = (searched, questions) => questions.filter((question) => {
   // console.log(question);
   if (question.question_body.indexOf(searched) > -1) {
     return true;
@@ -29,7 +29,7 @@ const Questions = ({
   if (createQuestion) {
     return (
       <div>
-        <QuestionModal show={createQuestion} toggleModal={createQuestionView} addQuestionHandler={addQuestionHandler} />
+        <QuestionModal show={createQuestion} toggleModal={createQuestionView} addQuestionHandler={null} />
       </div>
     );
   }

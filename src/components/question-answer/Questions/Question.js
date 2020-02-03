@@ -20,7 +20,7 @@ const reportUpdate = async (e, id) => {
 };
 
 const Question = ({
-  question_id, question_body, asker_name, question_helpfulness,
+  question_id, question_body, question_helpfulness,
 }) => {
   const [helpfulButton, buttonUsed] = useState(false);
   const [helpfulnessState, helpfulnessUpdate] = useState(question_helpfulness);
