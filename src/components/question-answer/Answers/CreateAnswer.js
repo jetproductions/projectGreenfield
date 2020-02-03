@@ -14,8 +14,6 @@ class CreateAnswer extends Component {
       error: false,
       success: false,
     };
-    const { toggleModal } = props;
-    const { question_id } = props;
   }
 
   formChangeHandler = (location, value) => {
@@ -52,14 +50,10 @@ class CreateAnswer extends Component {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
-    // console.log('created: ', created.status);
     if (created.status === 201) {
-      // addAnswerHandler(data);
       this.setState({ success: true });
-      // toggleModal(false);
     }
     this.setState({ error: true });
-    // linter wanted a return at end of arrow function this is probably unnecessary
     return null;
   }
 
@@ -84,9 +78,12 @@ class CreateAnswer extends Component {
         <label htmlFor="answer">
 Your Answer:
           <input
-            id="answer"
+            id="body"
             type="text"
+            name="body"
             onChange={(e) => this.formChangeHandler('body', e.target.value)}
+            className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+            rows="4"
             placeholder="Your Answer Here"
           />
 
@@ -100,7 +97,9 @@ Nickname:
             placeholder="Example: jack543!"
             maxLength="60"
           />
+          <span>For privacy reasons, do not use your full name or email address</span>
         </label>
+        <br />
         <label htmlFor="answer-email">
 Email:
           <input

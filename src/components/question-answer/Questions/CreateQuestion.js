@@ -21,6 +21,35 @@ class CreateQuestion extends Component {
     this.setState(payload);
   }
 
+  emailValidator = () => {
+    const { email } = this.state;
+    if (email === '') {
+      return null;
+    }
+    if (email.indexOf('@') === -1 || (email.length < 8 || email.length > 60)) {
+      return (<span>Please enter a valid email</span>);
+    }
+    return null;
+  }
+
+  nameValidator = () => {
+    const { name } = this.state;
+    if (name === '') return null;
+    if (name.length < 8 || name.length > 60) {
+      return (<span>Please enter a valid username</span>);
+    }
+    return null;
+  }
+
+  bodyValidator = () => {
+    const { body } = this.state;
+    if (body === '') return null;
+    if (body.length > 1000) {
+      return (<span>Please make your question more concise</span>);
+    }
+    return null;
+  }
+
   // should be refactored into the upper level function
   // eventually should probably put these in store to work more efficiently
   submitQuestion = async () => {
@@ -32,18 +61,15 @@ class CreateQuestion extends Component {
     const { addQuestionHandler } = this.props;
 
     if (body.length < 25 || body.indexOf('?') === -1) {
-      console.log('question: ', body);
       // how to change styling and add a required text above the input field when requirement not met?
       return 'Invalid Question';
     }
     // need to put disclaimer in form
     // would eventually check against user credentials and name
     if (name.length < 8 || name.length > 60) {
-      console.log('name');
       return 'Invalid Nickname';
     }
     if (email.length > 60 || email.indexOf('@') === -1) {
-      console.log('email');
       return 'Invalid Email';
     }
     const data = { body, email, name };
@@ -84,19 +110,29 @@ class CreateQuestion extends Component {
         <h3>Ask a Question</h3>
         <br />
         { error ? errorMessage : null }
-        <label htmlFor="asked-question">
+        <label htmlFor="body">
+
           {/* need to make this input field bigger, 1000 chars-ish */}
 Question:
+          {' '}
+          {this.bodyValidator()}
+          {' '}
           <input
-            id="asked-question"
+            id="body"
             type="text"
             onChange={(e) => this.formChangeHandler('body', e.target.value)}
+            className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+            rows="4"
             placeholder="Your Question Here"
           />
 
         </label>
         <label htmlFor="question-nickname">
 Nickname:
+          {' '}
+          {' '}
+          {this.nameValidator()}
+          {' '}
           <input
             id="question-nickname"
             type="text"
@@ -104,9 +140,14 @@ Nickname:
             placeholder="Example: jackson11!"
             maxLength="60"
           />
+          <span>For privacy reasons, do not use your full name or email address</span>
         </label>
+        <br />
         <label htmlFor="question-email">
 Email:
+          {' '}
+          {this.emailValidator()}
+          {' '}
           <input
             id="question-email"
             type="email"
@@ -126,8 +167,6 @@ Email:
       </div>
     );
   }
-
-  // after submit could put timeer on submitted then close modal
 }
 
 const mapStateToProps = (state) => ({
