@@ -25,7 +25,10 @@ const searchQuestions = (searched, questions) => questions.filter((question) => 
 const Questions = ({
   questions, questionModal, searchBar, addQuestionHandler,
 }) => {
+  // should refactor the multiple return statements to streamline
+  // can refactor search and sort into 1 function
   const [createQuestion, createQuestionView] = useState(false);
+  const [showMore, showMoreToggle] = useState(false);
   if (createQuestion) {
     return (
       <div>
@@ -37,16 +40,26 @@ const Questions = ({
   const searched = searchQuestions(searchBar, questions);
   // looking to see if product has changed or if startup and nothing in questions
   // eslint-disable-next-line no-undef
-  if (questions.length > 0) {
+  const sorted = sortHelpfulness(searched);
+  if ((sorted.length > 0 && sorted.length <= 2) || showMore) {
     return (
       <div>
-        {sortHelpfulness(searched).map((question) => {
+        {sorted.map((question) => {
           const qid = question.question_id ? question.question_id : null;
           return (
           // eslint-disable-next-line react/jsx-props-no-spreading
             <Question key={qid} {...question} {...questionModal} />
           );
         })}
+        {sorted.length > 2 ? (
+          <button
+            type="button"
+            onClick={(e) => { e.preventDefault(); showMoreToggle(!showMore); }}
+            className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
+          >
+Show Less
+          </button>
+        ) : null}
         <button
           type="button"
           onClick={(e) => { e.preventDefault(); createQuestionView(!createQuestion); }}
@@ -57,9 +70,36 @@ const Questions = ({
       </div>
     );
   }
+  if (questions.length === 0) {
+    return (
+      <>
+        <div>No Questions Asked Yet</div>
+        <button
+          type="button"
+          onClick={(e) => { e.preventDefault(); createQuestionView(!createQuestion); }}
+          className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
+        >
+        Add Question +
+        </button>
+      </>
+    );
+  }
   return (
-    <>
-      <div>No Questions Asked Yet</div>
+    <div>
+      {sorted.slice(0, 2).map((question) => {
+        const qid = question.question_id ? question.question_id : null;
+        return (
+        // eslint-disable-next-line react/jsx-props-no-spreading
+          <Question key={qid} {...question} {...questionModal} />
+        );
+      })}
+      <button
+        type="button"
+        onClick={(e) => { e.preventDefault(); showMoreToggle(!showMore); console.log('showmore'); }}
+        className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
+      >
+        Show More
+      </button>
       <button
         type="button"
         onClick={(e) => { e.preventDefault(); createQuestionView(!createQuestion); }}
@@ -67,7 +107,7 @@ const Questions = ({
       >
         Add Question +
       </button>
-    </>
+    </div>
   );
 };
 

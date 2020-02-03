@@ -71,12 +71,13 @@ A:
           </button>
         </span>
       </div>
+      {/* photo functionality can be added later, work with James for carousel-esque styling
       {photos.length > 0 ? (
         <footer>
           <div>Photos:</div>
           <Photos photos={photos} />
         </footer>
-      ) : null}
+      ) : null} */}
 
     </div>
   );
