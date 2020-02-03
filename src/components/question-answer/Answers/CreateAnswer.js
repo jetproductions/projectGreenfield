@@ -12,7 +12,7 @@ class CreateAnswer extends Component {
       email: '',
       photos: [],
       error: false,
-      success: true,
+      success: false,
     };
     const { toggleModal } = props;
     const { question_id } = props;
@@ -68,6 +68,14 @@ class CreateAnswer extends Component {
     const errorMessage = (
       <h5>There was an Error Submitting Your Answer Please Try Again</h5>
     );
+    const { success } = this.state;
+    const { toggleModal } = this.props;
+    if (success) {
+      setTimeout(() => { toggleModal(false); }, 1500);
+      return (
+        <h2>Your Answer has been successfully submitted.</h2>
+      );
+    }
     return (
       <div>
         Answer a Question
