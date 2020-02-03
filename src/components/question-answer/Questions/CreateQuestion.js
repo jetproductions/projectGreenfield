@@ -138,6 +138,7 @@ Nickname:
             type="text"
             onChange={(e) => this.formChangeHandler('name', e.target.value)}
             placeholder="Example: jackson11!"
+            className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
             maxLength="60"
           />
           <span>For privacy reasons, do not use your full name or email address</span>
@@ -154,6 +155,7 @@ Email:
             name="question-email"
             onChange={(e) => this.formChangeHandler('email', e.target.value)}
             placeholder="Why did you like the product or not?"
+            className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
             maxLength="60"
           />
         </label>

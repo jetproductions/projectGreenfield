@@ -22,6 +22,35 @@ class CreateAnswer extends Component {
     this.setState(payload);
   }
 
+  emailValidator = () => {
+    const { email } = this.state;
+    if (email === '') {
+      return null;
+    }
+    if (email.indexOf('@') === -1 || (email.length < 8 || email.length > 60)) {
+      return (<span>Please enter a valid email</span>);
+    }
+    return null;
+  }
+
+  nameValidator = () => {
+    const { name } = this.state;
+    if (name === '') return null;
+    if (name.length < 8 || name.length > 60) {
+      return (<span>Please enter a valid username</span>);
+    }
+    return null;
+  }
+
+  bodyValidator = () => {
+    const { body } = this.state;
+    if (body === '') return null;
+    if (body.length > 1000) {
+      return (<span>Please make your question more concise</span>);
+    }
+    return null;
+  }
+
   submitAnswer = async () => {
     const { body } = this.state;
     const { name } = this.state;
@@ -77,6 +106,9 @@ class CreateAnswer extends Component {
         {error ? errorMessage : null}
         <label htmlFor="answer">
 Your Answer:
+          {' '}
+          {this.bodyValidator()}
+          {' '}
           <input
             id="body"
             type="text"
@@ -90,10 +122,14 @@ Your Answer:
         </label>
         <label htmlFor="answer-nickname">
 Nickname:
+          {' '}
+          {this.nameValidator()}
+          {' '}
           <input
             id="answer-nickname"
             type="text"
             onChange={(e) => this.formChangeHandler('name', e.target.value)}
+            className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
             placeholder="Example: jack543!"
             maxLength="60"
           />
@@ -102,6 +138,9 @@ Nickname:
         <br />
         <label htmlFor="answer-email">
 Email:
+          {' '}
+          {this.emailValidator()}
+          {' '}
           <input
             id="answer-email"
             type="email"
@@ -109,6 +148,7 @@ Email:
             onChange={(e) => this.formChangeHandler('email', e.target.value)}
             placeholder="Example: jack@email.com"
             maxLength="60"
+            className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
           />
         </label>
         <label htmlFor="answer-photos">
@@ -118,6 +158,7 @@ Email:
             type="url"
             onChange={(e) => { this.formChangeHandler('photos', e.target.value); }}
             placeholder="Put Link to Photos Here"
+            className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
           />
         </label>
         <button
