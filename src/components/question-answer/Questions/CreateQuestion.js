@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-// TODO: renders with * next to all mandatory fields
 // TODO: createQuestion renders with current product name as subtitle
 // TODO: input field bigger and scrollable vertically rather than moving horizontally when fills
 // above should already be formatted, look at review form and check styling
@@ -110,7 +109,7 @@ class CreateQuestion extends Component {
         <label htmlFor="body">
 
           {/* need to make this input field bigger, 1000 chars-ish */}
-Question:
+*Question:
           {' '}
           {this.bodyValidator()}
           {' '}
@@ -125,7 +124,7 @@ Question:
 
         </label>
         <label htmlFor="question-nickname">
-Nickname:
+*Nickname:
           {' '}
           {' '}
           {this.nameValidator()}
@@ -142,7 +141,7 @@ Nickname:
         </label>
         <br />
         <label htmlFor="question-email">
-Email:
+*Email:
           {' '}
           {this.emailValidator()}
           {' '}
@@ -164,6 +163,9 @@ Email:
         >
           Submit Question
         </button>
+        <footer>
+* Mandatory
+        </footer>
       </div>
     );
   }

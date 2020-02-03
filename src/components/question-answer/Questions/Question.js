@@ -5,16 +5,11 @@ import React, { useState } from 'react';
 import Answers from '../Answers/Answers';
 import AnswerModal from '../Answers/AnswerModal';
 
-// TODO: refactor both update functions to be just one function and usable in both question and answer
-// TODO: refactor to be own module work with both question and answer
-const helpfulUpdate = async (e, id) => {
+// TODO: refactor updater to be useable in both Q and A
+
+const updater = async (e, id, qa, type) => {
   e.preventDefault();
-  const status = await fetch(`http://52.26.193.201:3000/qa/question/${id}/helpful`, { method: 'PUT', headers: { 'Content-Type': 'application/json' } }).then((result) => result.status);
-  return status === 204;
-};
-const reportUpdate = async (e, id) => {
-  e.preventDefault();
-  const status = await fetch(`http://52.26.193.201:3000/qa/question/${id}/report`, { method: 'PUT', headers: { 'Content-Type': 'application/json' } }).then((result) => result.status);
+  const status = await fetch(`http://52.26.193.201:3000/qa/${qa}/${id}/${type}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' } }).then((result) => result.status);
   return status === 204;
 };
 
@@ -27,14 +22,14 @@ const Question = ({
   const [createAnswer, createAnswerView] = useState(false);
 
   const helpfulnessHander = async (e) => {
-    const updated = await helpfulUpdate(e, question_id);
+    const updated = await updater(e, question_id, 'question', 'helpful');
     if (updated) {
       helpfulnessUpdate(helpfulnessState + 1);
       buttonUsed(true);
     }
   };
   const reportHandler = async (event) => {
-    const reported = await reportUpdate(event, question_id);
+    const reported = await updater(event, question_id, 'question', 'report');
     if (reported) {
       reportStateUpdate(true);
     }

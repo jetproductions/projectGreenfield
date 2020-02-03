@@ -3,7 +3,6 @@
 /* eslint-disable no-undef */
 import React, { Component } from 'react';
 
-// TODO: renders with * next to all mandatory fields
 // TODO: add subtitle to Modal [Product Name]: [questionbody]
 // TODO: add error message when submission is incomplete telling which fields are inclomplete 'You must enter the following:'
 // TODO: add photos option opens separate window
@@ -109,7 +108,7 @@ class CreateAnswer extends Component {
         <br />
         {error ? errorMessage : null}
         <label htmlFor="answer">
-Your Answer:
+*Your Answer:
           {' '}
           {this.bodyValidator()}
           {' '}
@@ -125,7 +124,7 @@ Your Answer:
 
         </label>
         <label htmlFor="answer-nickname">
-Nickname:
+*Nickname:
           {' '}
           {this.nameValidator()}
           {' '}
@@ -141,7 +140,7 @@ Nickname:
         </label>
         <br />
         <label htmlFor="answer-email">
-Email:
+*Email:
           {' '}
           {this.emailValidator()}
           {' '}
@@ -173,6 +172,9 @@ Email:
         >
           Submit Answer
         </button>
+        <footer>
+* Mandatory
+        </footer>
       </div>
     );
   }

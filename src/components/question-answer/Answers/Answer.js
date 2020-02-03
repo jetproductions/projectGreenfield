@@ -3,19 +3,15 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 import Photos from './Photos';
+// import updater from '../HelpfulReportHandler';
 
-// TODO: have Seller next to username if seller
-// TODO: refactor update functions to one function and work for both question and answer
+// TODO: refactor updater to use for both Q and A
 // TODO: add photo thumbnail functionality
+// TODO: have Seller next to username if seller - hard time finding this on API docs
 
-const helpfulUpdate = async (e, id) => {
+const updater = async (e, id, qa, type) => {
   e.preventDefault();
-  const status = await fetch(`http://3.134.102.30/qa/answer/${id}/helpful`, { method: 'PUT', headers: { 'Content-Type': 'application/json' } }).then((result) => result.status);
-  return status === 204;
-};
-const reportUpdate = async (e, id) => {
-  e.preventDefault();
-  const status = await fetch(`http://52.26.193.201:3000/qa/answer/${id}/report`, { method: 'PUT', headers: { 'Content-Type': 'application/json' } }).then((result) => result.status);
+  const status = await fetch(`http://52.26.193.201:3000/qa/${qa}/${id}/${type}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' } }).then((result) => result.status);
   return status === 204;
 };
 
@@ -27,14 +23,14 @@ const Answer = ({
   const [helpfulnessState, helpfulnessUpdate] = useState(helpfulness);
   const [reportState, reportStateUpdate] = useState(false);
   const helpfulnessHander = async (e) => {
-    const updated = await helpfulUpdate(e, answer_id);
+    const updated = await updater(e, answer_id, 'answer', 'helpful');
     if (updated) {
       helpfulnessUpdate(helpfulnessState + 1);
       buttonUsed(true);
     }
   };
   const reportHandler = async (event) => {
-    const reported = await reportUpdate(event, answer_id);
+    const reported = await updater(event, answer_id, 'answer', 'report');
     if (reported) {
       reportStateUpdate(true);
     }
