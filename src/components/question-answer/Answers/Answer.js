@@ -3,17 +3,10 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 import Photos from './Photos';
-// import updater from '../HelpfulReportHandler';
+import Updater from '../HelpfulReportHandler';
 
-// TODO: refactor updater to use for both Q and A
 // TODO: add photo thumbnail functionality
 // TODO: have Seller next to username if seller - hard time finding this on API docs
-
-const updater = async (e, id, qa, type) => {
-  e.preventDefault();
-  const status = await fetch(`http://52.26.193.201:3000/qa/${qa}/${id}/${type}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' } }).then((result) => result.status);
-  return status === 204;
-};
 
 const Answer = ({
   answerer_name, body, helpfulness, date, photos, answer_id,
@@ -23,14 +16,14 @@ const Answer = ({
   const [helpfulnessState, helpfulnessUpdate] = useState(helpfulness);
   const [reportState, reportStateUpdate] = useState(false);
   const helpfulnessHander = async (e) => {
-    const updated = await updater(e, answer_id, 'answer', 'helpful');
+    const updated = await Updater(e, answer_id, 'answer', 'helpful');
     if (updated) {
       helpfulnessUpdate(helpfulnessState + 1);
       buttonUsed(true);
     }
   };
   const reportHandler = async (event) => {
-    const reported = await updater(event, answer_id, 'answer', 'report');
+    const reported = await Updater(event, answer_id, 'answer', 'report');
     if (reported) {
       reportStateUpdate(true);
     }

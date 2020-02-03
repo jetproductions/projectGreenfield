@@ -2,16 +2,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable camelcase */
 import React, { useState } from 'react';
+
 import Answers from '../Answers/Answers';
 import AnswerModal from '../Answers/AnswerModal';
-
-// TODO: refactor updater to be useable in both Q and A
-
-const updater = async (e, id, qa, type) => {
-  e.preventDefault();
-  const status = await fetch(`http://52.26.193.201:3000/qa/${qa}/${id}/${type}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' } }).then((result) => result.status);
-  return status === 204;
-};
+import Updater from '../HelpfulReportHandler';
 
 const Question = ({
   question_id, question_body, question_helpfulness,
@@ -22,14 +16,14 @@ const Question = ({
   const [createAnswer, createAnswerView] = useState(false);
 
   const helpfulnessHander = async (e) => {
-    const updated = await updater(e, question_id, 'question', 'helpful');
+    const updated = await Updater(e, question_id, 'question', 'helpful');
     if (updated) {
       helpfulnessUpdate(helpfulnessState + 1);
       buttonUsed(true);
     }
   };
   const reportHandler = async (event) => {
-    const reported = await updater(event, question_id, 'question', 'report');
+    const reported = await Updater(event, question_id, 'question', 'report');
     if (reported) {
       reportStateUpdate(true);
     }
