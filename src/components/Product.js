@@ -8,7 +8,7 @@ import QuestionAnswer from './question-answer/QuestionAnswer';
 import Reviews from './reviews/Reviews';
 
 /* eslint-disable no-undef */
-const getProduct = (id) => fetch(`http://3.134.102.30/products/${id}`).then((res) => res.json());
+const getProduct = (id) => fetch(`http://52.26.193.201:3000/products/${id}`).then((res) => res.json());
 
 const Product = ({ productStore, setProductInStore }) => {
   //  set the initial product variable to what we have as our product in our store

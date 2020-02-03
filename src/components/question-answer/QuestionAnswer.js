@@ -14,11 +14,11 @@ class QuestionAnswer extends Component {
     const { product: { id } } = props;
     this.state = {
       questions: [],
-      questionModal: false,
       searched: '',
       filteredQuestions: [],
     };
     this.getQuestions(id);
+    this.addQuestionHandler = this.addQuestionHandler.bind(this);
   }
 
   // need to work on this get fucntioning better understanding needed
@@ -37,12 +37,8 @@ class QuestionAnswer extends Component {
   }
 
 
-  // need to update Search to handle this and to pass back up upon search
-  // this might also need to handle filter for what questions get sent down?
-
-
   getQuestions = async (id) => {
-    const fetchQuestions = await fetch(`http://3.134.102.30/qa/${id}`).then((res) => res.json());
+    const fetchQuestions = await fetch(`http://52.26.193.201:3000/qa/${id}`).then((res) => res.json());
     const { results } = fetchQuestions;
     this.setState({ questions: results });
   }
@@ -52,9 +48,15 @@ class QuestionAnswer extends Component {
     this.setState({ searched: event.target.value });
   }
 
+  addQuestionHandler(questionAdded) {
+    const { questions } = this.state;
+    // since doesn't have username functionality pull added at top
+    questions.unshift(questionAdded);
+    this.setState({ questions });
+  }
+
   render() {
 	  const { questions } = this.state;
-    const { questionModal } = this.state;
     const { searched } = this.state;
 	  return (
   <div id="questions-answers">
@@ -65,8 +67,8 @@ class QuestionAnswer extends Component {
       <SearchBar searchChangeHandler={this.searchChangeHandler} />
       <Questions
         questions={questions}
-        questionModal={questionModal}
         searchBar={searched}
+        addQuestionHandler={this.addQuestionHandler}
       />
     </div>
   </div>

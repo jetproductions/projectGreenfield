@@ -4,7 +4,7 @@
 /* eslint-disable no-undef */
 import React, { useState, Component } from 'react';
 import Answer from './Answer';
-import Button from '../../utility/Button';
+import AnswerModal from './AnswerModal';
 
 class Answers extends Component {
   constructor(props) {
@@ -14,6 +14,7 @@ class Answers extends Component {
       answers: [],
       question_id,
       count: 0,
+      // showModal: false,
     };
     this.getAnswers();
   }
@@ -23,7 +24,7 @@ class Answers extends Component {
   getAnswers = () => {
     const { question_id } = this.state;
     // console.log(question_id);
-    fetch(`http://3.134.102.30/qa/${question_id}/answers`).then((res) => res.json())
+    fetch(`http://52.26.193.201:3000/qa/${question_id}/answers`).then((res) => res.json())
       .then((result) => {
         // console.log('resultAnswers: ', result);
         this.setState({ answers: result.results, count: result.count });
@@ -36,6 +37,11 @@ class Answers extends Component {
     }
     return 1;
   });
+
+  // showModalHandler = () => {
+  //   const { showModal } = this.state;
+  //   this.setState({ showModal: !showModal });
+  // }
 
   render() {
     const { answers } = this.state;
