@@ -23,10 +23,8 @@ class Answers extends Component {
   // eslint-disable-next-line no-undef
   getAnswers = () => {
     const { question_id } = this.state;
-    // console.log(question_id);
     fetch(`http://52.26.193.201:3000/qa/${question_id}/answers`).then((res) => res.json())
       .then((result) => {
-        // console.log('resultAnswers: ', result);
         this.setState({ answers: result.results, count: result.count });
       });
   }
@@ -38,24 +36,26 @@ class Answers extends Component {
     return 1;
   });
 
-  // showModalHandler = () => {
-  //   const { showModal } = this.state;
-  //   this.setState({ showModal: !showModal });
-  // }
-
   render() {
     const { answers } = this.state;
     const filtered = this.sortHelpfulness(answers);
-    // console.log('answers in render: ', answers);
     if (answers.length === 0) {
       return (
         <div>No Answers for This Question Yet</div>
       );
     }
+    // update to only show 2 answers at first
+    // show more option
+    // scroll window eventually with ~2 answers showing at any point
     return (
-      filtered.map((answer) => (
-        <Answer key={answer.answer_id} {...answer} />
-      ))
+      filtered.map((answer, i) => {
+        if (i < 2) {
+          return (
+            <Answer key={answer.answer_id} {...answer} />
+          );
+        }
+        return null;
+      })
     );
   }
 }
