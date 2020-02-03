@@ -77,7 +77,8 @@ Helpfulness?
           Add Answer
         </button>
       </span>
-      <Answers question_id={question_id || null} />
+      {/* working to get to only take up certain amount of space with scrolling */}
+      <Answers className="h-screen w-overflow-y-scroll" question_id={question_id || null} />
     </div>
   );
 };

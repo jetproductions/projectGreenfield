@@ -44,18 +44,11 @@ class Answers extends Component {
         <div>No Answers for This Question Yet</div>
       );
     }
-    // update to only show 2 answers at first
-    // show more option
-    // scroll window eventually with ~2 answers showing at any point
+    // how to fetch more answers as scroll
     return (
-      filtered.map((answer, i) => {
-        if (i < 2) {
-          return (
-            <Answer key={answer.answer_id} {...answer} />
-          );
-        }
-        return null;
-      })
+      filtered.map((answer) => (
+        <Answer key={answer.answer_id} {...answer} />
+      ))
     );
   }
 }

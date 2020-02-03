@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 import React, { useState } from 'react';
 import moment from 'moment';
-import AnswerModal from './AnswerModal';
+import Photos from './Photos';
 
 // could eventualy refactor these two functions into one that can handle both based on parameters/args
 const helpfulUpdate = async (e, id) => {
@@ -74,7 +74,7 @@ A:
       {photos.length > 0 ? (
         <footer>
           <div>Photos:</div>
-          <span>Photos Go Here</span>
+          <Photos photos={photos} />
         </footer>
       ) : null}
 
