@@ -14,6 +14,8 @@ import './reviews.css';
 /* eslint-disable no-undef */
 /* eslint-disable react/no-unused-state */
 class Reviews extends Component {
+  API_URL = 'http://52.26.193.201:3000';
+
   constructor(props) {
     super(props);
     const { product: { id } } = props;
@@ -22,6 +24,8 @@ class Reviews extends Component {
       reviewsMeta: reviewsMetaData,
       reviewsList: reviewsListData,
       cached: reviewsListData,
+      sort: 'newest',
+      count: 5,
       filtered: false,
       modal: {
         show: false,
@@ -41,7 +45,7 @@ class Reviews extends Component {
 
   getReviewsMeta = async () => {
     const { product: { id } } = this.props;
-    const reviewsMeta = await fetch(`http://3.134.102.30/reviews/${id}/meta`).then((res) => res.json());
+    const reviewsMeta = await fetch(`${this.API_URL}/reviews/${id}/meta`).then((res) => res.json());
     const { ratings } = reviewsMeta;
     this.setState({ reviewsMeta }, () => {
       this.setWeightedAverage(ratings);
@@ -50,12 +54,26 @@ class Reviews extends Component {
 
   getReviewsList = async () => {
     const { product: { id } } = this.props;
-    const reviewsList = await fetch(`http://3.134.102.30/reviews/${id}/list?count=10000`).then((res) => res.json());
+    const { sort } = this.state;
+    const reviewsList = await fetch(`${this.API_URL}/reviews/${id}/list?sort=${sort}&count=10000`).then((res) => res.json());
     const { results } = reviewsList;
     const { setTotalReviewsState } = this.props;
     this.setState({ reviewsList, cached: reviewsList }, () => {
       setTotalReviewsState(results.length);
     });
+  }
+
+  updateSort = (e) => {
+    const { target: { value } } = e;
+    this.setState({ sort: value }, () => {
+      this.getReviewsList();
+    });
+  }
+
+  loadMoreReviews = () => {
+    const { count: previous } = this.state;
+    const count = previous + 5;
+    this.setState({ count });
   }
 
   getTotalRatings = (ratings) => Object.values(ratings).reduce((acc, value) => acc + value, 0)
@@ -71,8 +89,8 @@ class Reviews extends Component {
 
   calcRecommended = () => {
     const { reviewsMeta: { recommended = {} } } = this.state;
-    const total = Object.values(recommended).reduce((acc, curr) => acc + curr, 0);
-    const recommendations = recommended[1] || 0;
+    const total = Object.values(recommended).length ? Object.values(recommended).reduce((acc, curr) => acc + curr, 0) : 1;
+    const recommendations = recommended['1'] || 0;
     const percentage = Math.floor((recommendations / total) * 100);
     return percentage;
   }
@@ -104,7 +122,7 @@ class Reviews extends Component {
       default:
     }
     const { review_id: id } = review;
-    const { ok } = await fetch(`http://3.134.102.30/reviews/${endpoint}/${id}`, {
+    const { ok } = await fetch(`${this.API_URL}/reviews/${endpoint}/${id}`, {
       method: 'PUT',
     });
     if (!ok || endpoint === 'report') return;
@@ -119,7 +137,7 @@ class Reviews extends Component {
 
   createReview = async (review) => {
     const { product: { id } } = this.props;
-    const { ok } = await fetch(`http://3.134.102.30/reviews/${id}`, {
+    const { ok } = await fetch(`${this.API_URL}/reviews/${id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -135,7 +153,10 @@ class Reviews extends Component {
 
   render() {
     const { reviewsMeta } = this.state;
-    const { reviewsList: { results: allReviews }, filtered } = this.state;
+    const {
+      reviewsList: { results: allReviews }, filtered, sort, count,
+    } = this.state;
+    const reviews = allReviews.slice(0, count);
     const { modal: { show, content } } = this.state;
     const { ratings, characteristics } = reviewsMeta;
     const { weighted } = this.props;
@@ -180,10 +201,26 @@ class Reviews extends Component {
               </div>
             </div>
             <div className="flex flex-col w-full md:w-2/3 pr-4 pl-8">
-              <div className="w-full font-bold text-2xl mb-8">
-                <span className="mr-2">{ allReviews.length }</span>
-                reviews, sorted by
-                <u className="ml-1">relevance</u>
+              <div className="w-full flex justify-between">
+                <div className="w-full flex-grow font-bold text-2xl mb-12">
+                  <span className="mr-2">{ allReviews.length }</span>
+                  total reviews, sorted by
+                  <div className="inline-block relative">
+                    <select onChange={this.updateSort} defaultValue={sort} className="block appearance-none w-full bg-white border-0 font-bold py-2 px-2 pr-8 underline leading-tight focus:outline-none focus:bg-white">
+                      <option>newest</option>
+                      <option>relevant</option>
+                      <option>helpful</option>
+                    </select>
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
+                      <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex-shrink py-3 text-right">
+                  Showing
+                  <span className="mx-1">{ count < allReviews.length ? count : 'All' }</span>
+                  reviews
+                </div>
               </div>
               {
                 allReviews.length > 0
@@ -191,14 +228,14 @@ class Reviews extends Component {
                     <ReviewsList
                       update={this.updateReview}
                       openModal={this.toggleModal}
-                      reviews={allReviews}
+                      reviews={reviews}
                     />
                   )
                   : (
                     <h3 className="text-xl font-bold">No reviews yet...add one below!</h3>
                   )
               }
-              <div className="w-full mt-8">
+              <div className="w-full flex justify-start mt-8">
                 <button
                   onClick={(e) => {
                     this.toggleModal({ show: true, content: <ReviewForm create={this.createReview} characteristics={characteristics} /> });
@@ -207,6 +244,13 @@ class Reviews extends Component {
                   className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
                 >
                 Add Review
+                </button>
+                <button
+                  onClick={this.loadMoreReviews}
+                  type="button"
+                  className="bg-white border border-teal-500 text-teal-500 hover:bg-teal-500 hover:text-white font-bold py-2 px-4 ml-4 rounded"
+                >
+                  More Reviews
                 </button>
               </div>
             </div>
