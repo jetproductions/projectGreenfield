@@ -7,8 +7,12 @@ import QuestionModal from './QuestionModal';
 
 // TODO: change questions modal show/hide to live here in state not in QA
 // TODO: refactor multiple JSX returns to streamline
+// TODO: ShowMore only add 2 at a time below other questions
+// TODO: Become scrollable when questions rendered is longer than a screen
+// searchBar and Button should be on screen but outside of scroll
+// TODO: showMore immediately loads all and expands to max height if necessary load in infinite scroll
 // TODO: refactor sort to be used by Qs and As
-// TODO: when searching highlights text that is contained in search
+// TODO: when searching highlights text that is contained in search but only after 3 characters
 
 const sortHelpfulness = (questionsArr) => questionsArr.sort((a, b) => {
   if (a.helpfulness > b.helpfulness) {

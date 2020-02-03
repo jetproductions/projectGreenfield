@@ -3,10 +3,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-// TODO: createQuestion renders with current product name
+// TODO: renders with * next to all mandatory fields
+// TODO: createQuestion renders with current product name as subtitle
 // TODO: input field bigger and scrollable vertically rather than moving horizontally when fills
 // above should already be formatted, look at review form and check styling
-// TODO: add error message when submission is incomplete telling which fields are inclomplete
+// TODO: add error message when submission is incomplete telling which fields are inclomplete 'You must enter the following:'
 
 class CreateQuestion extends Component {
   constructor(props) {
@@ -103,6 +104,7 @@ class CreateQuestion extends Component {
       <div>
         {/* need to have this render with current product name */}
         <h3>Ask a Question</h3>
+        <h4>About ProductName</h4>
         <br />
         { error ? errorMessage : null }
         <label htmlFor="body">

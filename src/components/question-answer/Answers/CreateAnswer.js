@@ -3,8 +3,11 @@
 /* eslint-disable no-undef */
 import React, { Component } from 'react';
 
-// TODO: add error message when submission is incomplete telling which fields are inclomplete
-// TODO: add photos
+// TODO: renders with * next to all mandatory fields
+// TODO: add subtitle to Modal [Product Name]: [questionbody]
+// TODO: add error message when submission is incomplete telling which fields are inclomplete 'You must enter the following:'
+// TODO: add photos option opens separate window
+// TODO: adds thumbnail of photo when uploaded
 // TODO: how to validate photos uploads?
 
 class CreateAnswer extends Component {
