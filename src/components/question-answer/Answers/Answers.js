@@ -60,10 +60,10 @@ class Answers extends Component {
           <Answer key={filtered[1].answer_id} {...filtered[1]} />
           <button
             type="button"
-            className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
+            className=" bg-teal-500 hover:bg-teal-700 text-white font-bold py-0.5 px-2 rounded m-2 "
             onClick={(e) => { e.preventDefault(); this.showMoreHandler(); }}
           >
-            See More Answers
+            Load More Answers
           </button>
         </>
       );
@@ -76,7 +76,7 @@ class Answers extends Component {
         {filtered.length > 2 ? (
           <button
             type="button"
-            className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
+            className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-0.5 px-2 rounded m-2"
             onClick={(e) => { e.preventDefault(); this.showMoreHandler(); }}
           >
         Collapse Answers

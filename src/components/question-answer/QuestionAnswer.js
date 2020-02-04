@@ -44,15 +44,16 @@ class QuestionAnswer extends Component {
 	  const { questions } = this.state;
     const { searched } = this.state;
 	  return (
-  <div id="questions-answers" className="container mx-auto justify-center align-center">
+  <div id="questions-answers" className="container mx-auto w-auto max-w-5xl justify-center align-center">
     <div className="w-full px-4">
       <h5 className="uppercase font-thin text-xl">QUESTIONS & ANSWERS</h5>
     </div>
-    <div>
+    <div className="w-auto">
       <SearchBar searchChangeHandler={this.searchChangeHandler} />
       <Questions
         questions={questions}
         searchBar={searched}
+        className=" m-2 "
       />
     </div>
   </div>

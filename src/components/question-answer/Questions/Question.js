@@ -36,8 +36,8 @@ const Question = ({
     );
   }
   return (
-    <div className=" container mx-auto justify-center ">
-      <div className=" text-lg items-left block font-bold">
+    <div className=" container mx-auto justify-center m-1">
+      <div className=" text-lg items-left font-bold">
 Q:
         {' '}
         <Highlight search={searched || ''}>{question_body}</Highlight>
