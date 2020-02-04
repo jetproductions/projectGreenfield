@@ -61,7 +61,7 @@ const Questions = ({
           <button
             type="button"
             onClick={(e) => { e.preventDefault(); showMoreToggle(!showMore); }}
-            className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
+            className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded py-2 px-4 m-2"
           >
 Show Less
           </button>

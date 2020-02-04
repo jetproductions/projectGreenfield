@@ -40,7 +40,7 @@ const Question = ({
       <div className=" text-lg items-left font-bold">
 Q:
         {' '}
-        <Highlight search={searched || ''}>{question_body}</Highlight>
+        <Highlight search={searched || ''} className="font-normal">{question_body}</Highlight>
       </div>
       <div className=" text-sm items-right float-right ">
 Helpful?
