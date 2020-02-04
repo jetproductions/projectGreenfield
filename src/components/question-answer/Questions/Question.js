@@ -36,13 +36,13 @@ const Question = ({
     );
   }
   return (
-    <div>
+    <div className="text-lg">
       <h4>
 Q:
         {' '}
         <Highlight search={searched || ''}>{question_body}</Highlight>
       </h4>
-      <span>
+      <span className=" items-right justify-center">
 Helpful?
         <button type="button" disabled={helpfulButton} onClick={(e) => { helpfulnessHander(e); }}>Yes</button>
       (
