@@ -104,16 +104,52 @@ class CreateAnswer extends Component {
     if (success) {
       setTimeout(() => { toggleModal(false); }, 1500);
       return (
-        <h2>Your Answer has been successfully submitted.</h2>
+        <h2 className="center">Your Answer has been successfully submitted.</h2>
       );
     }
     return (
-      <div>
-        <h3>Answer a Question about:</h3>
+
+      <div className=" w-full px-4 text-gray-700">
+        <h2 className=" text-xl ">Answer a Question about:</h2>
         {' '}
-        <h5>{`${productName}: ${questionBody}`}</h5>
+        <h5 className=" text-l ">{`${productName}: ${questionBody}`}</h5>
         <br />
         {error ? errorMessage : null}
+        <div className="flex flex-wrap -mx-4 mb-8">
+          <label htmlFor="answer-nickname">
+
+        *Nickname:
+            {' '}
+            {this.nameValidator()}
+            {' '}
+            <input
+              id="answer-nickname"
+              type="text"
+              onChange={(e) => this.formChangeHandler('name', e.target.value)}
+              className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+              placeholder="Example: jack543!"
+              maxLength="60"
+            />
+            <span className=" text-xs ">For privacy reasons, do not use your full name or email address</span>
+          </label>
+          <br />
+          <label htmlFor="answer-email">
+*Email:
+            {' '}
+            {this.emailValidator()}
+            {' '}
+            <input
+              id="answer-email"
+              type="email"
+              name="answer-email"
+              onChange={(e) => this.formChangeHandler('email', e.target.value)}
+              placeholder="Example: jack@email.com"
+              maxLength="60"
+              className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+            />
+            <span className=" text-xs ">For authentication reasons, you will not be emailed</span>
+          </label>
+        </div>
         <label htmlFor="answer">
 *Your Answer:
           {' '}
@@ -124,45 +160,14 @@ class CreateAnswer extends Component {
             type="text"
             name="body"
             onChange={(e) => this.formChangeHandler('body', e.target.value)}
-            className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 overflow-y-auto"
+            className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
             rows="4"
             placeholder="Your Answer Here"
           />
 
         </label>
-        <label htmlFor="answer-nickname">
-*Nickname:
-          {' '}
-          {this.nameValidator()}
-          {' '}
-          <input
-            id="answer-nickname"
-            type="text"
-            onChange={(e) => this.formChangeHandler('name', e.target.value)}
-            className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-            placeholder="Example: jack543!"
-            maxLength="60"
-          />
-          <span>For privacy reasons, do not use your full name or email address</span>
-        </label>
-        <br />
-        <label htmlFor="answer-email">
-*Email:
-          {' '}
-          {this.emailValidator()}
-          {' '}
-          <input
-            id="answer-email"
-            type="email"
-            name="answer-email"
-            onChange={(e) => this.formChangeHandler('email', e.target.value)}
-            placeholder="Example: jack@email.com"
-            maxLength="60"
-            className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-          />
-          <span>For authentication reasons, you will not be emailed</span>
-        </label>
-        <label htmlFor="answer-photos">
+
+        {/* <label htmlFor="answer-photos">
           Add Photos:
           <input
             id="answer-photos"
@@ -171,17 +176,17 @@ class CreateAnswer extends Component {
             placeholder="Put Link to Photos Here"
             className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
           />
-        </label>
+        </label> */}
         <button
           type="button"
           onClick={(e) => { e.preventDefault(); this.submitAnswer(); }}
-          className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded "
+          className=" bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded "
         >
           Submit Answer
         </button>
         <footer>
           <div className=" text-grey ">
-* Mandatory Fields
+* Indicates Required Field
           </div>
         </footer>
       </div>
