@@ -13,6 +13,7 @@ import QuestionModal from './QuestionModal';
 // TODO: showMore immediately loads all and expands to max height if necessary load in infinite scroll
 // TODO: refactor sort to be used by Qs and As
 // TODO: when searching highlights text that is contained in search but only after 3 characters
+// TODO: refactor so search is non-case-sensitive
 
 const sortHelpfulness = (questionsArr) => questionsArr.sort((a, b) => {
   if (a.helpfulness > b.helpfulness) {
@@ -53,7 +54,7 @@ const Questions = ({
           const qid = question.question_id ? question.question_id : null;
           return (
           // eslint-disable-next-line react/jsx-props-no-spreading
-            <Question key={qid} {...question} {...questionModal} />
+            <Question key={qid} {...question} {...questionModal} searched={searchBar} />
           );
         })}
         {sorted.length > 2 ? (
@@ -95,7 +96,7 @@ Show Less
         const qid = question.question_id ? question.question_id : null;
         return (
         // eslint-disable-next-line react/jsx-props-no-spreading
-          <Question key={qid} {...question} {...questionModal} />
+          <Question key={qid} {...question} {...questionModal} searched={searchBar} />
         );
       })}
       <button

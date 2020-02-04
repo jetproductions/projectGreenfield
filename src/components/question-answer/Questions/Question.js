@@ -2,13 +2,15 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable camelcase */
 import React, { useState } from 'react';
+import Highlight from 'react-highlighter';
 
 import Answers from '../Answers/Answers';
 import AnswerModal from '../Answers/AnswerModal';
 import Updater from '../HelpfulReportHandler';
 
+// TODO: get highlighter working
 const Question = ({
-  question_id, question_body, question_helpfulness,
+  question_id, question_body, question_helpfulness, searched,
 }) => {
   const [helpfulButton, buttonUsed] = useState(false);
   const [helpfulnessState, helpfulnessUpdate] = useState(question_helpfulness);
@@ -38,7 +40,7 @@ const Question = ({
       <h4>
 Q:
         {' '}
-        {question_body}
+        <Highlight search={searched || ''}>{question_body}</Highlight>
       </h4>
       <span>
 Helpful?
