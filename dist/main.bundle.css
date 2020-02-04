@@ -31,6 +31,20 @@
 #logo{
   color:#e6e6e6;
 }
+
+.leftColumn{
+  transition: width 0.3s ease-in-out;
+  -webkit-transition: width 0.3s ease-in-out;
+}
+
+.rightColumn{
+  transition: width 0.3s ease-in-out;
+  -webkit-transition: width 0.3s ease-in-out;
+}
+
+.arrow:hover{
+  box-shadow: 1px 1px 1px 1px gray;
+}
 input[type="range"]{
   width: 100%;
   height: 0.5rem;

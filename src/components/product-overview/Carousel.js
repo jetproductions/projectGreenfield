@@ -14,7 +14,7 @@ const Carousel = (props) => {
     const keyNum = index;
     return (
       <div key={keyNum} className={` mx-2 my-2  ${border} z-10 `}>
-        <img className="h-20 w-20  object-cover " key={Math.random() * Math.random() * 10} src={item} alt={`thumbnail ${index} for style`} onClick={(e) => { e.preventDefault(); currentImageChangeHandler(index); }} />
+        <img className="h-20 w-20  object-cover " src={item} alt={`thumbnail ${index} for style`} onClick={(e) => { e.preventDefault(); currentImageChangeHandler(index); }} />
       </div>
     );
   });

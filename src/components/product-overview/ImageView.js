@@ -63,22 +63,19 @@ const ImageView = (props) => {
   const { imageUrl } = props;
   const slidelist = productStyles.map((style) => style.photos);
   const currentSlideDeck = slidelist[currentStyle] ? slidelist[currentStyle].map((entry) => entry.thumbnail_url) : [];
+  const imgHeight = selectedViewFormat === 'default' ? 'h-screen' : selectedViewFormat === 'zoomed' ? '' : 'h-full';
+  const nextViewFormat = selectedViewFormat === 'default' ? 'expanded' : selectedViewFormat === 'expanded' ? 'zoomed' : 'default';
+  const mainImageName = selectedViewFormat === 'zoomed' ? 'zoomedImage' : 'mainImage';
 
 
-  // const html = (
-  //   {/* <div className=" w-1/2 h-100" style={{ backgroundImage: imageUrl, backgroundSize: 'cover', backgroundPosition: 'center' }} /> */}
-
-
-  // );
-
-  const imgHtml = imageUrl === 'https://http.cat/204' ? <img className="ml-auto mr-auto static h-screen w-full z-0  my-3  object-scale-down cursor-pointer" src={imageUrl} alt="A model wearing a garment" />
-    : (<img className="ml-auto mr-auto static h-screen w-full z-0  my-3  object-cover cursor-pointer" src={imageUrl} alt="A model wearing a garment" />
+  const imgHtml = imageUrl === 'https://http.cat/204' ? (<img className=" ml-auto mr-auto static h-screen w-full z-0  my-3  object-scale-down cursor-pointer" src={imageUrl} alt="A model wearing a garment" />)
+    : (<img id={mainImageName} className={`overflow-hidden ml-auto mr-auto static ${imgHeight} w-full z-0  my-3  object-cover cursor-pointer`} src={imageUrl} alt="A model wearing a garment" onClick={(e) => { e.preventDefault(); imageViewFormatChangeHandler(nextViewFormat); }} />
     );
 
   return (
     <div className="">
       <div className="flex flex-auto ml-auto mr-auto ">
-        <Carousel className="z-10 " currentSlideDeck={currentSlideDeck} currentImageChangeHandler={currentImageChangeHandler} selectedImage={selectedImage} />
+        <Carousel currentSlideDeck={currentSlideDeck} currentImageChangeHandler={currentImageChangeHandler} selectedImage={selectedImage} />
         {imgHtml}
       </div>
     </div>

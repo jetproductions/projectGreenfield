@@ -19,7 +19,7 @@ import React, { Component } from 'react';
 //             > via function passed from Main View
 //           > A check appears on top of a thumbnail to show it is selected
 //             > Use a transparency perhaps?
-//             > The selected style is inert - clicking on it does nothing.
+//             > The selected style is inert - clicking on it does not  hing.
 
 const StyleSelector = (props) => {
   const { productStyles } = props;
