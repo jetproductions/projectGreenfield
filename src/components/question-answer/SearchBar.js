@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 
 const QuestionSearch = ({ searchChangeHandler }) => (
-  <input name="question-search" type="search" onChange={(e) => searchChangeHandler(e)} placeholder="HAVE A QUESTION? SEARH FOR ANSWERS..." />
+  <input className=" w-full relative h-7 m-3 p-2 border" name="question-search" type="search" onChange={(e) => searchChangeHandler(e)} placeholder="HAVE A QUESTION? SEARCH FOR ANSWERS..." />
 );
 
 

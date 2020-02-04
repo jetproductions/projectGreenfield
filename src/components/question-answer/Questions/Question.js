@@ -36,15 +36,15 @@ const Question = ({
     );
   }
   return (
-    <div className="text-lg">
-      <h4>
+    <div className=" container mx-auto justify-center ">
+      <div className=" text-lg items-left block font-bold">
 Q:
         {' '}
         <Highlight search={searched || ''}>{question_body}</Highlight>
-      </h4>
-      <span className=" items-right justify-center">
+      </div>
+      <div className=" text-sm items-right float-right ">
 Helpful?
-        <button type="button" disabled={helpfulButton} onClick={(e) => { helpfulnessHander(e); }}>Yes</button>
+        <button className="text-md" type="button" disabled={helpfulButton} onClick={(e) => { helpfulnessHander(e); }}>Yes</button>
       (
         {helpfulnessState}
 )
@@ -66,7 +66,7 @@ Helpful?
         >
           Add Answer
         </button>
-      </span>
+      </div>
       {/* working to get to only take up certain amount of space with scrolling */}
       <Answers className="h-screen w-overflow-y-scroll" question_id={question_id || null} />
     </div>

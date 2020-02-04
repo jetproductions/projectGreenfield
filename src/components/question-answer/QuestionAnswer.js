@@ -44,7 +44,7 @@ class QuestionAnswer extends Component {
 	  const { questions } = this.state;
     const { searched } = this.state;
 	  return (
-  <div id="questions-answers" className="container mx-auto">
+  <div id="questions-answers" className="container mx-auto justify-center align-center">
     <div className="w-full px-4">
       <h5 className="uppercase font-thin text-xl">QUESTIONS & ANSWERS</h5>
     </div>

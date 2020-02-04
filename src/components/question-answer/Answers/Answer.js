@@ -30,13 +30,13 @@ const Answer = ({
   return (
     <div>
       <h2>
-A:
+        <div className="font-bold float-left">A: </div>
         {' '}
         {body}
       </h2>
-      <div className="flex items-center justify-start text-gray-700">
-        <small className="bg-gray-400 rounded-full mr-2 font-black h-auto" style={{ fontSize: '8px', padding: '2px 3.5px' }}>{String.fromCharCode(10003)}</small>
-        <span>{`By ${answerer_name}, ${dateString}`}</span>
+      <div className=" flex items-center justify-start text-gray-700 text-sm ">
+        {/* <small className=" bg-gray-400 rounded-full mr-2 font-black h-auto " style={{ fontSize: '8px', padding: '2px 3.5px' }}>{String.fromCharCode(10003)}</small> */}
+        <span>{`by ${answerer_name}, ${dateString}`}</span>
         <span className="ml-1">
           {' '}
           {'| Helpful?'}
