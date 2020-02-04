@@ -4,6 +4,8 @@
 
 import React, { useState } from 'react';
 
+// TODO: get selected photo to modal to center
+
 const Photos = ({ photos }) => {
   const [selectedPhoto, selectedPhotoHandler] = useState(null);
   if (selectedPhoto) {
@@ -20,7 +22,7 @@ const Photos = ({ photos }) => {
           >
             <small className="absolute font-bold text-2xl w-full text-center" style={{ marginTop: '-3px', marginLeft: '2px', transform: 'rotate(45deg)' }}>+</small>
           </a>
-          <img src={selectedPhoto} alt="selection from answer" />
+          <img src={selectedPhoto} alt="selection from answer" className="center max-w-xl" />
         </div>
       </div>
     );
