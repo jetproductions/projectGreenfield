@@ -41,7 +41,7 @@ Q:
         {question_body}
       </h4>
       <span>
-Helpfulness?
+Helpful?
         <button type="button" disabled={helpfulButton} onClick={(e) => { helpfulnessHander(e); }}>Yes</button>
       (
         {helpfulnessState}
@@ -59,7 +59,7 @@ Helpfulness?
         <button
           type="button"
           onClick={(e) => { e.preventDefault(); createAnswerView(true); }}
-          className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-teal-500 hover:bg-teal-700 text-white py-2 px-4 rounded"
         >
           Add Answer
         </button>

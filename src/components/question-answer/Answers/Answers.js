@@ -22,14 +22,13 @@ class Answers extends Component {
     this.getAnswers();
   }
 
-  // eslint-disable-next-line no-undef
-  getAnswers = () => {
-    const { question_id } = this.state;
-    fetch(`http://52.26.193.201:3000/qa/${question_id}/answers`).then((res) => res.json())
-      .then((result) => {
-        this.setState({ answers: result.results, count: result.count });
-      });
-  }
+   getAnswers = () => {
+     const { question_id } = this.state;
+     fetch(`http://52.26.193.201:3000/qa/${question_id}/answers`).then((res) => res.json())
+       .then((result) => {
+         this.setState({ answers: result.results, count: result.count });
+       });
+   }
 
   sortHelpfulness = (answersArr) => answersArr.sort((a, b) => {
     if (a.helpfulness > b.helpfulness) {
