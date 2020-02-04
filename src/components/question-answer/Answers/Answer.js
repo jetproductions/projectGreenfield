@@ -6,6 +6,7 @@ import Photos from './Photos';
 import Updater from '../HelpfulReportHandler';
 
 // TODO: add photo thumbnail functionality
+// TODO: allow for zoom on photos
 // TODO: have Seller next to username if seller - hard time finding this on API docs
 
 const Answer = ({
@@ -60,13 +61,13 @@ A:
           </button>
         </span>
       </div>
-      {/* photo functionality can be added later, work with James for carousel-esque styling
+      {/* photo functionality can be added later, work with James for carousel-esque styling */}
       {photos.length > 0 ? (
         <footer>
           <div>Photos:</div>
           <Photos photos={photos} />
         </footer>
-      ) : null} */}
+      ) : null}
 
     </div>
   );

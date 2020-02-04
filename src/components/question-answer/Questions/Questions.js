@@ -13,7 +13,7 @@ import QuestionModal from './QuestionModal';
 // TODO: showMore immediately loads all and expands to max height if necessary load in infinite scroll
 // TODO: refactor sort to be used by Qs and As
 // TODO: when searching highlights text that is contained in search but only after 3 characters
-// TODO: refactor so search is non-case-sensitive
+// TODO: refactor so search is not case-sensitive
 
 const sortHelpfulness = (questionsArr) => questionsArr.sort((a, b) => {
   if (a.helpfulness > b.helpfulness) {
