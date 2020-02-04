@@ -7,7 +7,7 @@ import React from 'react';
 const Photos = ({ photos }) => (photos.map((item, index) => {
   const keyNum = index;
   return (
-    <div key={keyNum} className=" mx-2 my-2  border border-gray-600 z-10 ">
+    <div key={keyNum} className=" inline-block mx-2 my-2  border border-gray-600 z-10 ">
       <img
         className="h-20 w-20  object-cover "
         key={item.id}
