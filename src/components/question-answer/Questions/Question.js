@@ -32,7 +32,7 @@ const Question = ({
   };
   if (createAnswer) {
     return (
-      <AnswerModal show={createAnswer} toggleModal={createAnswerView} question_id={question_id} />
+      <AnswerModal show={createAnswer} toggleModal={createAnswerView} question_id={question_id} question_body={question_body} />
     );
   }
   return (
@@ -54,14 +54,15 @@ Helpful?
           type="button"
           disabled={reportState}
           onClick={(e) => { reportHandler(e); }}
+          className="hover:underline"
         >
           Report
         </button>
-        {'  '}
+        {'  |  '}
         <button
           type="button"
           onClick={(e) => { e.preventDefault(); createAnswerView(true); }}
-          className="bg-teal-500 hover:bg-teal-700 text-white py-2 px-4 rounded"
+          className="hover:underline text-black"
         >
           Add Answer
         </button>

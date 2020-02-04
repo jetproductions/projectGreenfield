@@ -6,6 +6,7 @@ import React from 'react';
 import CreateQuestion from './CreateQuestion';
 
 // TODO: refactor to only 1 modal for Q and A
+// TODO: disable scrolling when modal open
 
 const QuestionModal = ({
   show, toggleModal,

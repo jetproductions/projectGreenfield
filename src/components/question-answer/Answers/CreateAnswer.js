@@ -2,8 +2,8 @@
 /* eslint-disable react/no-unused-state */
 /* eslint-disable no-undef */
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-// TODO: add subtitle to Modal [Product Name]: [questionbody]
 // TODO: add error message when submission is incomplete telling which fields are inclomplete 'You must enter the following:'
 // TODO: add photos option opens separate window
 // TODO: adds thumbnail of photo when uploaded
@@ -63,6 +63,7 @@ class CreateAnswer extends Component {
     const { email } = this.state;
     const { photos } = this.state;
     const { question_id } = this.props;
+
     if (body.length < 25 || body.length > 1000) {
       return 'Inavlid Answer';
     }
@@ -96,6 +97,10 @@ class CreateAnswer extends Component {
     );
     const { success } = this.state;
     const { toggleModal } = this.props;
+    // eslint-disable-next-line react/destructuring-assignment
+    const productName = this.props.product.name;
+    // eslint-disable-next-line react/destructuring-assignment
+    const questionBody = this.props.question_body;
     if (success) {
       setTimeout(() => { toggleModal(false); }, 1500);
       return (
@@ -104,7 +109,9 @@ class CreateAnswer extends Component {
     }
     return (
       <div>
-        Answer a Question
+        <h3>Answer a Question about:</h3>
+        {' '}
+        <h5>{`${productName}: ${questionBody}`}</h5>
         <br />
         {error ? errorMessage : null}
         <label htmlFor="answer">
@@ -168,16 +175,22 @@ class CreateAnswer extends Component {
         <button
           type="button"
           onClick={(e) => { e.preventDefault(); this.submitAnswer(); }}
-          className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded "
         >
           Submit Answer
         </button>
         <footer>
-* Mandatory
+          <div className=" text-grey ">
+* Mandatory Fields
+          </div>
         </footer>
       </div>
     );
   }
 }
 
-export default CreateAnswer;
+const mapStateToProps = (state) => ({
+  product: state.product,
+});
+
+export default connect(mapStateToProps)(CreateAnswer);

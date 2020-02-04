@@ -5,8 +5,6 @@ import moment from 'moment';
 import Photos from './Photos';
 import Updater from '../HelpfulReportHandler';
 
-// TODO: add photo thumbnail functionality
-// TODO: allow for zoom on photos
 // TODO: have Seller next to username if seller - hard time finding this on API docs
 
 const Answer = ({
@@ -46,6 +44,7 @@ A:
             type="button"
             disabled={helpfulButton}
             onClick={(e) => { helpfulnessHander(e); }}
+            className="hover:underline"
           >
             Yes
           </button>
@@ -55,6 +54,7 @@ A:
             type="button"
             disabled={reportState}
             onClick={(e) => { reportHandler(e); }}
+            className="hover:underline"
           >
            Report
           </button>
