@@ -63,14 +63,34 @@ const ImageView = (props) => {
   const { imageUrl } = props;
   const slidelist = productStyles.map((style) => style.photos);
   const currentSlideDeck = slidelist[currentStyle] ? slidelist[currentStyle].map((entry) => entry.thumbnail_url) : [];
-  const imgHeight = selectedViewFormat === 'default' ? 'h-screen' : selectedViewFormat === 'zoomed' ? '' : 'h-full';
+  const imgHeight = selectedViewFormat === 'default' ? 'h-screen' : selectedViewFormat === 'zoomed' ? 'h-screen' : 'h-full';
   const nextViewFormat = selectedViewFormat === 'default' ? 'expanded' : selectedViewFormat === 'expanded' ? 'zoomed' : 'default';
   const mainImageName = selectedViewFormat === 'zoomed' ? 'zoomedImage' : 'mainImage';
+  const { mousePositionChangeHandler } = props;
+  const { xPos } = props;
+  const { yPos } = props;
+  const imgDiv = document.getElementById(mainImageName);
+  const leftCol = document.getElementById('leftColumn');
+  const colHeight = leftCol ? leftCol.clientHeight : 0;
+  const colWidth = leftCol ? leftCol.clientWidth : 0;
+  const imgY = imgDiv ? imgDiv.height : 0;
+  const imgX = imgDiv ? imgDiv.width : 0;
+  const zoomMargins = { marginTop: imgY / 2 + (0 - yPos), marginLeft: imgX / 2 + (0 - xPos) };
 
+  // console.log(colHeight, colWidth * 0.75);
 
-  const imgHtml = imageUrl === 'https://http.cat/204' ? (<img className=" ml-auto mr-auto static h-screen w-full z-0  my-3  object-scale-down cursor-pointer" src={imageUrl} alt="A model wearing a garment" />)
-    : (<img id={mainImageName} className={`overflow-hidden ml-auto mr-auto static ${imgHeight} w-full z-0  my-3  object-cover cursor-pointer`} src={imageUrl} alt="A model wearing a garment" onClick={(e) => { e.preventDefault(); imageViewFormatChangeHandler(nextViewFormat); }} />
-    );
+  const imgHtml = imageUrl === 'http://http.cat/204'
+    ? (<img className=" ml-auto mr-auto static h-screen w-full z-0  my-3  object-scale-down cursor-pointer" src={imageUrl} alt="A model wearing a garment" />)
+    : selectedViewFormat === 'zoomed'
+      ? (
+        <div className="h-screen w-3/4">
+          <img style={zoomMargins} id={mainImageName} onMouseMove={mousePositionChangeHandler} className={`static ${imgHeight} w-full z-0  my-3  object-cover cursor-pointer`} src={imageUrl} alt="A model wearing a garment" onClick={(e) => { e.preventDefault(); imageViewFormatChangeHandler(nextViewFormat); }} />
+    //
+          {' '}
+        </div>
+      )
+      : (<img id={mainImageName} className={`ml-auto mr-auto static ${imgHeight} w-full z-0  my-3  object-cover cursor-pointer`} src={imageUrl} alt="A model wearing a garment" onClick={(e) => { e.preventDefault(); imageViewFormatChangeHandler(nextViewFormat); }} />
+      );
 
   return (
     <div className="">
