@@ -12,8 +12,6 @@ import QuestionModal from './QuestionModal';
 // searchBar and Button should be on screen but outside of scroll
 // TODO: showMore immediately loads all and expands to max height if necessary load in infinite scroll
 // TODO: refactor sort to be used by Qs and As
-// TODO: when searching highlights text that is contained in search but only after 3 characters
-// TODO: refactor so search is not case-sensitive
 
 const sortHelpfulness = (questionsArr) => questionsArr.sort((a, b) => {
   if (a.helpfulness > b.helpfulness) {
@@ -22,12 +20,15 @@ const sortHelpfulness = (questionsArr) => questionsArr.sort((a, b) => {
   return 1;
 });
 
-const searchQuestions = (searched, questions) => questions.filter((question) => {
-  if (question.question_body.toLowerCase().indexOf(searched) > -1) {
-    return true;
-  }
-  return false;
-});
+const searchQuestions = (searched, questions) => {
+  if (searched.length < 3) return questions;
+  return questions.filter((question) => {
+    if (question.question_body.toLowerCase().indexOf(searched) > -1) {
+      return true;
+    }
+    return false;
+  });
+};
 
 
 const Questions = ({

@@ -35,12 +35,14 @@ const Question = ({
       <AnswerModal show={createAnswer} toggleModal={createAnswerView} question_id={question_id} question_body={question_body} />
     );
   }
+  const highlighted = <Highlight search={searched || ''} className="font-normal">{question_body}</Highlight>;
+  const notHighlighted = <div className="font-normal">{question_body}</div>;
   return (
     <div className=" container mx-auto justify-center m-1">
       <div className=" text-lg items-left font-bold">
 Q:
         {' '}
-        <Highlight search={searched || ''} className="font-normal">{question_body}</Highlight>
+        {searched.length > 3 ? highlighted : notHighlighted}
       </div>
       <div className=" text-sm items-right float-right ">
 Helpful?
