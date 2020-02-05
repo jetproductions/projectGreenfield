@@ -53,6 +53,8 @@ class ProductOverview extends Component {
       imageUrl: '',
       skus: [],
       maxQty: 0,
+      xPos: 0,
+      yPos: 0,
     };
 
     this.getProductStyles(id);
@@ -66,6 +68,7 @@ class ProductOverview extends Component {
     this.imageViewFormatChangeHandler = this.imageViewFormatChangeHandler.bind(this);
     this.imageUrlChangeHandler = this.imageUrlChangeHandler.bind(this);
     this.skuChangeHandler = this.skuChangeHandler.bind(this);
+    this.mousePositionChangeHandler = this.mousePositionChangeHandler.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -82,7 +85,7 @@ class ProductOverview extends Component {
   // API CALLS:
   //    > Product STYLES - store in state.productStyles
   getProductStyles(productId) {
-    return fetch(`http://3.134.102.30/products/${productId}/styles`)
+    return fetch(`http://52.26.193.201:3000/products/${productId}/styles`)
       .then((res) => res.json())
       .catch((err) => { throw err; })
       .then((response) => this.setState({ productStyles: response.results }, () => { this.imageUrlChangeHandler(); this.skuChangeHandler(); }));
@@ -148,12 +151,18 @@ class ProductOverview extends Component {
     this.setState({ selectedViewFormat: format }, this.imageUrlChangeHandler);
   }
 
-  imageUrlChangeHandler() {
+  //  Current Image URL Change
+  imageUrlChangeHandler=() => {
     const { currentStyle } = this.state;
     const { selectedImage } = this.state;
     const { productStyles } = this.state;
     const newUrl = productStyles.length === 0 ? 'https://http.cat/204' : productStyles[currentStyle].photos[selectedImage].url;
     this.setState({ imageUrl: newUrl });
+  }
+
+  //  Mouse Position Change (for zoomed image)
+  mousePositionChangeHandler=(e) => {
+    this.setState({ xPos: e.nativeEvent.offsetX, yPos: e.nativeEvent.offsetY });
   }
 
   render() {
@@ -174,6 +183,38 @@ class ProductOverview extends Component {
     const { selectedSize } = this.state;
     const { selectedQty } = this.state;
     const { maxQty } = this.state;
+    const { xPos } = this.state;
+    const { yPos } = this.state;
+    const { mousePositionChangeHandler } = this;
+    const rightWidth = selectedViewFormat === 'default' ? 'w-1/4' : 'w-0';
+    const leftWidth = selectedViewFormat === 'default' ? 'w-1/2' : 'w-3/4';
+    const rightColumnHtml = selectedViewFormat === 'default' ? (
+      <div>
+        <ProductInformation
+          product={product}
+          productStyles={productStyles}
+          reviewScore={weighted}
+        />
+        <StyleSelector
+          product={product}
+          productStyles={productStyles}
+          styleChangeHandler={styleChangeHandler}
+          currentStyle={currentStyle}
+        />
+        <AddToCart
+          product={product}
+          productStyles={productStyles}
+          addToCartClickHandler={addToCartClickHandler}
+          skus={skus}
+          sizeChangeHandler={sizeChangeHandler}
+          qtyChangeHandler={qtyChangeHandler}
+          selectedSize={selectedSize}
+          selectedQty={selectedQty}
+          maxQty={maxQty}
+        />
+      </div>
+    ) : (<div />);
+
 
     return (
       <div id="productOverview">
@@ -185,7 +226,7 @@ class ProductOverview extends Component {
 
         <div className="flex mb-4">
 
-          <div id="leftColumn" className=" w-1/2 ml-auto">
+          <div id="leftColumn" className={`${leftWidth} overflow-hidden relative ml-auto`}>
             {/* <h1>Left Column</h1> */}
             <div className="w-full h-auto">
               <ImageView
@@ -197,6 +238,9 @@ class ProductOverview extends Component {
                 currentImageChangeHandler={currentImageChangeHandler}
                 imageViewFormatChangeHandler={imageViewFormatChangeHandler}
                 imageUrl={imageUrl}
+                xPos={xPos}
+                yPos={yPos}
+                mousePositionChangeHandler={mousePositionChangeHandler}
               />
             </div>
             <div className="w-full">
@@ -208,35 +252,14 @@ class ProductOverview extends Component {
 
           </div>
 
-          <div id="rightColumn" className="w-1/4 mr-auto bg-gray-100">
+          <div id="rightColumn" className={`${rightWidth} relative bg-gray-100 mr-auto`}>
             {/* <h1>Right Column</h1> */}
-            <ProductInformation
-              product={product}
-              productStyles={productStyles}
-              reviewScore={weighted}
-            />
-            <StyleSelector
-              product={product}
-              productStyles={productStyles}
-              styleChangeHandler={styleChangeHandler}
-              currentStyle={currentStyle}
-            />
-            <AddToCart
-              product={product}
-              productStyles={productStyles}
-              addToCartClickHandler={addToCartClickHandler}
-              skus={skus}
-              sizeChangeHandler={sizeChangeHandler}
-              qtyChangeHandler={qtyChangeHandler}
-              selectedSize={selectedSize}
-              selectedQty={selectedQty}
-              maxQty={maxQty}
-            />
+            {rightColumnHtml}
           </div>
 
 
         </div>
-        <div id="endOfOverview" />
+
       </div>
     );
   }

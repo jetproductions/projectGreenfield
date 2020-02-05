@@ -5,6 +5,7 @@ import StarRatings from '../utility/stars/StarRatings';
 /* eslint-disable no-undef */
 /* eslint-disable react/no-unused-state */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable camelcase */
 
 //  #### GUIDELINES ####
 //    * Product information - Functional Component
@@ -17,6 +18,7 @@ const ProductInformation = (props) => {
   const { reviewScore } = props;
   const { product: { category } } = props;
   const { product: { name } } = props;
+  const { product: { default_price } } = props;
   return (
     <div id="productInformation">
       <div id="starRating" className="mx-4 my-8 content-center flex flex-wrap self-center ">
@@ -32,6 +34,10 @@ const ProductInformation = (props) => {
       <h1 className="h1 mx-2 my-2 text-xl" id="category">{` CATEGORY >  ${category.toUpperCase()}`}</h1>
       <h1 className="h1 mx-2 my-2 text-5xl" id="productName">
         {name}
+      </h1>
+      <h1 className="italic h1 mx-8 my-2 text-xl" id="price">
+        $
+        {default_price}
       </h1>
     </div>
   );
