@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 import Question from './Question';
 import QuestionModal from './QuestionModal';
 
-// TODO: ShowMore only add 2 at a time below other questions
 // TODO: Become scrollable when questions rendered is longer than a screen
 // searchBar and Button should be on screen but outside of scroll
 // TODO: showMore immediately loads all and expands to max height if necessary load in infinite scroll

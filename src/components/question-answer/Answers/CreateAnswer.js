@@ -1,9 +1,11 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable camelcase */
 /* eslint-disable react/no-unused-state */
 /* eslint-disable no-undef */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import Photos from './Photos';
 // TODO: add error message when submission is incomplete telling which fields are inclomplete 'You must enter the following:'
 // TODO: change unmet requirements to show up once user has selected different input
 // TODO: add photos option opens separate window
@@ -18,6 +20,7 @@ class CreateAnswer extends Component {
       name: '',
       email: '',
       photos: [],
+      photo: '',
       error: false,
       success: false,
     };
@@ -25,6 +28,7 @@ class CreateAnswer extends Component {
 
   formChangeHandler = (location, value) => {
     const payload = {};
+    console.log('formchangeLocation: ', location, ' value: ', value);
     payload[location] = value;
     this.setState(payload);
   }
@@ -56,6 +60,13 @@ class CreateAnswer extends Component {
       return (<span>Please make your question more concise</span>);
     }
     return null;
+  }
+
+  photoAddHandler = () => {
+    const { photos } = this.state;
+    const { photo } = this.state;
+    photos.push(photo);
+    this.setState({ photos, photo: '' });
   }
 
   submitAnswer = async () => {
@@ -102,12 +113,26 @@ class CreateAnswer extends Component {
     const productName = this.props.product.name;
     // eslint-disable-next-line react/destructuring-assignment
     const questionBody = this.props.question_body;
+    const { photos } = this.state;
+    const { photo } = this.state;
     if (success) {
       setTimeout(() => { toggleModal(false); }, 1500);
       return (
         <h2 className="center">Your Answer has been successfully submitted.</h2>
       );
     }
+    const addPhotoInput = (
+      <div className="flex">
+        <input
+          id="answer-photos"
+          type="url"
+          onChange={(e) => { this.formChangeHandler('photo', e.target.value); }}
+          placeholder="Put Link to Photos Here"
+          className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 max-h-full"
+        />
+        <button type="button" className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-1 px-2 rounded flex flex-wrap mx-2 mb-2" onClick={(e) => { e.preventDefault(); this.photoAddHandler(); }}>Add Photo</button>
+      </div>
+    );
     return (
 
       <div className=" w-full px-4 text-gray-700">
@@ -116,72 +141,74 @@ class CreateAnswer extends Component {
         <h5 className=" text-l ">{`${productName}: ${questionBody}`}</h5>
         <br />
         {error ? errorMessage : null}
-        <div className="flex flex-wrap -mx-4 mb-8">
-          <label htmlFor="answer-nickname" className=" float-left">
+        <form>
+          <div className="flex flex-wrap -mx-4 mb-8">
+            <label htmlFor="answer-nickname" className=" float-left ">
         *Nickname:
-            {' '}
-            {this.nameValidator()}
-            {' '}
-            <input
-              id="answer-nickname"
-              type="text"
-              onChange={(e) => this.formChangeHandler('name', e.target.value)}
-              className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-              placeholder="Example: jack543!"
-              maxLength="60"
-            />
-            <span className=" text-xs ">For privacy reasons, do not use your full name or email address</span>
-          </label>
-          <br />
-          <label htmlFor="answer-email" className="float-right">
+              {' '}
+              {this.nameValidator()}
+              {' '}
+              <input
+                id="answer-nickname"
+                type="text"
+                onChange={(e) => this.formChangeHandler('name', e.target.value)}
+                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                placeholder="Example: jack543!"
+                maxLength="60"
+              />
+              <span className=" text-xs ">For privacy reasons, do not use your full name or email address</span>
+            </label>
+          </div>
+          <div className="flex flex-wrap -mx-4 mb-8">
+            <label htmlFor="answer-email" className="float-right">
 *Email:
-            {' '}
-            {this.emailValidator()}
-            {' '}
-            <input
-              id="answer-email"
-              type="email"
-              name="answer-email"
-              onChange={(e) => this.formChangeHandler('email', e.target.value)}
-              placeholder="Example: jack@email.com"
-              maxLength="60"
-              className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-            />
-            <span className=" text-xs ">For authentication reasons, you will not be emailed</span>
-          </label>
-        </div>
-        <label htmlFor="answer">
+              {' '}
+              {this.emailValidator()}
+              {' '}
+              <input
+                id="answer-email"
+                type="email"
+                name="answer-email"
+                onChange={(e) => this.formChangeHandler('email', e.target.value)}
+                placeholder="Example: jack@email.com"
+                maxLength="60"
+                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 lg:max-w-6/12"
+              />
+              <span className=" text-xs ">For authentication reasons, you will not be emailed</span>
+            </label>
+          </div>
+          <div className="flex flex-wrap -mx-4 mb-8">
+            <label htmlFor="answer">
 *Your Answer:
-          {' '}
-          {this.bodyValidator()}
-          {' '}
-          <input
-            id="body"
-            type="text"
-            name="body"
-            onChange={(e) => this.formChangeHandler('body', e.target.value)}
-            className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-            rows="4"
-            placeholder="Your Answer Here"
-          />
-        </label>
-        {/* <label htmlFor="answer-photos">
+              {' '}
+              {this.bodyValidator()}
+              {' '}
+              <input
+                id="body"
+                type="text"
+                name="body"
+                onChange={(e) => this.formChangeHandler('body', e.target.value)}
+                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                rows="4"
+                placeholder="Your Answer Here"
+              />
+            </label>
+          </div>
+          <div className="flex flex-wrap -mx-4 mb-8">
+            <label htmlFor="answer-photos">
           Add Photos:
-          <input
-            id="answer-photos"
-            type="url"
-            onChange={(e) => { this.formChangeHandler('photos', e.target.value); }}
-            placeholder="Put Link to Photos Here"
-            className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-          />
-        </label> */}
-        <button
-          type="button"
-          onClick={(e) => { e.preventDefault(); this.submitAnswer(); }}
-          className=" bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded "
-        >
+              {photos.length !== 0 ? <Photos photos={photos} /> : null}
+              {photos.length < 4 ? addPhotoInput : null}
+            </label>
+          </div>
+          <button
+            type="button"
+            onClick={(e) => { e.preventDefault(); this.submitAnswer(); }}
+            className=" bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded flex flex-wrap -mx-4 mb-4"
+          >
           Submit Answer
-        </button>
+          </button>
+        </form>
         <footer>
           <div className=" text-grey ">
 * Indicates Required Field
