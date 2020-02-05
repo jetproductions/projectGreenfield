@@ -19,7 +19,7 @@ import React, { Component } from 'react';
 //             > via function passed from Main View
 //           > A check appears on top of a thumbnail to show it is selected
 //             > Use a transparency perhaps?
-//             > The selected style is inert - clicking on it does nothing.
+//             > The selected style is inert - clicking on it does not  hing.
 
 const StyleSelector = (props) => {
   const { productStyles } = props;
@@ -36,10 +36,10 @@ const StyleSelector = (props) => {
   });
   return (
     <div>
-      <h1 className="mx-2" id="styleSelector">
+      <h1 className="h1 mx-2" id="styleSelector">
         {`STYLE > ${styleName}`}
       </h1>
-      <h1 className="mx-8" id="styleSelector">{'Choose A Style >'}</h1>
+      <h1 className="h1 mx-8" id="styleSelector">{'Choose A Style >'}</h1>
       <div className="flex flex-wrap">
         {styles}
       </div>
