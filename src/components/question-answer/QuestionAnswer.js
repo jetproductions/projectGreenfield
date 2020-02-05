@@ -5,6 +5,7 @@
 /* eslint-disable no-undef */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
 import SearchBar from './SearchBar';
 import Questions from './Questions/Questions';
 
@@ -18,21 +19,13 @@ class QuestionAnswer extends Component {
       filteredQuestions: [],
     };
     this.getQuestions(id);
-    this.addQuestionHandler = this.addQuestionHandler.bind(this);
   }
-
-  // need to work on this get fucntioning better understanding needed
-  // componentDidMount() {
-  //   const { product: { id } } = this.props;
-  //   this.getQuestions(id);
-  // }
 
   // not sure this is setup properly
   componentDidUpdate(prevProps) {
 	  const { product: { id } } = this.props;
 	  // eslint-disable-next-line no-useless-return
 	  if (id === prevProps.product.id) return;
-    // need to get new questions
     this.getQuestions(id);
   }
 
@@ -44,31 +37,21 @@ class QuestionAnswer extends Component {
   }
 
   searchChangeHandler = (event) => {
-    // console.log(event.target.value);
     this.setState({ searched: event.target.value });
-  }
-
-  addQuestionHandler(questionAdded) {
-    const { questions } = this.state;
-    // since doesn't have username functionality pull added at top
-    questions.unshift(questionAdded);
-    this.setState({ questions });
   }
 
   render() {
 	  const { questions } = this.state;
     const { searched } = this.state;
 	  return (
-  <div id="questions-answers">
-    <div className="w-full px-4">
-      <h5 className="uppercase font-thin text-xl">QUESTIONS & ANSWERS</h5>
-    </div>
-    <div>
+  <div id="questions-answers" className="container mx-auto w-auto p-3 justify-center align-center">
+    <h5 className="uppercase font-thin text-xl float-left">QUESTIONS & ANSWERS</h5>
+    <div className="w-auto">
       <SearchBar searchChangeHandler={this.searchChangeHandler} />
       <Questions
         questions={questions}
         searchBar={searched}
-        addQuestionHandler={this.addQuestionHandler}
+        className=" m-2 "
       />
     </div>
   </div>

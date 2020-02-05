@@ -5,7 +5,11 @@ import React from 'react';
 
 import CreateQuestion from './CreateQuestion';
 
-const QuestionModal = ({ show, toggleModal, question_id }) => {
+// TODO: refactor to only 1 modal for Q and A
+
+const QuestionModal = ({
+  show, toggleModal,
+}) => {
   const style = {
     backgroundColor: 'rgba(0,0,0,0.3)',
     display: (show ? 'flex' : 'none'),

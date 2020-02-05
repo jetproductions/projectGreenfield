@@ -2,25 +2,14 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable camelcase */
 import React, { useState } from 'react';
+import Highlight from 'react-highlighter';
+
 import Answers from '../Answers/Answers';
 import AnswerModal from '../Answers/AnswerModal';
-
-// should be able to refactor both of these to be just one function in long run,
-// also maybe refactor to be own module work with both question and answer
-const helpfulUpdate = async (e, id) => {
-  e.preventDefault();
-  const status = await fetch(`http://52.26.193.201:3000/qa/question/${id}/helpful`, { method: 'PUT', headers: { 'Content-Type': 'application/json' } }).then((result) => result.status);
-  return status === 204;
-};
-const reportUpdate = async (e, id) => {
-  e.preventDefault();
-  const status = await fetch(`http://52.26.193.201:3000/qa/question/${id}/report`, { method: 'PUT', headers: { 'Content-Type': 'application/json' } }).then((result) => result.status);
-  // console.log('report: ', status);
-  return status === 204;
-};
+import Updater from '../HelpfulReportHandler';
 
 const Question = ({
-  question_id, question_body, asker_name, question_helpfulness,
+  question_id, question_body, question_helpfulness, searched,
 }) => {
   const [helpfulButton, buttonUsed] = useState(false);
   const [helpfulnessState, helpfulnessUpdate] = useState(question_helpfulness);
@@ -28,34 +17,35 @@ const Question = ({
   const [createAnswer, createAnswerView] = useState(false);
 
   const helpfulnessHander = async (e) => {
-    const updated = await helpfulUpdate(e, question_id);
+    const updated = await Updater(e, question_id, 'question', 'helpful');
     if (updated) {
       helpfulnessUpdate(helpfulnessState + 1);
       buttonUsed(true);
     }
   };
   const reportHandler = async (event) => {
-    console.log('reportHandler');
-    const reported = await reportUpdate(event, question_id);
+    const reported = await Updater(event, question_id, 'question', 'report');
     if (reported) {
       reportStateUpdate(true);
     }
   };
   if (createAnswer) {
     return (
-      <AnswerModal show={createAnswer} toggleModal={createAnswerView} />
+      <AnswerModal show={createAnswer} toggleModal={createAnswerView} question_id={question_id} question_body={question_body} />
     );
   }
+  const highlighted = <Highlight search={searched || ''} className="font-normal">{question_body}</Highlight>;
+  const notHighlighted = <span className="font-normal">{question_body}</span>;
   return (
-    <div>
-      <h4>
+    <div className=" container mx-auto justify-center m-1">
+      <div className=" text-lg items-left font-bold">
 Q:
         {' '}
-        {question_body}
-      </h4>
-      <span>
-Helpfulness?
-        <button type="button" disabled={helpfulButton} onClick={(e) => { helpfulnessHander(e); }}>Yes</button>
+        {searched.length >= 3 ? highlighted : notHighlighted}
+      </div>
+      <div className=" text-sm items-right float-right ">
+Helpful?
+        <button className="text-md" type="button" disabled={helpfulButton} onClick={(e) => { helpfulnessHander(e); }}>Yes</button>
       (
         {helpfulnessState}
 )
@@ -65,19 +55,21 @@ Helpfulness?
           type="button"
           disabled={reportState}
           onClick={(e) => { reportHandler(e); }}
+          className="hover:underline"
         >
           Report
         </button>
-        {'  '}
+        {'  |  '}
         <button
           type="button"
           onClick={(e) => { e.preventDefault(); createAnswerView(true); }}
-          className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
+          className="hover:underline text-black"
         >
           Add Answer
         </button>
-      </span>
-      <Answers question_id={question_id || null} />
+      </div>
+      {/* working to get to only take up certain amount of space with scrolling */}
+      <Answers className="h-screen w-overflow-y-scroll" question_id={question_id || null} />
     </div>
   );
 };

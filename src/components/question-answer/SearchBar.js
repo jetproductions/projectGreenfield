@@ -2,12 +2,8 @@
 import React, { Component } from 'react';
 
 const QuestionSearch = ({ searchChangeHandler }) => (
-  <input name="question-search" type="search" onChange={(e) => searchChangeHandler(e)} placeholder="HAVE A QUESTION? SEARH FOR ANSWERS..." />
+  <input className=" w-full relative h-7 m-3 p-2 border border-black rounded-lg" name="question-search" type="search" onChange={(e) => searchChangeHandler(e)} placeholder="HAVE A QUESTION? SEARCH FOR ANSWERS..." />
 );
 
 
 export default QuestionSearch;
-// should add questions to global state and reducer with actions to
-// get questions into store in component above this.
-// will need to have a display and !display functionality so when
-// search is in use only shows searched

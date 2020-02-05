@@ -2,20 +2,10 @@
 /* eslint-disable camelcase */
 import React, { useState } from 'react';
 import moment from 'moment';
-import AnswerModal from './AnswerModal';
+import Photos from './Photos';
+import Updater from '../HelpfulReportHandler';
 
-// could eventualy refactor these two functions into one that can handle both based on parameters/args
-const helpfulUpdate = async (e, id) => {
-  e.preventDefault();
-  const status = await fetch(`http://3.134.102.30/qa/answer/${id}/helpful`, { method: 'PUT', headers: { 'Content-Type': 'application/json' } }).then((result) => result.status);
-  return status === 204;
-};
-const reportUpdate = async (e, id) => {
-  e.preventDefault();
-  const status = await fetch(`http://52.26.193.201:3000/qa/answer/${id}/report`, { method: 'PUT', headers: { 'Content-Type': 'application/json' } }).then((result) => result.status);
-  console.log('report: ', status);
-  return status === 204;
-};
+// TODO: have Seller next to username if seller - hard time finding this on API docs
 
 const Answer = ({
   answerer_name, body, helpfulness, date, photos, answer_id,
@@ -24,39 +14,39 @@ const Answer = ({
   const [helpfulButton, buttonUsed] = useState(false);
   const [helpfulnessState, helpfulnessUpdate] = useState(helpfulness);
   const [reportState, reportStateUpdate] = useState(false);
-  // const [showModal, changeModal] = useState(false);
   const helpfulnessHander = async (e) => {
-    const updated = await helpfulUpdate(e, answer_id);
+    const updated = await Updater(e, answer_id, 'answer', 'helpful');
     if (updated) {
       helpfulnessUpdate(helpfulnessState + 1);
       buttonUsed(true);
     }
   };
   const reportHandler = async (event) => {
-    console.log('reportHandler');
-    const reported = await reportUpdate(event, answer_id);
+    const reported = await Updater(event, answer_id, 'answer', 'report');
     if (reported) {
       reportStateUpdate(true);
     }
   };
   return (
-    <div>
+    <div className="m-2">
       <h2>
-A:
-        {' '}
-        {body}
+        <div className="font-bold float-left">A:</div>
+        <div className="text-md">
+&nbsp;&nbsp;
+          {body}
+        </div>
       </h2>
-      <div className="flex items-center justify-end text-gray-700">
-        <small className="bg-gray-400 rounded-full mr-2 font-black h-auto" style={{ fontSize: '8px', padding: '2px 3.5px' }}>{String.fromCharCode(10003)}</small>
-        <span>{`By ${answerer_name}, `}</span>
+      <div className=" flex items-center justify-start text-gray-700 text-sm ">
+        {/* <small className=" bg-gray-400 rounded-full mr-2 font-black h-auto " style={{ fontSize: '8px', padding: '2px 3.5px' }}>{String.fromCharCode(10003)}</small> */}
+        <span className=" mx-1">{`by ${answerer_name}, ${dateString}`}</span>
         <span className="ml-1">
-          { dateString }
           {' '}
-          {'| Helpful?'}
+          {'| Helpful? '}
           <button
             type="button"
             disabled={helpfulButton}
             onClick={(e) => { helpfulnessHander(e); }}
+            className="hover:underline"
           >
             Yes
           </button>
@@ -66,15 +56,17 @@ A:
             type="button"
             disabled={reportState}
             onClick={(e) => { reportHandler(e); }}
+            className="hover:underline"
           >
            Report
           </button>
         </span>
       </div>
+      {/* photo functionality can be added later, work with James for carousel-esque styling */}
       {photos.length > 0 ? (
         <footer>
           <div>Photos:</div>
-          <span>Photos Go Here</span>
+          <Photos photos={photos} />
         </footer>
       ) : null}
 

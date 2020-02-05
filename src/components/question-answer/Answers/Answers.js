@@ -6,6 +6,9 @@ import React, { useState, Component } from 'react';
 import Answer from './Answer';
 import AnswerModal from './AnswerModal';
 
+// TODO: format so at most takes up 1/2 screen
+// TODO: how to get all the answers for a question, lazy load? as scrolling?
+
 class Answers extends Component {
   constructor(props) {
     super(props);
@@ -14,22 +17,18 @@ class Answers extends Component {
       answers: [],
       question_id,
       count: 0,
-      // showModal: false,
+      showMore: false,
     };
     this.getAnswers();
   }
 
-  // this only gets two answers need to figure out how to get the rest of the answers
-  // eslint-disable-next-line no-undef
-  getAnswers = () => {
-    const { question_id } = this.state;
-    // console.log(question_id);
-    fetch(`http://52.26.193.201:3000/qa/${question_id}/answers`).then((res) => res.json())
-      .then((result) => {
-        // console.log('resultAnswers: ', result);
-        this.setState({ answers: result.results, count: result.count });
-      });
-  }
+   getAnswers = () => {
+     const { question_id } = this.state;
+     fetch(`http://52.26.193.201:3000/qa/${question_id}/answers`).then((res) => res.json())
+       .then((result) => {
+         this.setState({ answers: result.results, count: result.count });
+       });
+   }
 
   sortHelpfulness = (answersArr) => answersArr.sort((a, b) => {
     if (a.helpfulness > b.helpfulness) {
@@ -38,24 +37,53 @@ class Answers extends Component {
     return 1;
   });
 
-  // showModalHandler = () => {
-  //   const { showModal } = this.state;
-  //   this.setState({ showModal: !showModal });
-  // }
+  showMoreHandler = () => {
+    this.setState((prevState) => {
+      const { showMore } = prevState;
+      return { showMore: !showMore };
+    });
+  }
 
   render() {
     const { answers } = this.state;
     const filtered = this.sortHelpfulness(answers);
-    // console.log('answers in render: ', answers);
+    const { showMore } = this.state;
     if (answers.length === 0) {
       return (
         <div>No Answers for This Question Yet</div>
       );
     }
+    if (filtered.length > 2 && !showMore) {
+      return (
+        <>
+          <Answer key={filtered[0].answer_id} {...filtered[0]} />
+          <Answer key={filtered[1].answer_id} {...filtered[1]} />
+          <button
+            type="button"
+            className=" hover:underline text-grey py-0.5 px-2 rounded m-2 "
+            onClick={(e) => { e.preventDefault(); this.showMoreHandler(); }}
+          >
+LOAD MORE ANSWERS
+            {' '}
+          </button>
+        </>
+      );
+    }
     return (
-      filtered.map((answer) => (
-        <Answer key={answer.answer_id} {...answer} />
-      ))
+      <>
+        {filtered.map((answer) => (
+          <Answer key={answer.answer_id} {...answer} />
+        ))}
+        {filtered.length > 2 ? (
+          <button
+            type="button"
+            className=" over:underline text-grey py-0.5 px-2 rounded m-2"
+            onClick={(e) => { e.preventDefault(); this.showMoreHandler(); }}
+          >
+        COLLAPSE ANSWERS
+          </button>
+        ) : null}
+      </>
     );
   }
 }

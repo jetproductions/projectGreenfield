@@ -1,14 +1,14 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-undef */
 /* eslint-disable react/prefer-stateless-function */
 import React from 'react';
-
 import CreateAnswer from './CreateAnswer';
 
-const submitAnswer = (text, id) => {
-  fetch();
-};
+// TODO: refactor so only 1 modal for Q and A
 
-const AnswerModal = ({ show, toggleModal }) => {
+const AnswerModal = ({
+  show, toggleModal, question_id, question_body,
+}) => {
   const style = {
     backgroundColor: 'rgba(0,0,0,0.3)',
     display: (show ? 'flex' : 'none'),
@@ -27,7 +27,7 @@ const AnswerModal = ({ show, toggleModal }) => {
           <small className="absolute font-bold text-2xl w-full text-center" style={{ marginTop: '-3px', marginLeft: '2px', transform: 'rotate(45deg)' }}>+</small>
         </a>
         <div className="w-full max-h-full overflow-y-scroll overflow-x-hiddena px-10">
-          <CreateAnswer toggleModal={toggleModal} />
+          <CreateAnswer toggleModal={toggleModal} question_id={question_id} question_body={question_body} />
         </div>
       </div>
     </div>
