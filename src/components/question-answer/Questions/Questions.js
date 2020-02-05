@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 import Question from './Question';
 import QuestionModal from './QuestionModal';
 
-// TODO: refactor multiple JSX returns to streamline
 // TODO: ShowMore only add 2 at a time below other questions
 // TODO: Become scrollable when questions rendered is longer than a screen
 // searchBar and Button should be on screen but outside of scroll
@@ -62,6 +61,15 @@ const Questions = ({
         See More Answered Questions
     </button>
   );
+  const showLessQuestionsRender = (
+    <button
+      type="button"
+      onClick={(e) => { e.preventDefault(); showMoreQuestionsHandler(false); }}
+      className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded py-2 px-4 m-2"
+    >
+Show Less
+    </button>
+  );
   if (showMoreQuestions) {
     return (
       <div>
@@ -73,15 +81,7 @@ const Questions = ({
           );
         })}
         {moreQuestionsAvailable ? showMoreQuestionsRender : null}
-        {sorted.length > 2 ? (
-          <button
-            type="button"
-            onClick={(e) => { e.preventDefault(); showMoreQuestionsHandler(false); }}
-            className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded py-2 px-4 m-2"
-          >
-Show Less
-          </button>
-        ) : null}
+        {sorted.length > 2 ? showLessQuestionsRender : null}
         {addQuestion}
       </div>
     );
