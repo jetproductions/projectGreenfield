@@ -6,7 +6,6 @@ import React, { useState, Component } from 'react';
 import Answer from './Answer';
 
 // TODO: format so at most takes up 1/2 screen
-// TODO: how to keep loading more if there are more count === answers.length
 // TODO: how to get all the answers for a question, lazy load? as scrolling?
 
 class Answers extends Component {
@@ -74,7 +73,7 @@ COLLAPSE ANSWERS
     );
     if (answers.length === 0) {
       return (
-        <div>No Answers for This Question Yet</div>
+        <div>Be the first to answer this question</div>
       );
     }
     if (filtered.length > 2 && !showMore) {

@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 import Question from './Question';
 import QuestionModal from './QuestionModal';
 
-// TODO: change questions modal show/hide to live here in state not in QA
 // TODO: refactor multiple JSX returns to streamline
 // TODO: ShowMore only add 2 at a time below other questions
 // TODO: Become scrollable when questions rendered is longer than a screen
@@ -31,12 +30,11 @@ const searchQuestions = (searched, questions) => {
 
 
 const Questions = ({
-  questions, questionModal, searchBar,
+  questions, questionModal, searchBar, showMoreQuestions, showMoreQuestionsHandler, getMoreQuestionsHandler, moreQuestionsAvailable,
 }) => {
   // should refactor the multiple return statements to streamline
   // can refactor search and sort into 1 function
   const [createQuestion, createQuestionView] = useState(false);
-  const [showMore, showMoreToggle] = useState(false);
   if (createQuestion) {
     return (
       <div>
@@ -46,7 +44,25 @@ const Questions = ({
   }
   const searched = searchQuestions(searchBar, questions);
   const sorted = sortHelpfulness(searched);
-  if ((sorted.length > 0 && sorted.length <= 2) || showMore) {
+  const addQuestion = (
+    <button
+      type="button"
+      onClick={(e) => { e.preventDefault(); createQuestionView(!createQuestion); }}
+      className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
+    >
+    Add Question +
+    </button>
+  );
+  const showMoreQuestionsRender = (
+    <button
+      type="button"
+      onClick={(e) => { e.preventDefault(); showMoreQuestionsHandler(true); getMoreQuestionsHandler(); }}
+      className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded py-2 px-4 m-2"
+    >
+        See More Answered Questions
+    </button>
+  );
+  if (showMoreQuestions) {
     return (
       <div>
         {sorted.map((question) => {
@@ -56,22 +72,17 @@ const Questions = ({
             <Question key={qid} {...question} {...questionModal} searched={searchBar} />
           );
         })}
+        {moreQuestionsAvailable ? showMoreQuestionsRender : null}
         {sorted.length > 2 ? (
           <button
             type="button"
-            onClick={(e) => { e.preventDefault(); showMoreToggle(!showMore); }}
+            onClick={(e) => { e.preventDefault(); showMoreQuestionsHandler(false); }}
             className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded py-2 px-4 m-2"
           >
 Show Less
           </button>
         ) : null}
-        <button
-          type="button"
-          onClick={(e) => { e.preventDefault(); createQuestionView(!createQuestion); }}
-          className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Add Question +
-        </button>
+        {addQuestion}
       </div>
     );
   }
@@ -79,13 +90,7 @@ Show Less
     return (
       <>
         <div>No Questions Asked Yet</div>
-        <button
-          type="button"
-          onClick={(e) => { e.preventDefault(); createQuestionView(!createQuestion); }}
-          className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
-        >
-        Add Question +
-        </button>
+        {addQuestion}
       </>
     );
   }
@@ -98,23 +103,10 @@ Show Less
           <Question key={qid} {...question} {...questionModal} searched={searchBar} />
         );
       })}
-      <button
-        type="button"
-        onClick={(e) => { e.preventDefault(); showMoreToggle(!showMore); }}
-        className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded py-2 px-4 m-2"
-      >
-        See More Answered Questions
-      </button>
-      <button
-        type="button"
-        onClick={(e) => { e.preventDefault(); createQuestionView(!createQuestion); }}
-        className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded m-2"
-      >
-        Add Question +
-      </button>
+      {showMoreQuestionsRender}
+      {addQuestion}
     </div>
   );
 };
-
 
 export default Questions;
