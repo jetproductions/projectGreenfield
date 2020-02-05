@@ -23,20 +23,20 @@ const Carousel = (props) => {
     </div>
   );
 
-  const leftArrowHtml = (
-    <div className=" z-20 ml-2 mr-auto">
-      <div className="h-20 w-20 arrow text-6xl text-purple-400 text-bold text-center">
+  const leftArrowHtml = selectedImage > 0 ? (
+    <div className=" pointer-events-auto z-20 ml-2 mr-2">
+      <div className="h-20 w-20 arrow text-6xl text-purple-400 text-bold text-center" onClick={() => { const nextImage = selectedImage - 1 >= 0 ? selectedImage - 1 : 0; currentImageChangeHandler(nextImage); }}>
         &#10502;
       </div>
     </div>
-  );
-  const rightArrowHtml = (
-    <div className=" z-20 mr-2 ml-auto">
-      <div className="h-20 w-20 arrow text-6xl text-purple-400 text-bold text-center">
+  ) : (<div />);
+  const rightArrowHtml = selectedImage < currentSlideDeck.length - 1 ? (
+    <div className="pointer-events-auto z-20 mr-2 mr-2">
+      <div className="h-20 w-20 arrow text-6xl text-purple-400 text-bold text-center" onClick={() => { const nextImage = selectedImage + 1 > fullSlideDeck.length - 1 ? fullSlideDeck.length - 1 : selectedImage + 1; currentImageChangeHandler(nextImage); }}>
         &#10503;
       </div>
     </div>
-  );
+  ) : (<div />);
 
   const fullSlideDeck = currentSlideDeck.map((item, index) => {
     const border = index === selectedImage ? 'border-2 border-blue-400' : 'border border-gray-600';
@@ -51,7 +51,7 @@ const Carousel = (props) => {
   const sevenSlideDeck = fullSlideDeck.length > 7 ? fullSlideDeck.slice(selectedImage, selectedImage + 7) : fullSlideDeck;
   const htmlList = sevenSlideDeck;
   const prettyHtml = (
-    <div className="h-screen justify-center">
+    <div className="pointer-events-auto h-screen justify-center">
       {upArrowHtml}
       {htmlList}
       {downArrowHtml}
@@ -62,8 +62,9 @@ const Carousel = (props) => {
   return (
     <div className="pointer-events-none absolute mt-12 object-left z-10 h-screen flex w-full">
       {prettyHtml}
-      <div className="flex self-center w-full">
+      <div className="pointer-events-none flex self-center w-full">
         {leftArrowHtml}
+        <div className="pointer-events-none w-full" />
         {rightArrowHtml}
       </div>
 
