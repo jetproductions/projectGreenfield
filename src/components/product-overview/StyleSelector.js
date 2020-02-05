@@ -36,10 +36,10 @@ const StyleSelector = (props) => {
   });
   return (
     <div>
-      <h1 className="mx-2" id="styleSelector">
+      <h1 className="h1 mx-2" id="styleSelector">
         {`STYLE > ${styleName}`}
       </h1>
-      <h1 className="mx-8" id="styleSelector">{'Choose A Style >'}</h1>
+      <h1 className="h1 mx-8" id="styleSelector">{'Choose A Style >'}</h1>
       <div className="flex flex-wrap">
         {styles}
       </div>

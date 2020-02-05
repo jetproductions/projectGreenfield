@@ -64,7 +64,7 @@ const AddToCart = (props) => {
   );
   return (
     <div id="addToCart" className="mt-6">
-      <div className="mx-8">{'Select Size > '}</div>
+      <div className="h1  mx-8">{'Select Size > '}</div>
       <div className="flex mx-8">
         <select
           id="sizeSelect"
