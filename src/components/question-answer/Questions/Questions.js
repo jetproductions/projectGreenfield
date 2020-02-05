@@ -23,7 +23,7 @@ const sortHelpfulness = (questionsArr) => questionsArr.sort((a, b) => {
 });
 
 const searchQuestions = (searched, questions) => questions.filter((question) => {
-  if (question.question_body.indexOf(searched) > -1) {
+  if (question.question_body.toLowerCase().indexOf(searched) > -1) {
     return true;
   }
   return false;
@@ -45,7 +45,6 @@ const Questions = ({
     );
   }
   const searched = searchQuestions(searchBar, questions);
-  // eslint-disable-next-line no-undef
   const sorted = sortHelpfulness(searched);
   if ((sorted.length > 0 && sorted.length <= 2) || showMore) {
     return (
