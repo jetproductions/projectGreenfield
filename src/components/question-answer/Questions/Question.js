@@ -8,7 +8,6 @@ import Answers from '../Answers/Answers';
 import AnswerModal from '../Answers/AnswerModal';
 import Updater from '../HelpfulReportHandler';
 
-// TODO: get highlighter working
 const Question = ({
   question_id, question_body, question_helpfulness, searched,
 }) => {
@@ -36,13 +35,13 @@ const Question = ({
     );
   }
   const highlighted = <Highlight search={searched || ''} className="font-normal">{question_body}</Highlight>;
-  const notHighlighted = <div className="font-normal">{question_body}</div>;
+  const notHighlighted = <span className="font-normal">{question_body}</span>;
   return (
     <div className=" container mx-auto justify-center m-1">
       <div className=" text-lg items-left font-bold">
 Q:
         {' '}
-        {searched.length > 3 ? highlighted : notHighlighted}
+        {searched.length >= 3 ? highlighted : notHighlighted}
       </div>
       <div className=" text-sm items-right float-right ">
 Helpful?

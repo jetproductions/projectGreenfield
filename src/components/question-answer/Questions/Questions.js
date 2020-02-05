@@ -11,7 +11,6 @@ import QuestionModal from './QuestionModal';
 // TODO: Become scrollable when questions rendered is longer than a screen
 // searchBar and Button should be on screen but outside of scroll
 // TODO: showMore immediately loads all and expands to max height if necessary load in infinite scroll
-// TODO: refactor sort to be used by Qs and As
 
 const sortHelpfulness = (questionsArr) => questionsArr.sort((a, b) => {
   if (a.helpfulness > b.helpfulness) {

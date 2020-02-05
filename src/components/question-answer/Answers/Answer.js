@@ -41,7 +41,7 @@ const Answer = ({
         <span className=" mx-1">{`by ${answerer_name}, ${dateString}`}</span>
         <span className="ml-1">
           {' '}
-          {'| Helpful?'}
+          {'| Helpful? '}
           <button
             type="button"
             disabled={helpfulButton}
