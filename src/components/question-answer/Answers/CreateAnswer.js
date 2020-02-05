@@ -116,8 +116,7 @@ class CreateAnswer extends Component {
         <br />
         {error ? errorMessage : null}
         <div className="flex flex-wrap -mx-4 mb-8">
-          <label htmlFor="answer-nickname">
-
+          <label htmlFor="answer-nickname" className=" float-left">
         *Nickname:
             {' '}
             {this.nameValidator()}
@@ -133,7 +132,7 @@ class CreateAnswer extends Component {
             <span className=" text-xs ">For privacy reasons, do not use your full name or email address</span>
           </label>
           <br />
-          <label htmlFor="answer-email">
+          <label htmlFor="answer-email" className="float-right">
 *Email:
             {' '}
             {this.emailValidator()}
@@ -164,9 +163,7 @@ class CreateAnswer extends Component {
             rows="4"
             placeholder="Your Answer Here"
           />
-
         </label>
-
         {/* <label htmlFor="answer-photos">
           Add Photos:
           <input

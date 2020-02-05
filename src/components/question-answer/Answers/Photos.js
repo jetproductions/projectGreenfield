@@ -22,7 +22,7 @@ const Photos = ({ photos }) => {
           >
             <small className="absolute font-bold text-2xl w-full text-center" style={{ marginTop: '-3px', marginLeft: '2px', transform: 'rotate(45deg)' }}>+</small>
           </a>
-          <img src={selectedPhoto} alt="selection from answer" className="center max-w-xl" />
+          <img src={selectedPhoto} alt="selection from answer" className="center float-center" />
         </div>
       </div>
     );
