@@ -177,7 +177,7 @@ class Reviews extends Component {
               <h5 className="uppercase font-thin text-xl">Ratings & Reviews</h5>
             </div>
           </div>
-          <div className="flex w-full -mx-4">
+          <div className="flex flex-wrap w-full -mx-4">
             <div className="flex flex-col w-full md:w-1/3 pl-4 pr-8">
               <div className="flex w-full mb-4">
                 <Weighted />
@@ -245,13 +245,15 @@ class Reviews extends Component {
                 >
                 Add Review
                 </button>
-                <button
-                  onClick={this.loadMoreReviews}
-                  type="button"
-                  className="bg-white border border-teal-500 text-teal-500 hover:bg-teal-500 hover:text-white font-bold py-2 px-4 ml-4 rounded"
-                >
-                  More Reviews
-                </button>
+                { allReviews.length > count && (
+                  <button
+                    onClick={this.loadMoreReviews}
+                    type="button"
+                    className="bg-white border border-teal-500 text-teal-500 hover:bg-teal-500 hover:text-white font-bold py-2 px-4 ml-4 rounded"
+                  >
+                    More Reviews
+                  </button>
+                ) }
               </div>
             </div>
           </div>
