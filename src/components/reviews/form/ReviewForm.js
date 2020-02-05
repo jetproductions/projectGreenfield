@@ -95,7 +95,7 @@ class ReviewForm extends Component {
           </div>
         </div>
         <div className="flex flex-wrap -mx-4 mb-8">
-          <div className="w-full md:w-1/2 flex flex-wrap px-4">
+          <div className="w-full md:w-1/2 flex flex-wrap px-4 mb-4 md:mb-0">
             <div className="w-full items-center flex">
               <label className="block text-sm uppercase font-bold mb-1">
                 Overall Rating
@@ -137,7 +137,7 @@ class ReviewForm extends Component {
           </div>
         </div>
         <div className="flex flex-wrap -mx-4 mb-8">
-          <div className="w-full md:w-1/2 px-4">
+          <div className="w-full md:w-1/2 px-4 mb-4 md:mb-0">
             <label className="block text-sm uppercase font-bold mb-2">
               Nickname
             </label>

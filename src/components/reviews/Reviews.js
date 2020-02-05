@@ -172,13 +172,13 @@ class Reviews extends Component {
     return (
       <div id="reviews" className="reviews py-12">
         <div className="container mx-auto px-4">
-          <div className="flex w-full -mx-4 mb-8">
+          <div className="flex -mx-4 mb-8">
             <div className="w-full px-4">
               <h5 className="uppercase font-thin text-xl">Ratings & Reviews</h5>
             </div>
           </div>
-          <div className="flex flex-wrap w-full -mx-4">
-            <div className="flex flex-col w-full md:w-1/3 pl-4 pr-8">
+          <div className="flex flex-wrap -mx-4">
+            <div className="flex flex-col w-full md:w-1/3 pl-4 pr-4 md:pr-8">
               <div className="flex w-full mb-4">
                 <Weighted />
                 <StarRatings rating={weighted} size="20" />
@@ -200,9 +200,9 @@ class Reviews extends Component {
                   <Characteristic characteristic={characteristic} key={characteristic[0]} />))}
               </div>
             </div>
-            <div className="flex flex-col w-full md:w-2/3 pr-4 pl-8">
-              <div className="w-full flex justify-between">
-                <div className="w-full flex-grow font-bold text-2xl mb-12">
+            <div className="flex flex-col w-full md:w-2/3 pr-4 pl-4 md:pl-8">
+              <div className="w-full flex flex-wrap justify-between">
+                <div className="w-full md:w-auto md:flex-grow font-bold text-base md:text-2xl">
                   <span className="mr-2">{ allReviews.length }</span>
                   total reviews, sorted by
                   <div className="inline-block relative">
@@ -216,7 +216,7 @@ class Reviews extends Component {
                     </div>
                   </div>
                 </div>
-                <div className="flex-shrink py-3 text-right">
+                <div className="w-full md:w-auto md:flex-shrink py-3 md:text-right mb-12">
                   Showing
                   <span className="mx-1">{ count < allReviews.length ? count : 'All' }</span>
                   reviews
