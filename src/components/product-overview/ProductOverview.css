@@ -33,9 +33,13 @@
     -webkit-transition: width .4s ease-in-out;
 
 }
-
+.arrow{
+    -webkit-text-stroke: 1px;
+    -webkit-text-stroke-color: darkslategrey;
+}
 .arrow:hover{
-    text-shadow: gray;
+    text-shadow: 2px 2px 10px  lightgreen, -2px -2px 10px lightblue;
+    
 }
 #zoomedImage{
     -moz-transform: scale(2.5);

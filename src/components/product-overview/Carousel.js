@@ -10,29 +10,29 @@ const Carousel = (props) => {
   const { selectedImage } = props;
   const upArrowHtml = (
     <div key="upArrow" className="mx-2 my-2 border border-gray-600 ">
-      <div className="h-20 w-20 text-4xl text-blue-400 text-bold text-center object-center">
+      <div className="h-20 w-20 arrow text-5xl text-purple-400 text-bold text-center object-center">
         &#10506;
       </div>
     </div>
   );
   const downArrowHtml = (
     <div key="downArrow" className="mx-2 my-2 border border-gray-600 ">
-      <div className="h-20 w-20 arrow text-4xl text-blue-400 text-bold text-center">
+      <div className="h-20 w-20 arrow text-5xl text-purple-400 text-bold text-center">
         &#10507;
       </div>
     </div>
   );
 
   const leftArrowHtml = (
-    <div className=" z-20 ">
-      <div className="h-20 w-20 arrow text-4xl text-blue-400 text-bold text-center">
+    <div className=" z-20 ml-2 mr-auto">
+      <div className="h-20 w-20 arrow text-6xl text-purple-400 text-bold text-center">
         &#10502;
       </div>
     </div>
   );
   const rightArrowHtml = (
-    <div className=" z-20">
-      <div className="h-20 w-20 arrow text-4xl text-blue-400 text-bold text-center">
+    <div className=" z-20 mr-2 ml-auto">
+      <div className="h-20 w-20 arrow text-6xl text-purple-400 text-bold text-center">
         &#10503;
       </div>
     </div>
@@ -60,9 +60,9 @@ const Carousel = (props) => {
   );
 
   return (
-    <div className="absolute mt-12 object-left z-10 h-screen flex">
+    <div className="pointer-events-none absolute mt-12 object-left z-10 h-screen flex w-full">
       {prettyHtml}
-      <div className="flex self-center">
+      <div className="flex self-center w-full">
         {leftArrowHtml}
         {rightArrowHtml}
       </div>
