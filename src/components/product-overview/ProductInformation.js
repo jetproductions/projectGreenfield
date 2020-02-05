@@ -5,6 +5,7 @@ import StarRatings from '../utility/stars/StarRatings';
 /* eslint-disable no-undef */
 /* eslint-disable react/no-unused-state */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable camelcase */
 
 //  #### GUIDELINES ####
 //    * Product information - Functional Component
