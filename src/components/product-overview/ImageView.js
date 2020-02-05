@@ -3,6 +3,9 @@ import Carousel from './Carousel';
 
 /* eslint-disable no-undef */
 /* eslint-disable react/no-unused-state */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+
 
 //  #### GUIDELINES ####
 //      * Image View - Carousel(Gallery) - Functional Component
@@ -73,9 +76,11 @@ const ImageView = (props) => {
   const leftCol = document.getElementById('leftColumn');
   const colHeight = leftCol ? leftCol.clientHeight : 0;
   const colWidth = leftCol ? leftCol.clientWidth : 0;
+  const screenHeight = window.screen.availHeight;
   const imgY = imgDiv ? imgDiv.height : 0;
   const imgX = imgDiv ? imgDiv.width : 0;
-  const zoomMargins = { marginTop: imgY / 2 + (0 - yPos), marginLeft: imgX / 2 + (0 - xPos) };
+  const zoomMargins = { marginTop: screenHeight - imgY - yPos, marginLeft: imgX / 2 + (0 - xPos) };
+
 
   // console.log(colHeight, colWidth * 0.75);
 
@@ -85,7 +90,6 @@ const ImageView = (props) => {
       ? (
         <div className="h-screen w-3/4">
           <img style={zoomMargins} id={mainImageName} onMouseMove={mousePositionChangeHandler} className={`static ${imgHeight} w-full z-0  my-3  object-cover cursor-pointer`} src={imageUrl} alt="A model wearing a garment" onClick={(e) => { e.preventDefault(); imageViewFormatChangeHandler(nextViewFormat); }} />
-    //
           {' '}
         </div>
       )
@@ -98,6 +102,7 @@ const ImageView = (props) => {
         <Carousel currentSlideDeck={currentSlideDeck} currentImageChangeHandler={currentImageChangeHandler} selectedImage={selectedImage} />
         {imgHtml}
       </div>
+
     </div>
   );
 };

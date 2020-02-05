@@ -22,6 +22,8 @@
 
 #leftColumn{
   background-color: #e6e6e6;
+  transition: width .4s ease-in-out;
+  -webkit-transition: width .4s ease-in-out;
 }
 
 #reviewNavButton{
@@ -32,18 +34,18 @@
   color:#e6e6e6;
 }
 
-.leftColumn{
-  transition: width 0.3s ease-in-out;
-  -webkit-transition: width 0.3s ease-in-out;
-}
-
-.rightColumn{
-  transition: width 0.3s ease-in-out;
-  -webkit-transition: width 0.3s ease-in-out;
+#rightColumn{
+  transition: width .4s ease-in-out;
+  -webkit-transition: width .4s ease-in-out;
 }
 
 .arrow:hover{
-  box-shadow: 1px 1px 1px 1px gray;
+  text-shadow: gray;
+}
+
+#zoomedImage{
+  -webkit-transform: scale(2.5);
+  transform: scale(2.5);
 }
 input[type="range"]{
   width: 100%;

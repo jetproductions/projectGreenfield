@@ -35,7 +35,7 @@
 }
 
 .arrow:hover{
-    box-shadow: 1px 1px 1px 1px gray;
+    text-shadow: gray;
 }
 #zoomedImage{
     -moz-transform: scale(2.5);
