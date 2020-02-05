@@ -55,7 +55,7 @@ Helpful?
           type="button"
           disabled={reportState}
           onClick={(e) => { reportHandler(e); }}
-          className="hover:underline"
+          className=" hover:underline "
         >
           Report
         </button>
@@ -63,13 +63,13 @@ Helpful?
         <button
           type="button"
           onClick={(e) => { e.preventDefault(); createAnswerView(true); }}
-          className="hover:underline text-black"
+          className=" hover:underline text-black "
         >
           Add Answer
         </button>
       </div>
       {/* working to get to only take up certain amount of space with scrolling */}
-      <Answers className="h-screen w-overflow-y-scroll" question_id={question_id || null} />
+      <Answers className=" h-screen w-overflow-y-scroll lg:h-20" question_id={question_id || null} />
     </div>
   );
 };

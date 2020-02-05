@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 // TODO: add error message when submission is incomplete telling which fields are inclomplete 'You must enter the following:'
+// TODO: change unmet requirements to show up once user has selected different input
 // TODO: add photos option opens separate window
 // TODO: adds thumbnail of photo when uploaded
 // TODO: how to validate photos uploads?
