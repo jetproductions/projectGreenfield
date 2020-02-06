@@ -5,6 +5,8 @@ import Carousel from './Carousel';
 /* eslint-disable react/no-unused-state */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable no-mixed-operators */
+/* eslint-disable no-restricted-globals */
 
 
 //  #### GUIDELINES ####
@@ -66,20 +68,45 @@ const ImageView = (props) => {
   const { imageUrl } = props;
   const slidelist = productStyles.map((style) => style.photos);
   const currentSlideDeck = slidelist[currentStyle] ? slidelist[currentStyle].map((entry) => entry.thumbnail_url) : [];
-  const imgHeight = selectedViewFormat === 'default' ? 'h-screen' : selectedViewFormat === 'zoomed' ? 'h-screen' : 'h-full';
+  const viewModeHeight = selectedViewFormat === 'default' ? 'h-screen' : selectedViewFormat === 'zoomed' ? 'h-screen' : 'h-full';
   const nextViewFormat = selectedViewFormat === 'default' ? 'expanded' : selectedViewFormat === 'expanded' ? 'zoomed' : 'default';
   const mainImageName = selectedViewFormat === 'zoomed' ? 'zoomedImage' : 'mainImage';
   const { mousePositionChangeHandler } = props;
   const { xPos } = props;
   const { yPos } = props;
+  const { renderedCarouselStartIndex } = props;
+  const { carouselStartIndexHandler } = props;
   const imgDiv = document.getElementById(mainImageName);
   const leftCol = document.getElementById('leftColumn');
   const colHeight = leftCol ? leftCol.clientHeight : 0;
   const colWidth = leftCol ? leftCol.clientWidth : 0;
   const screenHeight = window.screen.availHeight;
-  const imgY = imgDiv ? imgDiv.height : 0;
-  const imgX = imgDiv ? imgDiv.width : 0;
-  const zoomMargins = { marginTop: screenHeight - imgY - yPos, marginLeft: imgX / 2 + (0 - xPos) };
+  const imgDivY = imgDiv ? imgDiv.height : 0;
+  const imgDivX = imgDiv ? imgDiv.width : 0;
+
+  let imgHeight = 0;
+  let imgWidth = 0;
+
+  const getImageDimensions = (src) => {
+    const newImg = new Image();
+    newImg.onload = function () {
+      imgHeight = newImg.height * 2.5;
+      imgWidth = newImg.width * 2.5;
+      // console.log(imgHeight, imgWidth);
+    };
+    newImg.src = src;
+  };
+
+  getImageDimensions(imageUrl);
+  console.log((((imgDivY / 2) - yPos) / (imgDivY / 2)) * ((imgHeight - imgDivY)));
+
+  const zoomMargins = {
+    marginTop: isNaN((((imgDivY / 2) - yPos) / (imgDivY / 2)) * (1 / 2 * (imgHeight - imgDivY))) ? 0 : 0 - (((imgDivY / 2) - yPos) / (imgDivY / 2)) * ((imgHeight - imgDivY)),
+    marginLeft: isNaN((((imgDivX / 2) - xPos) / (imgDivY / 2)) * (1 / 2 * (imgWidth - imgDivX))) ? 0 : 0 - (((imgDivX / 2) - xPos) / (imgDivX / 2)) * ((imgWidth - imgDivX)),
+  };
+
+  // zoom margin equation = marginY = (1/2 imgDivY-mouseY)/ (1/2imgY) * Y
+  // (((0.5 * imgDivY) - yPos) / (0.5 * imgDivY)) * (imgDivY) * (1 / 2 * (imgHeight - imgDivY));
 
 
   // console.log(colHeight, colWidth * 0.75);
@@ -89,17 +116,17 @@ const ImageView = (props) => {
     : selectedViewFormat === 'zoomed'
       ? (
         <div className="h-screen w-3/4">
-          <img style={zoomMargins} id={mainImageName} onMouseMove={mousePositionChangeHandler} className={`static ${imgHeight} w-full z-0  my-3  object-cover cursor-pointer`} src={imageUrl} alt="A model wearing a garment" onClick={(e) => { e.preventDefault(); imageViewFormatChangeHandler(nextViewFormat); }} />
+          <img style={zoomMargins} id={mainImageName} onMouseMove={mousePositionChangeHandler} className={`static ${viewModeHeight} w-full z-0  my-3  object-cover cursor-pointer`} src={imageUrl} alt="A model wearing a garment" onClick={(e) => { e.preventDefault(); imageViewFormatChangeHandler(nextViewFormat); }} />
           {' '}
         </div>
       )
-      : (<img id={mainImageName} className={`ml-auto mr-auto static ${imgHeight} w-full z-0  my-3  object-cover cursor-pointer`} src={imageUrl} alt="A model wearing a garment" onClick={(e) => { e.preventDefault(); imageViewFormatChangeHandler(nextViewFormat); }} />
+      : (<img id={mainImageName} className={`ml-auto mr-auto static ${viewModeHeight} w-full z-0  my-3  object-cover cursor-pointer`} src={imageUrl} alt="A model wearing a garment" onClick={(e) => { e.preventDefault(); imageViewFormatChangeHandler(nextViewFormat); }} />
       );
 
   return (
     <div className="">
       <div className="flex flex-auto ml-auto mr-auto ">
-        <Carousel currentSlideDeck={currentSlideDeck} currentImageChangeHandler={currentImageChangeHandler} selectedImage={selectedImage} />
+        <Carousel carouselStartIndexHandler={carouselStartIndexHandler} selectedViewFormat={selectedViewFormat} renderedCarouselStartIndex={renderedCarouselStartIndex} currentSlideDeck={currentSlideDeck} currentImageChangeHandler={currentImageChangeHandler} selectedImage={selectedImage} />
         {imgHtml}
       </div>
 

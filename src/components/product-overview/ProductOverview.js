@@ -55,6 +55,7 @@ class ProductOverview extends Component {
       maxQty: 0,
       xPos: 0,
       yPos: 0,
+      renderedCarouselStartIndex: 0,
     };
 
     this.getProductStyles(id);
@@ -165,6 +166,19 @@ class ProductOverview extends Component {
     this.setState({ xPos: e.nativeEvent.offsetX, yPos: e.nativeEvent.offsetY });
   }
 
+  carouselStartIndexHandler=(term) => {
+    let { renderedCarouselStartIndex } = this.state;
+    const { currentStyle } = this.state;
+    const { productStyles } = this.state;
+    if (renderedCarouselStartIndex > 0 && term === 'up') {
+      renderedCarouselStartIndex -= 1;
+    }
+    if (productStyles[currentStyle] && renderedCarouselStartIndex < productStyles[currentStyle].photos.length && term === 'down') {
+      renderedCarouselStartIndex += 1;
+    }
+    this.setState({ renderedCarouselStartIndex });
+  }
+
   render() {
     const { product } = this.props;
     const { productStyles } = this.state;
@@ -182,6 +196,8 @@ class ProductOverview extends Component {
     const { skus } = this.state;
     const { selectedSize } = this.state;
     const { selectedQty } = this.state;
+    const { renderedCarouselStartIndex } = this.state;
+    const { carouselStartIndexHandler } = this;
     const { maxQty } = this.state;
     const { xPos } = this.state;
     const { yPos } = this.state;
@@ -241,6 +257,8 @@ class ProductOverview extends Component {
                 xPos={xPos}
                 yPos={yPos}
                 mousePositionChangeHandler={mousePositionChangeHandler}
+                renderedCarouselStartIndex={renderedCarouselStartIndex}
+                carouselStartIndexHandler={carouselStartIndexHandler}
               />
             </div>
             <div className="w-full">

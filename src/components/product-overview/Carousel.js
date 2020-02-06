@@ -9,29 +9,33 @@ const Carousel = (props) => {
   const { currentSlideDeck } = props;
   const { currentImageChangeHandler } = props;
   const { selectedImage } = props;
-
+  const { carouselStartIndexHandler } = props;
+  const { renderedCarouselStartIndex } = props;
+  const { selectedViewFormat } = props;
+  const correctSize = selectedViewFormat === 'default' ? 'h-20 w-20' : selectedViewFormat === 'expanded' ? 'h-10 w-10' : 'h-0 w-0';
   const fullSlideDeck = currentSlideDeck.map((item, index) => {
     const border = index === selectedImage ? 'border-2 border-blue-400' : 'border border-gray-600';
     const keyNum = index;
     return (
       <div key={keyNum} className={` mx-2 my-2  ${border} z-10 `}>
-        <img className="h-20 w-20  object-cover " src={item} alt={`thumbnail ${index} for style`} onClick={(e) => { e.preventDefault(); currentImageChangeHandler(index); }} />
+        <img className={`${correctSize}  object-cover `} src={item} alt={`thumbnail ${index} for style`} onClick={(e) => { e.preventDefault(); currentImageChangeHandler(index); }} />
       </div>
     );
   });
 
-  const sevenSlideDeck = fullSlideDeck.length > 7 ? fullSlideDeck.slice(selectedImage, selectedImage + 7) : fullSlideDeck;
+  const sevenSlideDeck = fullSlideDeck.length > 7 ? fullSlideDeck.slice(renderedCarouselStartIndex, renderedCarouselStartIndex + 7) : fullSlideDeck;
   const htmlList = sevenSlideDeck;
+
   const upArrowHtml = (
     <div key="upArrow" className="mx-2 my-2">
-      <div className="h-20 w-20 arrow text-5xl text-purple-400 text-bold text-center object-center">
+      <div className={`${correctSize} arrow text-5xl text-purple-400 text-bold text-center `} onClick={(e) => { e.preventDefault(); return carouselStartIndexHandler('up'); }}>
         &#10506;
       </div>
     </div>
   );
   const downArrowHtml = (
     <div key="downArrow" className="mx-2 my-2">
-      <div className="h-20 w-20 arrow text-5xl text-purple-400 text-bold text-center">
+      <div className={`${correctSize} arrow text-5xl text-purple-400 text-bold text-center `} onClick={(e) => { e.preventDefault(); return carouselStartIndexHandler('down'); }}>
         &#10507;
       </div>
     </div>
@@ -53,14 +57,14 @@ const Carousel = (props) => {
   ) : (<div />);
 
 
-  const prettyHtml = (
+  const prettyHtml = selectedViewFormat !== 'zoomed' ? (
     <div className="pointer-events-auto h-screen justify-center">
-      {upArrowHtml}
+      {renderedCarouselStartIndex === 0 ? (<div />) : upArrowHtml}
       {htmlList}
-      {downArrowHtml}
+      {(renderedCarouselStartIndex + 7 >= fullSlideDeck.length - 1) ? (<div />) : downArrowHtml}
     </div>
 
-  );
+  ) : (<div />);
 
   return (
     <div className="pointer-events-none absolute mt-12 object-left z-10 h-screen flex w-full">
