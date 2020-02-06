@@ -106,23 +106,6 @@ class CreateQuestion extends Component {
         <h4>About ProductName</h4>
         <br />
         { error ? errorMessage : null }
-        <label htmlFor="body">
-
-          {/* need to make this input field bigger, 1000 chars-ish */}
-*Question:
-          {' '}
-          {this.bodyValidator()}
-          {' '}
-          <input
-            id="body"
-            type="text"
-            onChange={(e) => this.formChangeHandler('body', e.target.value)}
-            className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 overflow-y-auto"
-            rows="4"
-            placeholder="Your Question Here"
-          />
-
-        </label>
         <label htmlFor="question-nickname">
 *Nickname:
           {' '}
@@ -155,6 +138,23 @@ class CreateQuestion extends Component {
             maxLength="60"
           />
           <span>For authentication reasons, you will not be emailed</span>
+        </label>
+        <label htmlFor="body">
+
+          {/* need to make this input field bigger, 1000 chars-ish */}
+*Question:
+          {' '}
+          {this.bodyValidator()}
+          {' '}
+          <input
+            id="body"
+            type="text"
+            onChange={(e) => this.formChangeHandler('body', e.target.value)}
+            className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+            rows="4"
+            placeholder="Your Question Here"
+          />
+
         </label>
         <button
           type="button"
