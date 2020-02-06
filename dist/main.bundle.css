@@ -30,6 +30,16 @@
   color: #525252;
 }
 
+#mainImage{
+  cursor:-webkit-zoom-in;
+  cursor:zoom-in;
+}
+
+#expandedImage{
+  cursor:-webkit-zoom-in;
+  cursor:zoom-in;
+}
+
 #logo{
   color:#e6e6e6;
 }
@@ -51,6 +61,8 @@
 #zoomedImage{
   -webkit-transform: scale(2.5);
   transform: scale(2.5);
+  cursor:-webkit-zoom-out;
+  cursor:zoom-out;
 }
 input[type="range"]{
   width: 100%;

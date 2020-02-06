@@ -70,17 +70,17 @@ const ImageView = (props) => {
   const currentSlideDeck = slidelist[currentStyle] ? slidelist[currentStyle].map((entry) => entry.thumbnail_url) : [];
   const viewModeHeight = selectedViewFormat === 'default' ? 'h-screen' : selectedViewFormat === 'zoomed' ? 'h-screen' : 'h-full';
   const nextViewFormat = selectedViewFormat === 'default' ? 'expanded' : selectedViewFormat === 'expanded' ? 'zoomed' : 'default';
-  const mainImageName = selectedViewFormat === 'zoomed' ? 'zoomedImage' : 'mainImage';
+  const mainImageName = selectedViewFormat === 'zoomed' ? 'zoomedImage' : selectedViewFormat === 'expanded' ? 'expandedImage' : 'mainImage';
   const { mousePositionChangeHandler } = props;
   const { xPos } = props;
   const { yPos } = props;
   const { renderedCarouselStartIndex } = props;
   const { carouselStartIndexHandler } = props;
   const imgDiv = document.getElementById(mainImageName);
-  const leftCol = document.getElementById('leftColumn');
-  const colHeight = leftCol ? leftCol.clientHeight : 0;
-  const colWidth = leftCol ? leftCol.clientWidth : 0;
-  const screenHeight = window.screen.availHeight;
+  // const leftCol = document.getElementById('leftColumn');
+  // const colHeight = leftCol ? leftCol.clientHeight : 0;
+  // const colWidth = leftCol ? leftCol.clientWidth : 0;
+  // const screenHeight = window.screen.availHeight;
   const imgDivY = imgDiv ? imgDiv.height : 0;
   const imgDivX = imgDiv ? imgDiv.width : 0;
 
@@ -125,7 +125,7 @@ const ImageView = (props) => {
 
   return (
     <div className="">
-      <div className="flex flex-auto ml-auto mr-auto ">
+      <div className="self-center my-auto flex flex-auto ml-auto mr-auto ">
         <Carousel carouselStartIndexHandler={carouselStartIndexHandler} selectedViewFormat={selectedViewFormat} renderedCarouselStartIndex={renderedCarouselStartIndex} currentSlideDeck={currentSlideDeck} currentImageChangeHandler={currentImageChangeHandler} selectedImage={selectedImage} />
         {imgHtml}
       </div>

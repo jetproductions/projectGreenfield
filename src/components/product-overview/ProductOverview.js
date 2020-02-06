@@ -12,6 +12,7 @@ import './ProductOverview.css';
 /* eslint-disable no-alert */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/accessible-emoji */
+/* eslint-disable camelcase */
 
 
 //        ## [Q] ##:  Could/Should the columns be different components themselves, or is this needless complication?
@@ -162,7 +163,7 @@ class ProductOverview extends Component {
     const { currentStyle } = this.state;
     const { selectedImage } = this.state;
     const { productStyles } = this.state;
-    const newUrl = productStyles.length === 0 ? 'https://http.cat/204' : productStyles[currentStyle].photos[selectedImage].url;
+    const newUrl = productStyles.length === 0 ? 'https://http.cat/204' : productStyles[currentStyle].photos[selectedImage] ? productStyles[currentStyle].photos[selectedImage].url : 'https://http.cat/204';
     this.setState({ imageUrl: newUrl });
   }
 

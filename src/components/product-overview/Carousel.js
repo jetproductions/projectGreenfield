@@ -58,7 +58,7 @@ const Carousel = (props) => {
 
 
   const prettyHtml = selectedViewFormat !== 'zoomed' ? (
-    <div className=" pointer-events-auto h-screen justify-center">
+    <div className="self-center pointer-events-auto h-screen justify-center">
       {renderedCarouselStartIndex === 0 ? (<div />) : upArrowHtml}
       {htmlList}
       {(renderedCarouselStartIndex + 7 >= fullSlideDeck.length - 1) ? (<div />) : downArrowHtml}
@@ -67,14 +67,16 @@ const Carousel = (props) => {
   ) : (<div />);
 
   return (
-    <div className="self-center pointer-events-none absolute mt-12 object-left z-10 h-screen flex w-full">
-      {prettyHtml}
-      <div className="pointer-events-none flex self-center w-full">
-        {leftArrowHtml}
-        <div className="pointer-events-none w-full" />
-        {rightArrowHtml}
-      </div>
+    <div className="self-center pointer-events-none h-screen">
+      <div className=" pointer-events-none absolute object-left z-10 h-screen flex w-full">
+        {prettyHtml}
+        <div className="self-center pointer-events-none flex  w-full">
+          {leftArrowHtml}
+          <div className="pointer-events-none w-full" />
+          {rightArrowHtml}
+        </div>
 
+      </div>
     </div>
   );
 };

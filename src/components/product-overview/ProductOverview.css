@@ -24,6 +24,12 @@
 #reviewNavButton{
     color: #525252;
 }
+#mainImage{
+    cursor:zoom-in;
+}
+#expandedImage{
+    cursor:zoom-in;
+}
 
 #logo{
     color:#e6e6e6;
@@ -47,4 +53,5 @@
     -o-transform: scale(2.5);
     -ms-transform: scale(2.5);
     transform: scale(2.5);
+    cursor:zoom-out;
 }
