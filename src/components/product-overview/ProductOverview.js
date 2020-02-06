@@ -36,6 +36,7 @@ class ProductOverview extends Component {
   constructor(props) {
     super(props);
     const { product: { id } } = props;
+    const { product: { default_price } } = props;
     this.state = {
       //         [product]: passed from PRODUCT OVERVIEW in props, from store
       //         [productStyles]: passed from API call method in constructor.
@@ -56,6 +57,8 @@ class ProductOverview extends Component {
       xPos: 0,
       yPos: 0,
       renderedCarouselStartIndex: 0,
+      defaultPrice: default_price,
+      salePrice: 0,
     };
 
     this.getProductStyles(id);
@@ -86,16 +89,18 @@ class ProductOverview extends Component {
   // API CALLS:
   //    > Product STYLES - store in state.productStyles
   getProductStyles(productId) {
+    const { defaultPrice } = this.state;
     return fetch(`http://52.26.193.201:3000/products/${productId}/styles`)
       .then((res) => res.json())
       .catch((err) => { throw err; })
-      .then((response) => this.setState({ productStyles: response.results }, () => { this.imageUrlChangeHandler(); this.skuChangeHandler(); }));
+      .then((response) => this.setState({ productStyles: response.results }, () => { this.imageUrlChangeHandler(); this.skuChangeHandler(); this.setState({ price: defaultPrice }); }));
   }
 
   //  HANDLERS:
   //  Style Selector change
   styleChangeHandler = (styleNum) => {
-    this.setState({ currentStyle: styleNum, maxQty: 0 }, () => { this.imageUrlChangeHandler(); this.skuChangeHandler(); });
+    const { productStyles } = this.state;
+    this.setState({ currentStyle: styleNum, maxQty: 0 }, () => { this.imageUrlChangeHandler(); this.skuChangeHandler(); this.setState({ salePrice: productStyles[styleNum].sale_price }); });
   }
 
   //  Add to Cart Size change
@@ -204,12 +209,16 @@ class ProductOverview extends Component {
     const { mousePositionChangeHandler } = this;
     const rightWidth = selectedViewFormat === 'default' ? 'w-1/4' : 'w-0';
     const leftWidth = selectedViewFormat === 'default' ? 'w-1/2' : 'w-3/4';
+    const { salePrice } = this.state;
+    const { defaultPrice } = this.state;
     const rightColumnHtml = selectedViewFormat === 'default' ? (
       <div>
         <ProductInformation
           product={product}
           productStyles={productStyles}
           reviewScore={weighted}
+          salePrice={salePrice}
+          defaultPrice={defaultPrice}
         />
         <StyleSelector
           product={product}

@@ -101,8 +101,8 @@ const ImageView = (props) => {
   console.log((((imgDivY / 2) - yPos) / (imgDivY / 2)) * ((imgHeight - imgDivY)));
 
   const zoomMargins = {
-    marginTop: isNaN((((imgDivY / 2) - yPos) / (imgDivY / 2)) * (1 / 2 * (imgHeight - imgDivY))) ? 0 : 0 - (((imgDivY / 2) - yPos) / (imgDivY / 2)) * ((imgHeight - imgDivY)),
-    marginLeft: isNaN((((imgDivX / 2) - xPos) / (imgDivY / 2)) * (1 / 2 * (imgWidth - imgDivX))) ? 0 : 0 - (((imgDivX / 2) - xPos) / (imgDivX / 2)) * ((imgWidth - imgDivX)),
+    marginTop: isNaN((((imgDivY / 2) - yPos + 170) / (imgDivY / 2)) * (1 / 2 * (imgHeight - imgDivY))) ? 0 : 0 - (((imgDivY / 2) - yPos + 170) / (imgDivY / 2)) * (1 / 2 * (imgHeight - imgDivY)),
+    marginLeft: isNaN((((imgDivX / 2) - xPos + 85) / (imgDivY / 2)) * (1 / 2 * (imgWidth - imgDivX))) ? 0 : 0 - (((imgDivX / 2) - xPos + 85) / (imgDivX / 2)) * (1 / 2 * (imgWidth - imgDivX)),
   };
 
   // zoom margin equation = marginY = (1/2 imgDivY-mouseY)/ (1/2imgY) * Y
