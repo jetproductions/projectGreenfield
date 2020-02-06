@@ -12,6 +12,7 @@ import './ProductOverview.css';
 /* eslint-disable no-alert */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/accessible-emoji */
+/* eslint-disable camelcase */
 
 
 //        ## [Q] ##:  Could/Should the columns be different components themselves, or is this needless complication?
@@ -36,6 +37,7 @@ class ProductOverview extends Component {
   constructor(props) {
     super(props);
     const { product: { id } } = props;
+    const { product: { default_price } } = props;
     this.state = {
       //         [product]: passed from PRODUCT OVERVIEW in props, from store
       //         [productStyles]: passed from API call method in constructor.
@@ -55,6 +57,9 @@ class ProductOverview extends Component {
       maxQty: 0,
       xPos: 0,
       yPos: 0,
+      renderedCarouselStartIndex: 0,
+      defaultPrice: default_price,
+      salePrice: 0,
     };
 
     this.getProductStyles(id);
@@ -85,16 +90,18 @@ class ProductOverview extends Component {
   // API CALLS:
   //    > Product STYLES - store in state.productStyles
   getProductStyles(productId) {
+    const { defaultPrice } = this.state;
     return fetch(`http://52.26.193.201:3000/products/${productId}/styles`)
       .then((res) => res.json())
       .catch((err) => { throw err; })
-      .then((response) => this.setState({ productStyles: response.results }, () => { this.imageUrlChangeHandler(); this.skuChangeHandler(); }));
+      .then((response) => this.setState({ productStyles: response.results }, () => { this.imageUrlChangeHandler(); this.skuChangeHandler(); this.setState({ price: defaultPrice }); }));
   }
 
   //  HANDLERS:
   //  Style Selector change
   styleChangeHandler = (styleNum) => {
-    this.setState({ currentStyle: styleNum, maxQty: 0 }, () => { this.imageUrlChangeHandler(); this.skuChangeHandler(); });
+    const { productStyles } = this.state;
+    this.setState({ currentStyle: styleNum, maxQty: 0 }, () => { this.imageUrlChangeHandler(); this.skuChangeHandler(); this.setState({ salePrice: productStyles[styleNum].sale_price }); });
   }
 
   //  Add to Cart Size change
@@ -156,13 +163,26 @@ class ProductOverview extends Component {
     const { currentStyle } = this.state;
     const { selectedImage } = this.state;
     const { productStyles } = this.state;
-    const newUrl = productStyles.length === 0 ? 'https://http.cat/204' : productStyles[currentStyle].photos[selectedImage].url;
+    const newUrl = productStyles.length === 0 ? 'https://http.cat/204' : productStyles[currentStyle].photos[selectedImage] ? productStyles[currentStyle].photos[selectedImage].url : 'https://http.cat/204';
     this.setState({ imageUrl: newUrl });
   }
 
   //  Mouse Position Change (for zoomed image)
   mousePositionChangeHandler=(e) => {
     this.setState({ xPos: e.nativeEvent.offsetX, yPos: e.nativeEvent.offsetY });
+  }
+
+  carouselStartIndexHandler=(term) => {
+    let { renderedCarouselStartIndex } = this.state;
+    const { currentStyle } = this.state;
+    const { productStyles } = this.state;
+    if (renderedCarouselStartIndex > 0 && term === 'up') {
+      renderedCarouselStartIndex -= 1;
+    }
+    if (productStyles[currentStyle] && renderedCarouselStartIndex < productStyles[currentStyle].photos.length && term === 'down') {
+      renderedCarouselStartIndex += 1;
+    }
+    this.setState({ renderedCarouselStartIndex });
   }
 
   render() {
@@ -182,18 +202,24 @@ class ProductOverview extends Component {
     const { skus } = this.state;
     const { selectedSize } = this.state;
     const { selectedQty } = this.state;
+    const { renderedCarouselStartIndex } = this.state;
+    const { carouselStartIndexHandler } = this;
     const { maxQty } = this.state;
     const { xPos } = this.state;
     const { yPos } = this.state;
     const { mousePositionChangeHandler } = this;
     const rightWidth = selectedViewFormat === 'default' ? 'w-1/4' : 'w-0';
     const leftWidth = selectedViewFormat === 'default' ? 'w-1/2' : 'w-3/4';
+    const { salePrice } = this.state;
+    const { defaultPrice } = this.state;
     const rightColumnHtml = selectedViewFormat === 'default' ? (
       <div>
         <ProductInformation
           product={product}
           productStyles={productStyles}
           reviewScore={weighted}
+          salePrice={salePrice}
+          defaultPrice={defaultPrice}
         />
         <StyleSelector
           product={product}
@@ -241,6 +267,8 @@ class ProductOverview extends Component {
                 xPos={xPos}
                 yPos={yPos}
                 mousePositionChangeHandler={mousePositionChangeHandler}
+                renderedCarouselStartIndex={renderedCarouselStartIndex}
+                carouselStartIndexHandler={carouselStartIndexHandler}
               />
             </div>
             <div className="w-full">

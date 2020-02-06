@@ -18,7 +18,29 @@ const ProductInformation = (props) => {
   const { reviewScore } = props;
   const { product: { category } } = props;
   const { product: { name } } = props;
-  const { product: { default_price } } = props;
+  const { defaultPrice } = props;
+  const { salePrice } = props;
+  const priceTag = salePrice
+    ? (
+      <div className="flex text-red-500 text-xl">
+        <h1 className="italic  mx-8 my-2 text-xl line-through" id="price">
+          $
+          {defaultPrice}
+        </h1>
+        <h1 className="italic  mx-8 my-2 text-xl">
+          $
+          {salePrice}
+        </h1>
+      </div>
+
+    )
+    : (
+      <h1 className="italic h1 mx-8 my-2 text-xl" id="price">
+      $
+        {defaultPrice}
+      </h1>
+    );
+
   return (
     <div id="productInformation">
       <div id="starRating" className="mx-4 my-8 content-center flex flex-wrap self-center ">
@@ -35,10 +57,7 @@ const ProductInformation = (props) => {
       <h1 className="h1 mx-2 my-2 text-5xl" id="productName">
         {name}
       </h1>
-      <h1 className="italic h1 mx-8 my-2 text-xl" id="price">
-        $
-        {default_price}
-      </h1>
+      {priceTag}
     </div>
   );
 };
