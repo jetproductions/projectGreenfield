@@ -6,10 +6,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Photos from './Photos';
+
 // TODO: add error message when submission is incomplete telling which fields are inclomplete 'You must enter the following:'
-// TODO: change unmet requirements to show up once user has selected different input
-// TODO: add photos option opens separate window
-// TODO: adds thumbnail of photo when uploaded
 // TODO: how to validate photos uploads?
 
 class CreateAnswer extends Component {
@@ -21,14 +19,14 @@ class CreateAnswer extends Component {
       email: '',
       photos: [],
       photo: '',
+      photosToSend: [],
       error: false,
-      success: false,
+      success: true,
     };
   }
 
   formChangeHandler = (location, value) => {
     const payload = {};
-    console.log('formchangeLocation: ', location, ' value: ', value);
     payload[location] = value;
     this.setState(payload);
   }
@@ -62,19 +60,23 @@ class CreateAnswer extends Component {
     return null;
   }
 
-  photoAddHandler = () => {
+  photoAddHandler = (e) => {
     const { photos } = this.state;
     const { photo } = this.state;
-    photos.push(photo);
-    this.setState({ photos, photo: '' });
+    const { photosToSend } = this.state;
+    if (photo.length === 0) return;
+    const count = photos.length;
+    photos.push({ url: photo, id: count + 1 });
+    photosToSend.push(photo);
+    this.setState({ photos, photo: '', photosToSend });
   }
 
   submitAnswer = async () => {
     const { body } = this.state;
     const { name } = this.state;
     const { email } = this.state;
-    const { photos } = this.state;
     const { question_id } = this.props;
+    const { photosToSend } = this.state;
 
     if (body.length < 25 || body.length > 1000) {
       return 'Inavlid Answer';
@@ -87,7 +89,7 @@ class CreateAnswer extends Component {
       return 'Invalid email';
     }
     const data = {
-      body, email, name, photos,
+      body, email, name, photos: photosToSend,
     };
     const created = await fetch(`http://52.26.193.201:3000/qa/${question_id}/answers`,
       {
@@ -118,7 +120,7 @@ class CreateAnswer extends Component {
     if (success) {
       setTimeout(() => { toggleModal(false); }, 1500);
       return (
-        <h2 className="center">Your Answer has been successfully submitted.</h2>
+        <div className="justify-center">Your Answer has been successfully submitted.</div>
       );
     }
     const addPhotoInput = (
@@ -129,8 +131,9 @@ class CreateAnswer extends Component {
           onChange={(e) => { this.formChangeHandler('photo', e.target.value); }}
           placeholder="Put Link to Photos Here"
           className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 max-h-full"
+          value={photo}
         />
-        <button type="button" className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-1 px-2 rounded flex flex-wrap mx-2 mb-2" onClick={(e) => { e.preventDefault(); this.photoAddHandler(); }}>Add Photo</button>
+        <button type="button" className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-1 px-2 rounded flex flex-wrap mx-2 mb-2" onClick={(e) => { e.preventDefault(); this.photoAddHandler(e); }}>Add Photo</button>
       </div>
     );
     return (
