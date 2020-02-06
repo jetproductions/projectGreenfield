@@ -21,7 +21,7 @@ class CreateAnswer extends Component {
       photo: '',
       photosToSend: [],
       error: false,
-      success: true,
+      success: false,
     };
   }
 
@@ -123,6 +123,7 @@ class CreateAnswer extends Component {
         <div className="justify-center">Your Answer has been successfully submitted.</div>
       );
     }
+
     const addPhotoInput = (
       <div className="flex">
         <input
@@ -191,7 +192,7 @@ class CreateAnswer extends Component {
                 type="text"
                 name="body"
                 onChange={(e) => this.formChangeHandler('body', e.target.value)}
-                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 inline"
                 rows="4"
                 placeholder="Your Answer Here"
               />
@@ -213,7 +214,7 @@ class CreateAnswer extends Component {
           </button>
         </form>
         <footer>
-          <div className=" text-grey ">
+          <div className=" text-grey font-size">
 * Indicates Required Field
           </div>
         </footer>
