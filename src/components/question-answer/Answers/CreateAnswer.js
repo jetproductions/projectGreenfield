@@ -131,10 +131,10 @@ class CreateAnswer extends Component {
           type="url"
           onChange={(e) => { this.formChangeHandler('photo', e.target.value); }}
           placeholder="Put Link to Photos Here"
-          className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 max-h-full"
+          className="bg-gray-200 appearance-none border-2 border-gray-200 rounded py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
           value={photo}
         />
-        <button type="button" className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-1 px-2 rounded flex flex-wrap mx-2 mb-2" onClick={(e) => { e.preventDefault(); this.photoAddHandler(e); }}>Add Photo</button>
+        <button type="button" className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 flex justify-center px-2 rounded  mx-2 mb-2" onClick={(e) => { e.preventDefault(); this.photoAddHandler(e); }}>Add Photo</button>
       </div>
     );
     return (
