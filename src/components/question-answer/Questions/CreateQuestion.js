@@ -107,7 +107,7 @@ class CreateQuestion extends Component {
         <br />
         { error ? errorMessage : null }
         <label htmlFor="question-nickname">
-*Nickname:
+Nickname*:
           {' '}
           {' '}
           {this.nameValidator()}
@@ -120,11 +120,11 @@ class CreateQuestion extends Component {
             className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
             maxLength="60"
           />
-          <span>For privacy reasons, do not use your full name or email address</span>
+          <span className="text-xs">For privacy reasons, do not use your full name or email address</span>
         </label>
         <br />
         <label htmlFor="question-email">
-*Email:
+Email*:
           {' '}
           {this.emailValidator()}
           {' '}
@@ -137,12 +137,12 @@ class CreateQuestion extends Component {
             className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
             maxLength="60"
           />
-          <span>For authentication reasons, you will not be emailed</span>
+          <span className="text-xs">For authentication reasons, you will not be emailed</span>
         </label>
         <label htmlFor="body">
-
+          <br />
           {/* need to make this input field bigger, 1000 chars-ish */}
-*Question:
+Question*:
           {' '}
           {this.bodyValidator()}
           {' '}
@@ -163,8 +163,8 @@ class CreateQuestion extends Component {
         >
           Submit Question
         </button>
-        <footer>
-* Mandatory
+        <footer className="text-sm">
+* Indicates Required Field
         </footer>
       </div>
     );
