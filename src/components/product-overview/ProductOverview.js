@@ -186,13 +186,13 @@ class ProductOverview extends Component {
   }
 
   render() {
-    const { product } = this.props;
+    const { product, weighted } = this.props;
     const { productStyles } = this.state;
     const { currentStyle } = this.state;
     const { addToCartClickHandler } = this;
-    const { weighted } = this.props;
-    const { selectedImage } = this.state;
-    const { selectedViewFormat } = this.state;
+    // const { weighted } = this.props;
+    const { selectedImage, selectedViewFormat } = this.state;
+    // const { selectedViewFormat } = this.state;
     const { currentImageChangeHandler } = this;
     const { imageViewFormatChangeHandler } = this;
     const { imageUrl } = this.state;
@@ -250,11 +250,11 @@ class ProductOverview extends Component {
           <span className="object-left self-center mr-64 cursor-pointer">&#128269;</span>
         </div>
 
-        <div className="flex mb-4">
+        <div className="md:flex lg:flex xl:flex mb-4">
 
-          <div id="leftColumn" className={`${leftWidth} overflow-hidden relative ml-auto`}>
+          <div id="leftColumn" className={`md:${leftWidth} lg:${leftWidth} xl:${leftWidth} sm:w-full overflow-hidden relative sm:ml-auto  md:ml-auto lg:ml-auto xl:ml-auto`}>
             {/* <h1>Left Column</h1> */}
-            <div className="w-full h-auto">
+            <div className="w-full h-screen">
               <ImageView
                 product={product}
                 currentStyle={currentStyle}
@@ -280,7 +280,7 @@ class ProductOverview extends Component {
 
           </div>
 
-          <div id="rightColumn" className={`${rightWidth} relative bg-gray-100 mr-auto`}>
+          <div id="rightColumn" className={`md:${rightWidth} lg:${rightWidth} xl:${rightWidth} sm:w-full relative bg-gray-100 mr-auto`}>
             {/* <h1>Right Column</h1> */}
             {rightColumnHtml}
           </div>
