@@ -10,7 +10,8 @@ import Photos from './Photos';
 // TODO: add error message when submission is incomplete telling which fields are inclomplete 'You must enter the following:'
 // TODO: how to validate photos uploads?
 
-class CreateAnswer extends Component {
+// this export added for testing unlinked to redux store
+export class CreateAnswer extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -140,7 +141,7 @@ class CreateAnswer extends Component {
 
     return (
 
-      <div className=" w-full px-4 text-gray-700">
+      <div className=" w-full px-4 text-gray-700 create-answer">
         <h2 className=" text-xl ">Answer a Question about:</h2>
         {' '}
         <h5 className=" text-l ">{`${productName}: ${questionBody}`}</h5>
