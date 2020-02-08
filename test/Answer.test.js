@@ -9,8 +9,16 @@ const importData = require('../sampleData/qAndA/answers');
 
 describe('<Answer /> Testing Suite', () => {
   const data = importData.default.results[1];
-  const shallowTest = shallow(<Answer {...data} />);
-  const mountTest = mount(<Answer {...data} />);
+  let shallowTest;
+  let mountTest;
+  beforeEach(() => {
+    shallowTest = shallow(<Answer {...data} />);
+    mountTest = mount(<Answer {...data} />);
+  });
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('renders without crashing SHALLOW', async () => {
     await expect(shallowTest.hasClass('single-answer')).toBe(true);
   });
@@ -29,4 +37,18 @@ describe('<Answer /> Testing Suite', () => {
   it('has a prop for date', async () => {
     await expect(mountTest.prop('date')).toBe(data.date);
   });
+  it('has a prop for helpfullness', async () => {
+    await expect(mountTest.prop('helpfullness')).toBe(data.helpfullness);
+  });
+  it('has a helpfulness Yes Button', async () => {
+    await expect(mountTest.find('#helpful-yes-button')).toBeTruthy();
+  });
+  // want to test initial state but with useState() hook
+  // it('has an initial helpfulButton State to change to true', async () => {
+  //   const setState = jest.fn();
+  //   const useStateSpy = jest.spyOn(React, 'useState');
+  //   useStateSpy.mockImplementation((init) => [init, setState]);
+  //   shallowTest.find('#helpful-yes-button').props().onClick();
+  //   expect(setState).toHaveBeenCalledWith(true);
+  // });
 });
