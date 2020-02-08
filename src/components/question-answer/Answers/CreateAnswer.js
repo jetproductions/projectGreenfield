@@ -47,7 +47,7 @@ export class CreateAnswer extends Component {
     const { name } = this.state;
     if (name === '') return null;
     if (name.length < 8 || name.length > 60) {
-      return (<span>Please enter a valid username</span>);
+      return (<span className="answer-name-valid">Please enter a valid username</span>);
     }
     return null;
   }
@@ -161,6 +161,7 @@ export class CreateAnswer extends Component {
                 className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                 placeholder="Example: jack543!"
                 maxLength="60"
+                value=""
               />
               <span className=" text-xs ">For privacy reasons, do not use your full name or email address</span>
             </label>

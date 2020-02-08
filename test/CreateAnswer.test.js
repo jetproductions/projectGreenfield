@@ -31,7 +31,15 @@ describe('<Create Answer /> Testing', () => {
     await expect(mountTest.state('success')).toBe(false);
     await expect(mountTest.state('error')).toBe(false);
   });
+  it('has 4 labels for input fields', async () => {
+    await expect(shallowTest.find('label').length).toBe(4);
+  });
   it('has expected state changes occur', async () => {
-    await expect().toBe(false);
+    await mountTest.find('#answer-nickname').simulate('change', { target: { value: 'nickname' } });
+    expect(mountTest.state('name')).toBe('nickname');
+    expect(mountTest.hasClass('answer-name-valid')).toBe(false);
+
+    // await mountTest.find('#answer-').simulate('change', { target: { value: 'nickname' } });
+    // expect(mountTest.state('name')).toBe('nickname');
   });
 });
