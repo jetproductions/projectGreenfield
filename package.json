@@ -4,8 +4,17 @@
   "description": "FEC Project for Jet Productions Project Greenfield",
   "main": "index.js",
   "jest": {
-    "setupFilesAfterEnv": ["./node_modules/jest-enzyme/lib/index.js"],
+    "setupFilesAfterEnv": [
+      "./node_modules/jest-enzyme/lib/index.js"
+    ],
     "testEnvironment": "enzyme"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ],
+    "plugins": ["@babel/plugin-proposal-class-properties"]
   },
   "scripts": {
     "start": "webpack-dev-server --mode development",
@@ -40,6 +49,7 @@
     "eslint-config-jest-enzyme": "^7.1.2",
     "eslint-plugin-jest": "^23.7.0",
     "jest": "^25.1.0",
+    "jest-cli": "^25.1.0",
     "mini-css-extract-plugin": "^0.9.0",
     "moment": "^2.24.0",
     "postcss-loader": "^3.0.0",
