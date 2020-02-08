@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import ProductOverview from './product-overview/ProductOverview';
 import QuestionAnswer from './question-answer/QuestionAnswer';
 import Reviews from './reviews/Reviews';
+import RelatedProducts from './related-products/RelatedProducts';
 
 /* eslint-disable no-undef */
 const getProduct = (id) => fetch(`http://52.26.193.201:3000/products/${id}`).then((res) => res.json());
@@ -27,6 +28,7 @@ const Product = ({ productStore, setProductInStore }) => {
     <div className="product">
       <div style={{ marginTop: '3em' }}>
         <ProductOverview />
+        <RelatedProducts />
         <QuestionAnswer />
         <Reviews />
       </div>

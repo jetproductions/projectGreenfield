@@ -5,6 +5,7 @@ import ImageView from './ImageView';
 import ProductDetails from './ProductDetails';
 import ProductInformation from './ProductInformation';
 import StyleSelector from './StyleSelector';
+import Features from './Features';
 import './ProductOverview.css';
 
 /* eslint-disable no-undef */
@@ -36,8 +37,7 @@ import './ProductOverview.css';
 class ProductOverview extends Component {
   constructor(props) {
     super(props);
-    const { product: { id } } = props;
-    const { product: { default_price } } = props;
+    const { product: { id, default_price, features } } = props;
     this.state = {
       //         [product]: passed from PRODUCT OVERVIEW in props, from store
       //         [productStyles]: passed from API call method in constructor.
@@ -47,7 +47,7 @@ class ProductOverview extends Component {
       //         [selectedImage]; defaults to 0, i.e. first.  Changed by ImageView component
       //         [selectedViewFormat]: default, expanded or zoomed.   view slides out, over RIGHT COLUMN, zoom is responsive to mouse position 250% zoom
       productStyles: [],
-      currentStyle: 0, // The first style doesn't necessarily have a value of 0.  Some items (such as 2) don't have pictures.
+      currentStyle: 0,
       selectedSize: '',
       selectedQty: 1,
       selectedImage: 0,
@@ -60,6 +60,7 @@ class ProductOverview extends Component {
       renderedCarouselStartIndex: 0,
       defaultPrice: default_price,
       salePrice: 0,
+      // relatedList: [],
     };
 
     this.getProductStyles(id);
@@ -74,7 +75,9 @@ class ProductOverview extends Component {
     this.imageUrlChangeHandler = this.imageUrlChangeHandler.bind(this);
     this.skuChangeHandler = this.skuChangeHandler.bind(this);
     this.mousePositionChangeHandler = this.mousePositionChangeHandler.bind(this);
+    // this.relatedProductHandler = this.relatedProductHandler.bind(this);
   }
+
 
   componentDidUpdate(prevProps) {
     const { product: { id } } = this.props;
@@ -112,7 +115,6 @@ class ProductOverview extends Component {
       const skuObj = Object.fromEntries(skus);
       const defSize = skus[0][0];
       const defVal = skuObj[defSize];
-      // console.log(defVal);
       const newSize = size === 'default' ? skus[0][0] : size;
       let max = size === 'default' ? skuObj[defSize] : skuObj[size];
       max = max > 15 ? 15 : max;
@@ -172,6 +174,7 @@ class ProductOverview extends Component {
     this.setState({ xPos: e.nativeEvent.offsetX, yPos: e.nativeEvent.offsetY });
   }
 
+  //  Carousel start image handler
   carouselStartIndexHandler=(term) => {
     let { renderedCarouselStartIndex } = this.state;
     const { currentStyle } = this.state;
@@ -185,33 +188,47 @@ class ProductOverview extends Component {
     this.setState({ renderedCarouselStartIndex });
   }
 
+  // //  Current Related Products Html Handler
+  // relatedProductHandler = (list) => {
+  //   this.setState({ relatedList: list });
+  // }
+
   render() {
     const { product, weighted } = this.props;
-    const { productStyles } = this.state;
-    const { currentStyle } = this.state;
-    const { addToCartClickHandler } = this;
-    // const { weighted } = this.props;
-    const { selectedImage, selectedViewFormat } = this.state;
-    // const { selectedViewFormat } = this.state;
-    const { currentImageChangeHandler } = this;
-    const { imageViewFormatChangeHandler } = this;
-    const { imageUrl } = this.state;
-    const { styleChangeHandler } = this;
-    const { qtyChangeHandler } = this;
-    const { sizeChangeHandler } = this;
-    const { skus } = this.state;
-    const { selectedSize } = this.state;
-    const { selectedQty } = this.state;
-    const { renderedCarouselStartIndex } = this.state;
-    const { carouselStartIndexHandler } = this;
-    const { maxQty } = this.state;
-    const { xPos } = this.state;
-    const { yPos } = this.state;
-    const { mousePositionChangeHandler } = this;
+    const {
+      productStyles,
+      currentStyle,
+      selectedImage,
+      selectedViewFormat,
+      selectedSize,
+      skus,
+      selectedQty,
+      renderedCarouselStartIndex,
+      maxQty,
+      xPos,
+      yPos,
+      salePrice,
+      defaultPrice,
+      imageUrl,
+      // relatedList,
+    } = this.state;
+
+    const {
+      addToCartClickHandler,
+      currentImageChangeHandler,
+      imageViewFormatChangeHandler,
+      styleChangeHandler,
+      qtyChangeHandler,
+      sizeChangeHandler,
+      carouselStartIndexHandler,
+      mousePositionChangeHandler,
+      // relatedProductHandler,
+    } = this;
+    const { features } = product;
     const rightWidth = selectedViewFormat === 'default' ? 'w-1/4' : 'w-0';
     const leftWidth = selectedViewFormat === 'default' ? 'w-1/2' : 'w-3/4';
-    const { salePrice } = this.state;
-    const { defaultPrice } = this.state;
+
+
     const rightColumnHtml = selectedViewFormat === 'default' ? (
       <div>
         <ProductInformation
@@ -238,9 +255,48 @@ class ProductOverview extends Component {
           selectedQty={selectedQty}
           maxQty={maxQty}
         />
+        <Features features={features} />
       </div>
     ) : (<div />);
+    const leftColumnHtml = (
+      <div className="md:flex lg:flex xl:flex mb-4">
 
+        <div id="leftColumn" className={`md:${leftWidth} lg:${leftWidth} xl:${leftWidth} sm:w-full overflow-hidden relative sm:ml-auto  md:ml-auto lg:ml-auto xl:ml-auto`}>
+          {/* <h1>Left Column</h1> */}
+          <div className="w-full h-screen">
+            <ImageView
+              product={product}
+              currentStyle={currentStyle}
+              productStyles={productStyles}
+              selectedImage={selectedImage}
+              selectedViewFormat={selectedViewFormat}
+              currentImageChangeHandler={currentImageChangeHandler}
+              imageViewFormatChangeHandler={imageViewFormatChangeHandler}
+              imageUrl={imageUrl}
+              xPos={xPos}
+              yPos={yPos}
+              mousePositionChangeHandler={mousePositionChangeHandler}
+              renderedCarouselStartIndex={renderedCarouselStartIndex}
+              carouselStartIndexHandler={carouselStartIndexHandler}
+            />
+          </div>
+          <div className="w-full">
+            <ProductDetails
+              product={product}
+              productStyles={productStyles}
+            />
+          </div>
+
+        </div>
+
+        <div id="rightColumn" className={`md:${rightWidth} lg:${rightWidth} xl:${rightWidth} sm:w-full relative bg-gray-100 mr-auto`}>
+          {/* <h1>Right Column</h1> */}
+          {rightColumnHtml}
+        </div>
+
+
+      </div>
+    );
 
     return (
       <div id="productOverview">
@@ -249,44 +305,7 @@ class ProductOverview extends Component {
           <input className="h-4 self-center mr-4" />
           <span className="object-left self-center mr-64 cursor-pointer">&#128269;</span>
         </div>
-
-        <div className="md:flex lg:flex xl:flex mb-4">
-
-          <div id="leftColumn" className={`md:${leftWidth} lg:${leftWidth} xl:${leftWidth} sm:w-full overflow-hidden relative sm:ml-auto  md:ml-auto lg:ml-auto xl:ml-auto`}>
-            {/* <h1>Left Column</h1> */}
-            <div className="w-full h-screen">
-              <ImageView
-                product={product}
-                currentStyle={currentStyle}
-                productStyles={productStyles}
-                selectedImage={selectedImage}
-                selectedViewFormat={selectedViewFormat}
-                currentImageChangeHandler={currentImageChangeHandler}
-                imageViewFormatChangeHandler={imageViewFormatChangeHandler}
-                imageUrl={imageUrl}
-                xPos={xPos}
-                yPos={yPos}
-                mousePositionChangeHandler={mousePositionChangeHandler}
-                renderedCarouselStartIndex={renderedCarouselStartIndex}
-                carouselStartIndexHandler={carouselStartIndexHandler}
-              />
-            </div>
-            <div className="w-full">
-              <ProductDetails
-                product={product}
-                productStyles={productStyles}
-              />
-            </div>
-
-          </div>
-
-          <div id="rightColumn" className={`md:${rightWidth} lg:${rightWidth} xl:${rightWidth} sm:w-full relative bg-gray-100 mr-auto`}>
-            {/* <h1>Right Column</h1> */}
-            {rightColumnHtml}
-          </div>
-
-
-        </div>
+        {leftColumnHtml}
 
       </div>
     );

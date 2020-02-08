@@ -90,7 +90,7 @@ const ImageView = (props) => {
   const getImageDimensions = (src) => {
     const newImg = new Image();
 
-    const imageLoader = function () {
+    const imageLoader = () => {
       imgHeight = newImg.height * 2.5;
       imgWidth = newImg.width * 2.5;
       // console.log(imgHeight, imgWidth);

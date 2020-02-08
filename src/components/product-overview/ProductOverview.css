@@ -9,6 +9,9 @@
     text-shadow: 2px 2px 10px  lightgreen, -2px -2px 10px lightblue;
     
 }
+.socialMedia:hover{
+    opacity: 75%;
+}
 #upperBar{
     background-color: #525252;
 }
@@ -32,8 +35,6 @@
 #reviewNavButton{
     color: #525252;
 }
-
-
 #logo{
     color:#e6e6e6;
 }
