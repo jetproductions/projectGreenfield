@@ -8,7 +8,7 @@ describe('<SearchBar /> Test Suite', () => {
     expect(shallow(<QuestionSearch />).is('input')).toBe(true);
   });
   it('should be selectable by class search-bar', () => {
-    expect(shallow(<QuestionSearch />).is('.search-bar')).toBe(true);
+    expect(shallow(<QuestionSearch />).hasClass('search-bar')).toBe(true);
   });
   // figure out how to test using mount() for full component with stubbed data
   it('should have a placeholder', () => {
