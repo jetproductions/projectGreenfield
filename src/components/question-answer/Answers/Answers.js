@@ -78,21 +78,21 @@ COLLAPSE ANSWERS
     }
     if (filtered.length > 2 && !showMore) {
       return (
-        <>
+        <div className="max-h-6/12 overflow-y-scroll">
           <Answer key={filtered[0].answer_id} {...filtered[0]} />
           <Answer key={filtered[1].answer_id} {...filtered[1]} />
           {loadMore}
-        </>
+        </div>
       );
     }
     return (
-      <>
+      <div className="max-h-screen overflow-y-scroll">
         {filtered.map((answer) => (
           <Answer key={answer.answer_id} {...answer} />
         ))}
         {filtered.length > 2 && answers.length === count ? loadMore : null }
         {filtered.length > 2 ? collapseAnswers : null}
-      </>
+      </div>
     );
   }
 }

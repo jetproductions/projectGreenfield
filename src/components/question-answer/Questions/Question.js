@@ -69,7 +69,7 @@ Helpful?
         </button>
       </div>
       {/* working to get to only take up certain amount of space with scrolling */}
-      <Answers className=" h-screen w-overflow-y-scroll lg:h-20" question_id={question_id || null} />
+      <Answers className=" max-h-6/12 w-overflow-y-scroll lg:h-20" question_id={question_id || null} />
     </div>
   );
 };

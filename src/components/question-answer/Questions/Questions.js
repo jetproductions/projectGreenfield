@@ -72,13 +72,15 @@ Show Less
   if (showMoreQuestions) {
     return (
       <div>
-        {sorted.map((question) => {
-          const qid = question.question_id ? question.question_id : null;
-          return (
-          // eslint-disable-next-line react/jsx-props-no-spreading
-            <Question key={qid} {...question} {...questionModal} searched={searchBar} />
-          );
-        })}
+        <div className=" overflow-y-scroll max-h-screen">
+          {sorted.map((question) => {
+            const qid = question.question_id ? question.question_id : null;
+            return (
+            // eslint-disable-next-line react/jsx-props-no-spreading
+              <Question key={qid} {...question} {...questionModal} searched={searchBar} />
+            );
+          })}
+        </div>
         {moreQuestionsAvailable ? showMoreQuestionsRender : null}
         {sorted.length > 2 ? showLessQuestionsRender : null}
         {addQuestion}
@@ -94,17 +96,19 @@ Show Less
     );
   }
   return (
-    <div>
-      {sorted.slice(0, 2).map((question) => {
-        const qid = question.question_id ? question.question_id : null;
-        return (
-        // eslint-disable-next-line react/jsx-props-no-spreading
-          <Question key={qid} {...question} {...questionModal} searched={searchBar} />
-        );
-      })}
+    <>
+      <div className="max-h-screen overflow-y-scroll">
+        {sorted.slice(0, 2).map((question) => {
+          const qid = question.question_id ? question.question_id : null;
+          return (
+          // eslint-disable-next-line react/jsx-props-no-spreading
+            <Question key={qid} {...question} {...questionModal} searched={searchBar} />
+          );
+        })}
+      </div>
       {showMoreQuestionsRender}
       {addQuestion}
-    </div>
+    </>
   );
 };
 

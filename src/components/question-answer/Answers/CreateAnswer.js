@@ -137,6 +137,7 @@ class CreateAnswer extends Component {
         <button type="button" className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 flex justify-center px-2 rounded  mx-2 mb-2" onClick={(e) => { e.preventDefault(); this.photoAddHandler(e); }}>Add Photo</button>
       </div>
     );
+
     return (
 
       <div className=" w-full px-4 text-gray-700">
