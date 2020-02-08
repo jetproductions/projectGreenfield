@@ -3,6 +3,13 @@
   "version": "1.0.0",
   "description": "FEC Project for Jet Productions Project Greenfield",
   "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --mode development",
+    "lint": "eslint --ext .js src/",
+    "test-watch": "jest --watchAll",
+    "test": "jest",
+    "test-coverage": "jest --coverage --colors"
+  },
   "jest": {
     "setupFilesAfterEnv": [
       "./node_modules/jest-enzyme/lib/index.js"
@@ -15,13 +22,6 @@
       "@babel/preset-react"
     ],
     "plugins": ["@babel/plugin-proposal-class-properties"]
-  },
-  "scripts": {
-    "start": "webpack-dev-server --mode development",
-    "lint": "eslint --ext .js src/",
-    "test-watch": "jest --watchAll",
-    "test": "jest",
-    "test-coverage": "jest --coverage --colors"
   },
   "repository": {
     "type": "git",

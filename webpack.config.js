@@ -4,7 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WriteFilePlugin = require('write-file-webpack-plugin');
 
 module.exports = (env, argv) => ({
-  entry: ['@babel/polyfill', path.join(__dirname, 'src', 'index.js')],
+  entry: path.join(__dirname, 'src', 'index.js'),
   plugins: [
     new MiniCssExtractPlugin({
       filename: '[name].bundle.css',
@@ -34,7 +34,11 @@ module.exports = (env, argv) => ({
           loader: 'babel-loader',
           options: {
             presets: [
-              '@babel/preset-env',
+              ['@babel/preset-env', {
+                targets: {
+                  node: 10,
+                },
+              }],
               '@babel/preset-react',
             ],
             plugins: ['@babel/plugin-proposal-class-properties'],
