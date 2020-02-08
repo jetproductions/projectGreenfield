@@ -32,7 +32,7 @@ const Photos = ({ photos }) => {
     return (
       <div
         key={keyNum}
-        className=" inline-block mx-2 my-2  border border-gray-600 z-10 "
+        className=" inline-block mx-2 my-2  border border-gray-600 z-10 answer-photos"
       >
         <img
           className="h-20 w-20  object-cover "
