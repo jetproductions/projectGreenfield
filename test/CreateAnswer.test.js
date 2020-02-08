@@ -31,4 +31,7 @@ describe('<Create Answer /> Testing', () => {
     await expect(mountTest.state('success')).toBe(false);
     await expect(mountTest.state('error')).toBe(false);
   });
+  it('has expected state changes occur', async () => {
+    await expect().toBe(false);
+  });
 });
