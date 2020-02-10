@@ -89,20 +89,26 @@ const ImageView = (props) => {
 
   const getImageDimensions = (src) => {
     const newImg = new Image();
-    newImg.onload = function () {
+
+    const imageLoader = () => {
       imgHeight = newImg.height * 2.5;
       imgWidth = newImg.width * 2.5;
       // console.log(imgHeight, imgWidth);
     };
+
+    newImg.onload = imageLoader;
+
     newImg.src = src;
   };
 
   getImageDimensions(imageUrl);
-  console.log((((imgDivY / 2) - yPos) / (imgDivY / 2)) * ((imgHeight - imgDivY)));
+
+  const topMargin = isNaN((((imgDivY / 2) - yPos + 170) / (imgDivY / 2)) * (1 * (imgHeight - imgDivY))) ? 0 : 0 - (((imgDivY / 2) - (yPos - 200)) / (imgDivY / 2)) * (1 / 2 * (imgHeight - imgDivY));
+  const sideMargin = isNaN((((imgDivX / 2) - xPos + 85) / (imgDivY / 2)) * (1 * (imgWidth - imgDivX))) ? 0 : 0 - (((imgDivX / 2) - (xPos - 110)) / (imgDivX / 2)) * (1 / 2 * (imgWidth - imgDivX));
 
   const zoomMargins = {
-    marginTop: isNaN((((imgDivY / 2) - yPos + 170) / (imgDivY / 2)) * (1 / 2 * (imgHeight - imgDivY))) ? 0 : 0 - (((imgDivY / 2) - yPos + 170) / (imgDivY / 2)) * (1 / 2 * (imgHeight - imgDivY)),
-    marginLeft: isNaN((((imgDivX / 2) - xPos + 85) / (imgDivY / 2)) * (1 / 2 * (imgWidth - imgDivX))) ? 0 : 0 - (((imgDivX / 2) - xPos + 85) / (imgDivX / 2)) * (1 / 2 * (imgWidth - imgDivX)),
+    marginTop: topMargin,
+    marginLeft: sideMargin,
   };
 
   // zoom margin equation = marginY = (1/2 imgDivY-mouseY)/ (1/2imgY) * Y
