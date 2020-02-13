@@ -1,6 +1,17 @@
 .h1{
     color: #525252;
 }
+.arrow{
+    -webkit-text-stroke: 1px;
+    -webkit-text-stroke-color: darkslategrey;
+}
+.arrow:hover{
+    text-shadow: 2px 2px 10px  lightgreen, -2px -2px 10px lightblue;
+    
+}
+.socialMedia:hover{
+    opacity: 75%;
+}
 #upperBar{
     background-color: #525252;
 }
@@ -24,13 +35,6 @@
 #reviewNavButton{
     color: #525252;
 }
-#mainImage{
-    cursor:zoom-in;
-}
-#expandedImage{
-    cursor:zoom-in;
-}
-
 #logo{
     color:#e6e6e6;
 }
@@ -39,13 +43,21 @@
     -webkit-transition: width .4s ease-in-out;
 
 }
-.arrow{
-    -webkit-text-stroke: 1px;
-    -webkit-text-stroke-color: darkslategrey;
+#mainImage{
+    cursor:zoom-in;
+    -moz-transform: scale(1);
+    -webkit-transform: scale(1);
+    -o-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
 }
-.arrow:hover{
-    text-shadow: 2px 2px 10px  lightgreen, -2px -2px 10px lightblue;
-    
+#expandedImage{
+    cursor:zoom-in;
+    -moz-transform: scale(1.5);
+    -webkit-transform: scale(1.5);
+    -o-transform: scale(1.5);
+    -ms-transform: scale(1.5);
+    transform: scale(1.5);
 }
 #zoomedImage{
     -moz-transform: scale(2.5);

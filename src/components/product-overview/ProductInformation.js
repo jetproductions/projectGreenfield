@@ -20,7 +20,7 @@ const ProductInformation = (props) => {
   const { product: { name } } = props;
   const { defaultPrice } = props;
   const { salePrice } = props;
-  const priceTag = salePrice
+  const priceTag = salePrice > 0
     ? (
       <div className="flex text-red-500 text-xl">
         <h1 className="italic  mx-8 my-2 text-xl line-through" id="price">

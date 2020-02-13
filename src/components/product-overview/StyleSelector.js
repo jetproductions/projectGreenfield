@@ -30,7 +30,7 @@ const StyleSelector = (props) => {
     const keyNum = index;
     return (
       <div key={keyNum} className="w-1/4 px-1 py-1 h-40">
-        <img className="object-cover ml-auto mr-auto h-32 bg-gray-200 cursor-pointer" src={style.photos[0].thumbnail_url} alt={style.name} onClick={(e) => { e.preventDefault(); styleChangeHandler(index); }} />
+        <img className="rounded-full object-cover ml-auto mr-auto h-24 w-24 bg-gray-200 cursor-pointer" src={style.photos[0].thumbnail_url} alt={style.name} onClick={(e) => { e.preventDefault(); styleChangeHandler(index); }} />
       </div>
     );
   });

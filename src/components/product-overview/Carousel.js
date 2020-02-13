@@ -28,29 +28,29 @@ const Carousel = (props) => {
 
   const upArrowHtml = (
     <div key="upArrow" className="mx-2 my-2">
-      <div className={`${correctSize} arrow text-5xl text-purple-400 text-bold text-center `} onClick={(e) => { e.preventDefault(); return carouselStartIndexHandler('up'); }}>
+      <div className={`${correctSize} arrow text-5xl text-gray-400 text-bold text-center `} onClick={(e) => { e.preventDefault(); return carouselStartIndexHandler('up'); }}>
         &#10506;
       </div>
     </div>
   );
   const downArrowHtml = (
     <div key="downArrow" className="mx-2 my-2">
-      <div className={`${correctSize} arrow text-5xl text-purple-400 text-bold text-center `} onClick={(e) => { e.preventDefault(); return carouselStartIndexHandler('down'); }}>
+      <div className={`${correctSize} arrow text-5xl text-gray-400 text-bold text-center `} onClick={(e) => { e.preventDefault(); return carouselStartIndexHandler('down'); }}>
         &#10507;
       </div>
     </div>
   );
 
   const leftArrowHtml = selectedViewFormat === 'zoomed' ? (<div />) : selectedImage > 0 ? (
-    <div className=" pointer-events-auto z-20 ml-2 mr-2">
-      <div className="h-20 w-20 arrow text-6xl text-purple-400 text-bold text-center" onClick={() => { const nextImage = selectedImage - 1 >= 0 ? selectedImage - 1 : 0; currentImageChangeHandler(nextImage); }}>
+    <div className=" pointer-events-auto z-20 ml-2 ml-2">
+      <div className="h-20 w-20 arrow text-6xl text-gray-400 text-bold text-center rounded-full" onClick={() => { const nextImage = selectedImage - 1 >= 0 ? selectedImage - 1 : 0; currentImageChangeHandler(nextImage); }}>
         &#10502;
       </div>
     </div>
   ) : (<div />);
   const rightArrowHtml = selectedViewFormat === 'zoomed' ? (<div />) : selectedImage < currentSlideDeck.length - 1 ? (
-    <div className="pointer-events-auto z-20 mr-2 mr-2">
-      <div className="h-20 w-20 arrow text-6xl text-purple-400 text-bold text-center" onClick={() => { const nextImage = selectedImage + 1 > fullSlideDeck.length - 1 ? fullSlideDeck.length - 1 : selectedImage + 1; currentImageChangeHandler(nextImage); }}>
+    <div className="pointer-events-auto z-20 mr-2 ml-2">
+      <div className="h-20 w-20 arrow text-6xl text-gray-400 text-bold text-center " onClick={() => { const nextImage = selectedImage + 1 > fullSlideDeck.length - 1 ? fullSlideDeck.length - 1 : selectedImage + 1; currentImageChangeHandler(nextImage); }}>
         &#10503;
       </div>
     </div>
@@ -59,9 +59,9 @@ const Carousel = (props) => {
 
   const prettyHtml = selectedViewFormat !== 'zoomed' ? (
     <div className="self-center pointer-events-auto h-screen justify-center">
-      {renderedCarouselStartIndex === 0 ? (<div />) : upArrowHtml}
+      {renderedCarouselStartIndex === 0 ? (<div className="mx-2 my-2"><div className={`${correctSize}`} /></div>) : upArrowHtml}
       {htmlList}
-      {(renderedCarouselStartIndex + 7 >= fullSlideDeck.length - 1) ? (<div />) : downArrowHtml}
+      {(renderedCarouselStartIndex + 7 >= fullSlideDeck.length - 1) ? (<div className="mx-2 my-2"><div className={`${correctSize}`} /></div>) : downArrowHtml}
     </div>
 
   ) : (<div />);
