@@ -1,3 +1,4 @@
+/* eslint-disable import/no-named-as-default */
 /* eslint-disable camelcase */
 /* eslint-disable no-undef */
 /* eslint-disable react/prefer-stateless-function */

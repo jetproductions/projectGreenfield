@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import SearchBar from './SearchBar';
 import Questions from './Questions/Questions';
 
-class QuestionAnswer extends Component {
+export class QuestionAnswer extends Component {
   constructor(props) {
     super(props);
     const { product: { id } } = props;

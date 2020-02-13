@@ -1,18 +1,20 @@
 /* eslint-disable no-undef */
-// import React, { Component } from 'react';
-// import renderer from 'react-test-renderer';
+import React from 'react';
+import { shallow, mount } from 'enzyme';
+import { QuestionAnswer } from '../src/components/question-answer/QuestionAnswer';
+import Product1 from '../sampleData/product/product';
 
-// const QuestionAnswer = require('../src/components/question-answer/QuestionAnswer');
-
-// test('Checks if QA Component Renders', () => {
-//   const component = renderer.create(
-//     <QuestionAnswer />
-//   )
-
-// });
-test('will eventually test QA', () => {
-  const output = 0;
-  expect(output).toBe(0);
+describe('<QuestionAnswer /> Component', () => {
+  let shallowTest;
+  let mountTest;
+  beforeEach(() => {
+    shallowTest = shallow(<QuestionAnswer product={Product1} />);
+    mountTest = mount(<QuestionAnswer product={Product1} />);
+  });
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+  it('renders without crashing', async () => {
+    await expect(mountTest.find('#questions-answers').hasClass('container')).toBe(true);
+  });
 });
-
-// working on simpler tests to build up to this

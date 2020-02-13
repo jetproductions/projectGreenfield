@@ -13,11 +13,3 @@ test('subtracts A and B using Mock', () => {
   expect(subtract).toHaveBeenCalledTimes(1);
   expect(subtract).toHaveBeenCalledWith(2, 1);
 });
-
-// const Hello = (<h1>Hello</h1>);
-// describe('<Hello/>', () => {
-//   it('renders one <h1> tag', () => {
-//     const wrapper = shallow(<Hello />);
-//     expect(wrapper.find('h1')).to.have.length(1);
-//   });
-// });

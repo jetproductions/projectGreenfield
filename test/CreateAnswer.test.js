@@ -21,6 +21,8 @@ describe('<Create Answer /> Testing', () => {
   it('renders without crashing', async () => {
     await expect(mountTest.find('.create-answer').hasClass('create-answer')).toBe(true);
   });
+  
+  // these test that state defaults are what they should be
   it('has expected default state', async () => {
     await expect(mountTest.state('body')).toBe('');
     await expect(mountTest.state('name')).toBe('');
@@ -34,12 +36,17 @@ describe('<Create Answer /> Testing', () => {
   it('has 4 labels for input fields', async () => {
     await expect(shallowTest.find('label').length).toBe(4);
   });
+
+  // these check that state does change
   it('has expected state changes occur', async () => {
     await mountTest.find('#answer-nickname').simulate('change', { target: { value: 'nickname' } });
     expect(mountTest.state('name')).toBe('nickname');
     expect(mountTest.hasClass('answer-name-valid')).toBe(false);
+  });
 
-    // await mountTest.find('#answer-').simulate('change', { target: { value: 'nickname' } });
-    // expect(mountTest.state('name')).toBe('nickname');
+  // tests that renders component asking for valid username length
+  it('renders invalid length when invalid', async () => {
+    await mountTest.find('#answer-nickname').simulate('change', { target: { value: 'nick' } });
+    expect(mountTest.find('.answer-name-valid').hasClass('answer-name-valid')).toBe(true);
   });
 });
