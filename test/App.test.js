@@ -5,6 +5,7 @@ describe('H1 Text', () => {
   test('h1 loads correctly in homepage', async () => {
     const browser = await puppeteer.launch({
       headless: false,
+      slowMo: 250,
     });
     const page = await browser.newPage();
 
@@ -26,29 +27,54 @@ describe('H1 Text', () => {
   }, 16000);
 });
 
-describe('product landing page', () => {
-  test('loads QA Section', async () => {
-    const browser = await puppeteer.launch({
-      headless: false,
-      slowMo: 250,
-    });
-    const page = await browser.newPage();
+// describe('price id renders', () => {
+//   test('price id renders in product information', async () => {
+//     const browser = await puppeteer.launch({
+//       headless: false,
+//       slowMo: 250,
+//     });
+//     const page = await browser.newPage();
 
-    page.emulate({
-      viewport: {
-        width: 500,
-        height: 2400,
-      },
-      userAgent: '',
-    });
+//     page.emulate({
+//       viewport: {
+//         width: 500,
+//         height: 2400,
+//       },
+//       userAgent: '',
+//     });
 
-    await page.goto('http://localhost:8080/products/1');
-    await page.waitForSelector('#questions-answers');
+//     await page.goto('http://localhost:8080/products/1');
+//     await page.waitForSelector('#price');
 
-    const html = await page.$eval('#questions-answers', (e) => e.innerHTML);
-    console.log(html);
-    expect(html).toBe('QUESTIONS & ANSWERS');
+//     const html = await page.$eval('#price', (e) => e.innerHTML);
+//     expect(html.contains('$')).toBe(true);
 
-    browser.close();
-  }, 16000);
-});
+//     browser.close();
+//   }, 16000);
+// });
+
+// describe('product landing page', () => {
+//   test('loads QA Section', async () => {
+//     const browser = await puppeteer.launch({
+//       headless: false,
+//       // slowMo: 500,
+//     });
+//     const page = await browser.newPage();
+
+//     page.emulate({
+//       viewport: {
+//         width: 500,
+//         height: 2400,
+//       },
+//       userAgent: '',
+//     });
+
+//     await page.goto('http://localhost:8080/products/1');
+//     await page.waitForSelector('#questions-answers-title');
+
+//     const html = await page.$eval('#questions-answers-title', (e) => e.innerHTML);
+//     expect(html).toBe('QUESTIONS & ANSWERS');
+
+//     browser.close();
+//   }, 16000);
+// });

@@ -56,7 +56,7 @@ export class QuestionAnswer extends Component {
     const { count } = this.state;
     return (
       <div id="questions-answers" className="container mx-auto w-auto p-3 justify-center align-center">
-        <h5 className="uppercase font-thin text-xl float-left">QUESTIONS & ANSWERS</h5>
+        <h5 className="uppercase font-thin text-xl float-left" id="questions-answers-title">QUESTIONS & ANSWERS</h5>
         <div className="w-auto">
           <SearchBar searchChangeHandler={this.searchChangeHandler} />
           <Questions
